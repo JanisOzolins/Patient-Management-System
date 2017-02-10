@@ -12,10 +12,14 @@
 */
 
 Route::get('/', function () {
-	$patients = \App\Patient::all();
+	$patients = "HELLO";
     return view('welcome')->with('patients', $patients);
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', function () {
+	$users = App\User::all();
+	return view('home')->with('users', $users);
+
+});
