@@ -8,7 +8,7 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    You are logged in and this is the HOMEPAGE! <br>
+                    Hello! You have successfully logged in!!!
                     @foreach ($users as $user)
                         {{ $user->name }} <br>
                     @endforeach
