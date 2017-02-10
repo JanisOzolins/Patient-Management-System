@@ -15,3 +15,7 @@ Route::get('/', function () {
 	$patients = \App\Patient::all();
     return view('welcome')->with('patients', $patients);
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
