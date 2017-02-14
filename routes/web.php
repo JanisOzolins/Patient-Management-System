@@ -11,15 +11,23 @@
 |
 */
 
-Route::get('/', function () {
-	$patients = "HELLO";
-    return view('welcome')->with('patients', $patients);
+
+
+Route::group(['middleware' => 'auth'], function () 
+
+{
+
+	Route::get('/', function () 
+
+	{
+
+		$users = App\User::all();
+
+		return view('home')->with('users', $users);
+
+	});
+
 });
 
 Auth::routes();
 
-Route::get('/home', function () {
-	$users = App\User::all();
-	return view('home')->with('users', $users);
-
-});
