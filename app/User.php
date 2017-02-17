@@ -2,12 +2,21 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+use Illuminate\Auth\Authenticatable;
+use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Jenssegers\Mongodb\Eloquent\HybridRelations;
+use Illuminate\Support\Collection;
+
+class User extends Eloquent implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
-    use Notifiable;
+    use Notifiable, Authenticatable, Authorizable, CanResetPassword, HybridRelations;
 
     protected $collection = "patientcollection";
 
@@ -17,7 +26,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'user_type', 'last_name', 'email', 'password',
+        'first_name', 'user_type', 'd_name', 'last_name', 'email', 'password',
     ];
 
     /**
@@ -28,4 +37,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function conditions()
+    {
+        return $this->embedsMany('App\Condition', 'Condition');
+    }
 }

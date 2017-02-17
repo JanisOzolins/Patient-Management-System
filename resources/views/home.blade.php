@@ -6,9 +6,15 @@
         return redirect()->route('login');
     @else
         <center>
-            @foreach($users as $user)
-                {{ $user }}
-            @endforeach
+                <center><ul>
+                @foreach ($conditions as $condition)
+                    <li>{{ $condition->d_name }}</li>
+                @endforeach
+                </center></ul>
+
+                <center><ul>
+
+                </center></ul>
         </center>
     @endif
 </div>

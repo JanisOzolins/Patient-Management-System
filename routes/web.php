@@ -21,9 +21,10 @@ Route::group(['middleware' => 'auth'], function ()
 
 	{
 
-		$users = App\User::all();
+		$user = Auth::user();
+		$current = $user->conditions;
 
-		return view('home')->with('users', $users);
+		return view('home')->with('conditions', $current);
 
 	});
 
