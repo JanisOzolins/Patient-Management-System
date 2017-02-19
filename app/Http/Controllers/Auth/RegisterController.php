@@ -66,12 +66,18 @@ class RegisterController extends Controller
         $user = User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
+            'user_type' => $data['user_type'],
+            'birth_date' => $data['birth_date'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
 
-        $one = $user->conditions()->create(['d_name' => 'Death']);
-        $two = $user->conditions()->create(['d_name' => 'HIV']);
+        $age = $user->calculateAge($user);
+        $user->age = $age;
+        $user->save();
+
+        // $one = $user->conditions()->create(['d_name' => 'Death']);
+        // $two = $user->conditions()->create(['d_name' => 'HIV']);
 
         return $user;
 

@@ -7,6 +7,6 @@ use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 class Condition extends Eloquent
 {
     protected $fillable = [
-        'd_name',
+        'c_name', 'c_diagnosed_at', 'c_isTreated', 'c_details'
         ];
 }
