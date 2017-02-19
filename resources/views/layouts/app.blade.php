@@ -56,8 +56,8 @@
                             <li><a href="{{ route('login') }}">Login</a></li>
                             
                         @else
-                            @if (Auth::user()->user_type = "staff")
-                            <li><a href="{{ route('register') }}">Register</a></li>
+                            @if (Auth::user()->isStaff(Auth::user()) == "staff")
+                                <li><a href="{{ route('register') }}">Register</a></li>
                             @endif
                             
                             <li class="dropdown">

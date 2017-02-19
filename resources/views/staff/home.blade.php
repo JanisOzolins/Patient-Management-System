@@ -6,13 +6,7 @@
         return redirect()->route('login');
     @else
         <center>
-                <center><ul>
-                @foreach ($conditions as $condition)
-                    <li>{{ $condition->d_name }}</li>
-                @endforeach
-                </center></ul>
-
-                <center><ul>
+                I'm in a staff view and I'm a {{ $test }}
 
                 </center></ul>
         </center>

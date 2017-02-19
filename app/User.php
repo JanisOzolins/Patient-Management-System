@@ -61,4 +61,22 @@ class User extends Eloquent implements AuthenticatableContract, AuthorizableCont
             return 0;
         }
     }
+
+    public function isStaff($user) {
+        if ($user->user_type == "staff") {
+
+            return "staff";
+
+        }
+        elseif ($user->user_type == "doctor") {
+
+            return "doctor";
+            
+        }
+        else {
+
+            return "patient";
+
+        }
+    }
 }
