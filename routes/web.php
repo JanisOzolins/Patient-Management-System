@@ -19,26 +19,50 @@ Route::get('/welcome', function () {
 	});
 
 
-Route::group(['middleware' => 'auth'], function () 
+Route::group(['middleware' => 'auth'], function () {
 
-{
 	Route::get('/', function () {
+
+		///// DOCTOR HOME
 
 		if(Auth::user()->user_type == "doctor") {
 			$users = App\User::orderBy('last_name', 'asc')->get();
 			return view('doctor.home')->with('users', $users);
 		}
+
+		///// STAFF HOME
+
 		elseif(Auth::user()->user_type == "staff") {
-			$test = "hey";
-			return view('staff.home')->with('test', $test);
+			$users = App\User::orderBy('last_name', 'asc')->get();
+			return view('staff.home')->with('users', $users);
 		}
+
+		///// PATIENT HOME
+
 		elseif(Auth::user()->user_type == "patient") {
 			$test = "hey";
 			return view('patient.home')->with('test', $test);
 		}
-		else {
-			return "SORRY, UNAUTHORIZED ACCESS.";
+
+		///// MANAGER HOME
+
+		elseif(Auth::user()->user_type == "manager") {
+			return view('manager.home');
 		}
+
+	});
+
+	Route::get('/appointments', 'AppointmentsController@index')->name('appointment.index');
+
+	Route::get('/appointments/add', function () {
+ 	
+		return view('appointment.add');
+
+	});
+
+	Route::get('/appointments/{appointment}', function () {
+ 	
+		return view('appointment.show');
 
 	});
 

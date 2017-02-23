@@ -17,9 +17,14 @@
                                 <label for="user_type" class="col-md-4 form-control-label">User Type</label>
 
                                     <select class="form-control" id="user_type" name="user_type" value="{{ old('user_type') }}" required >
-                                      <option value="patient">Patient</option>
-                                      <option value="staff">Staff/Nurse</option>
-                                      <option value="doctor">Doctor</option>
+                                      @if (Auth::user()->isStaff(Auth::user()) == "staff")
+                                        <option value="patient">Patient</option>
+                                      @endif
+                                      @if (Auth::user()->isStaff(Auth::user()) == "manager")
+                                        <option value="staff">Staff/Nurse</option>
+                                        <option value="doctor">Doctor</option>
+                                        <option value="manager">Manager</option>
+                                      @endif
                                     </select>
 
                                     @if ($errors->has('user_type'))

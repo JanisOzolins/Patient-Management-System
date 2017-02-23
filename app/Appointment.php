@@ -2,11 +2,11 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
-class Appointment extends Model
+class Appointment extends Eloquent
 {
     protected $fillable = [
-        'a_date', 'a_time', 'a_details',
+        'a_patient', 'a_date', 'a_time', 'a_details',
         ];
 }

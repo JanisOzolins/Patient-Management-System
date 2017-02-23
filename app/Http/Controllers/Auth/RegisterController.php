@@ -67,17 +67,21 @@ class RegisterController extends Controller
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'user_type' => $data['user_type'],
+            'address' => $data['address'],
             'birth_date' => $data['birth_date'],
+            'phone' => $data['phone'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
 
         $age = $user->calculateAge($user);
         $user->age = $age;
-        $user->save();
 
-        // $one = $user->conditions()->create(['d_name' => 'Death']);
-        // $two = $user->conditions()->create(['d_name' => 'HIV']);
+        $one = $user->appointments()->create(['a_patient' => $user->first_name . $user->first_name, 'a_date' => '2017-06-06', 'a_time' => '19:00']);
+        $two = $user->appointments()->create(['a_patient' => $user->first_name . $user->first_name, 'a_date' => '2017-04-04', 'a_time' => '12:00']);
+
+
+        $user->save();
 
         return $user;
 

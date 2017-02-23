@@ -45,6 +45,11 @@ class User extends Eloquent implements AuthenticatableContract, AuthorizableCont
         return $this->embedsMany('App\Condition', 'condition');
     }
 
+    public function appointments()
+    {
+        return $this->embedsMany('App\Appointment', 'appointment');
+    }
+
     public function calculateAge($user) 
     {
         $dob = $user->birth_date;
@@ -71,6 +76,11 @@ class User extends Eloquent implements AuthenticatableContract, AuthorizableCont
         elseif ($user->user_type == "doctor") {
 
             return "doctor";
+            
+        }
+        elseif ($user->user_type == "manager") {
+
+            return "manager";
             
         }
         else {
