@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Appointment;
+use App\User;
 
 use Illuminate\Http\Request;
 
@@ -13,9 +13,9 @@ class AppointmentsController extends Controller
 
 	{
 
-		$appointments = Appointment::all();
+		$users = User::all();
 
-		return view('appointment.index')->with('appointments', $appointments);
+		return view('appointment.index')->with('users', $users);
 
 	}
 

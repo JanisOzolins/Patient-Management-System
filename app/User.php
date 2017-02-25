@@ -22,6 +22,8 @@ class User extends Eloquent implements AuthenticatableContract, AuthorizableCont
 
     protected $collection = "patientcollection";
 
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *

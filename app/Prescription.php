@@ -2,10 +2,12 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
-class Prescription extends Model
+class Prescription extends Eloquent
 {
+	public $timestamps = false;
+
     protected $fillable = [
         'p_name', 'p_expiry', 'p_isRepeat', 'p_details'
         ];

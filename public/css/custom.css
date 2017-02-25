@@ -1,23 +1,15 @@
-.form-control-label {
-    padding-left: 0px;
+@media (min-width: 768px) {
+
+	.mobile-only {
+		display: none !important;
+	}
+
 }
 
-.container-fluid {
-	width: calc(100% - 225px);
-	float: right;
-}
+@media (max-width: 767px) {
 
-.home-cell-bar {
-    background: grey;
-    height: 100px;
-    padding: 0;
-}
+	.desktop-only {
+		display: none !important;
+	}
 
-.home-cell {
-    text-align: center;
-    color: white;
-    font-size: 25px;
-    line-height: 100px;
-    border-right: solid 1px #f5f8fa;
-    padding: 0;
 }

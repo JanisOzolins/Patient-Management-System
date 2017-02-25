@@ -54,17 +54,19 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/appointments', 'AppointmentsController@index')->name('appointment.index');
 
-	Route::get('/appointments/add', function () {
+	Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
+	// Route::get('/appointments/add', function () {
  	
-		return view('appointment.add');
+	// 	return view('appointment.add');
 
-	});
+	// });
 
-	Route::get('/appointments/{appointment}', function () {
+	// Route::get('/appointments/{appointment}', function () {
  	
-		return view('appointment.show');
+	// 	return view('appointment.show');
 
-	});
+	// });
 
 });
 
