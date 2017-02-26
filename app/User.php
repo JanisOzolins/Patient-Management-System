@@ -30,7 +30,7 @@ class User extends Eloquent implements AuthenticatableContract, AuthorizableCont
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'user_type', 'birth_date', 'age', 'email', 'phone', 'address', 'password',
+        '_id', 'first_name', 'last_name', 'user_type', 'birth_date', 'age', 'email', 'phone', 'address', 'password',
     ];
 
     /**
@@ -68,6 +68,8 @@ class User extends Eloquent implements AuthenticatableContract, AuthorizableCont
             return 0;
         }
     }
+
+
 
     public function isStaff($user) {
         if ($user->user_type == "staff") {

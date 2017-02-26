@@ -17,12 +17,12 @@
 @foreach ($users as $user)
 	@foreach ( $user->appointments as $app)
 	<tr>
-		<td>{{ $app->a_patient }}</td>
-        <td>{{ $app->a_patient }}</td>
+		<td>{{ $app->user->first_name }}</td>
+        <td>{{ $app->user->last_name }}</td>
         <td>{{ $app->a_date }}</td>
         <td>{{ $app->a_time }}</td>
         <td>{{ $app->a_details }}</td>
-        <td>Link</td>
+        <td><a href='./appointments/{{ $app->user->id }}/{{ $app->id }}/'>See details</a></td>
     </tr>
 	@endforeach
 @endforeach

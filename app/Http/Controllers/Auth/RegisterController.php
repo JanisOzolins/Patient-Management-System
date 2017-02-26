@@ -55,6 +55,29 @@ class RegisterController extends Controller
         ]);
     }
 
+    public function generateRandomNumber()
+    {
+        do {
+            $randomInt = rand(1000, 9999);
+        } 
+        while ($this->checkUserId($randomInt));
+
+        return $randomInt;
+
+    }
+
+    public function checkUserId($num)
+    {
+        $foundUser = User::find($num);
+
+        if ($foundUser === NULL) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
     /**
      * Create a new user instance after a valid registration.
      *
@@ -63,7 +86,9 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $userObjectID = $this->generateRandomNumber();
         $user = User::create([
+            '_id' => strval($userObjectID),
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'user_type' => $data['user_type'],
