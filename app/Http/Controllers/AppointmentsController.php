@@ -11,23 +11,45 @@ class AppointmentsController extends Controller
 {
     
 	public function index() 
-
 	{
-
 		$users = User::all();
-
-		return view('appointment.index')->with('users', $users);
-
+		return view('appointments.index')->with('users', $users);
 	}
 
-	public function show($uid, $aid) 
-
+	public function create() 
 	{
-		$user = User::find($uid);
-		$appointment = $user->appointments()->get()->where('id', $aid);
+		$users = User::all();
+		return view('appointments.create')->with('users', $users);
+	}
 
-		return view('appointment.show')->with('appointment', $appointment)->with('user', $user);
+	public function store() 
+	{
+		// find the patient model
+		$patient = User::find(request('a_patient_id'));
+
+		// add embedded 'Appointment' instance
+		$appointment = $patient->appointments()->create(['a_patient' => $patient->first_name . ' ' . $patient->last_name, 'a_date' => request('a_date'), 'a_time' => request('a_time'), 'a_details' => request('a_details')]);
+
+		// save changes
+		$patient->save();
+
+		// redirect to /appointments page
+		return redirect('/appointments');
+	}
+
+	public function delete($id) {
 
 	}
+
+
+	// public function show($uid, $aid) 
+
+	// {
+	// 	$user = User::find($uid);
+	// 	$appointment = $user->appointments()->where('id', $aid)->first();
+
+	// 	return view('appointment.show')->with('appointment', $appointment);
+
+	// }
 
 }

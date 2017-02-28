@@ -1,15 +1,89 @@
+body {
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+}
+
+.row {
+	margin: 10px 15px;
+}
+
+/* appointments */
+
+.appointments-table th, .appointments-table td {
+    text-align: center;
+    vertical-align: middle !important;
+}
+
+
+.h1, .h2, .h3, h1, h2, h3 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.profile-info td {
+    border: none !important;
+    padding: 8px 0px !important;
+    text-align: center;
+}
+
+td.attribute-name {
+    font-weight: bold;
+    padding: 4px 0px !important;
+    text-transform: uppercase;
+    background-color: #ececec;
+}
+
+.appointment-info {
+    padding: 5px 15px;
+    margin-bottom: 0px;
+    margin-top: 20px;
+}
+
+.user-left-container {
+    background-color: #fbfbfb;
+    border: 1px solid lightgrey;
+    padding: 20px;
+}
+
+.table-responsive {
+    margin: 20px 0;
+}
+
+/* forms */
+
+label {
+    padding-left: 0 !important;
+}
+
+.form-control {
+    border-radius: 0px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+
+/* on desktops */
 @media (min-width: 768px) {
 
 	.mobile-only {
 		display: none !important;
 	}
 
+	.user-left-container {
+		max-width: 310px;
+	}
+
 }
 
+/* on mobile devices */
 @media (max-width: 767px) {
 
 	.desktop-only {
 		display: none !important;
+	}
+
+	.user-left-container {
+	    text-align: center;
 	}
 
 }

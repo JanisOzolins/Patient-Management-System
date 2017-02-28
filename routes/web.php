@@ -52,9 +52,14 @@ Route::group(['middleware' => 'auth'], function () {
 
 	});
 
-	Route::get('/appointments', 'AppointmentsController@index')->name('appointment.index');
+	Route::get('/appointments', 'AppointmentsController@index')->name('appointments.index');
 
-	Route::get('/appointments/{user_id}/{appointment_id}', 'AppointmentsController@show')->name('appointment.show');
+	Route::post('/appointments', 'AppointmentsController@store');
+
+	Route::get('/appointments/create', 'AppointmentsController@create')->name('appointments.create');
+	Route::delete('/appointments/{id}', 'AppointmentsController@delete');
+
+	Route::get('/user/{user_id}', 'UsersController@show')->name('user.show');
 
 	Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 

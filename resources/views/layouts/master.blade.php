@@ -95,7 +95,7 @@
                     <li><a href="{{ url('/') }}"> Dashboard</a></li>
 
                     <li>
-                        <a href="{{ route('appointment.index') }}"> Appointments</a>
+                        <a href="{{ route('appointments.index') }}"> Appointments</a>
                     </li>
                     
                 </ul>
