@@ -1,6 +1,9 @@
+@font-face { font-family: "Helvetica Neue"; src: url('fonts/helvetica.otf'); } 
+
 body {
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 14px;
+    font-size: 13px;
+    color: #333;
     line-height: 1.42857143;
 }
 
@@ -8,18 +11,38 @@ body {
 	margin: 10px 15px;
 }
 
-/* appointments */
+/* appointments page */
 
 .appointments-table th, .appointments-table td {
     text-align: center;
     vertical-align: middle !important;
 }
 
+.appointments-list .btn {
+    width: 100%;
+}
+
+.app-control-item-container {
+    padding: 5px 10px 10px;
+}
+
+/* font tweaks */
 
 .h1, .h2, .h3, h1, h2, h3 {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+/* user profile page */
+
 .profile-info td {
     border: none !important;
     padding: 8px 0px !important;

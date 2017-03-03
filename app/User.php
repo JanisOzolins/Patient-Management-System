@@ -2,8 +2,6 @@
 
 namespace App;
 
-
-
 use Illuminate\Auth\Authenticatable;
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use Illuminate\Notifications\Notifiable;
@@ -14,11 +12,14 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Jenssegers\Mongodb\Eloquent\HybridRelations;
 use Illuminate\Support\Collection;
+use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 use DateTime;
 
 class User extends Eloquent implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
-    use Notifiable, Authenticatable, Authorizable, CanResetPassword, HybridRelations;
+    use Notifiable, Authenticatable, Authorizable, CanResetPassword, HybridRelations, SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 
     protected $collection = "patientcollection";
 
