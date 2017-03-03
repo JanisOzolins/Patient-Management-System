@@ -97,6 +97,10 @@
                     <li>
                         <a href="{{ route('appointments.index') }}"> Appointments</a>
                     </li>
+
+                    <li>
+                        <a href="{{ route('patients.index') }}"> Patients</a>
+                    </li>
                     
                 </ul>
             </div>

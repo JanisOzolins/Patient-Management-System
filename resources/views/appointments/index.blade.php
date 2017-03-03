@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-
 <div class="row apponitments-controls">
     <div class="col-md-4 app-control-item-container">
      <a href="./appointments/create" class="btn btn-success btn-block" role="button">Create New Appointment</a>

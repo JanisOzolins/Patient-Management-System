@@ -13,11 +13,12 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Jenssegers\Mongodb\Eloquent\HybridRelations;
 use Illuminate\Support\Collection;
 use Jenssegers\Mongodb\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 use DateTime;
 
 class User extends Eloquent implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
-    use Notifiable, Authenticatable, Authorizable, CanResetPassword, HybridRelations, SoftDeletes;
+    use Notifiable, Authenticatable, Authorizable, CanResetPassword, HybridRelations, SoftDeletes, Searchable;
 
     protected $dates = ['deleted_at'];
 
@@ -67,6 +68,20 @@ class User extends Eloquent implements AuthenticatableContract, AuthorizableCont
         {
             return 0;
         }
+    }
+
+
+    public function searchUsers($query, $keyword)
+    {
+        if ($keyword!='') {
+            $query->where(function ($query) use ($keyword) {
+                $query->where("name", "LIKE","%$keyword%")
+                    ->orWhere("email", "LIKE", "%$keyword%")
+                    ->orWhere("blood_group", "LIKE", "%$keyword%")
+                    ->orWhere("phone", "LIKE", "%$keyword%");
+            });
+        }
+        return $query;
     }
 
 

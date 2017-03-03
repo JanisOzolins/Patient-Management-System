@@ -62,6 +62,21 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/user/{user_id}', 'UsersController@show')->name('user.show');
 
+	Route::any('/patients',function(){
+	    $q = Input::get ( 'q' );
+	    $user = App\User::where('first_name','LIKE','%'.$q.'%')
+	    				->orWhere('last_name','LIKE','%'.$q.'%')
+	    				->orWhere('birth_date','LIKE','%'.$q.'%')
+	    				->orWhere('phone','LIKE','%'.$q.'%')
+	    				->orWhere('email','LIKE','%'.$q.'%')->get();
+	    if(count($user) > 0)
+	    	return view('patients.index')->withDetails($user)->withQuery ( $q );
+    	else {
+			$users = App\User::paginate(15);
+    		return view ('patients.index')->with('users', $users)->withMessage('No Details found. Try to search again !');
+    	}
+	})->name('patients.index');
+
 	Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 	// Route::get('/appointments/add', function () {

@@ -3,6 +3,7 @@
 @section('content')
 
 <div class="row">
+<a href="{{ url()->previous() }}" class="btn btn-default">Back</a>
 	<div class="col-md-6 col-sm-offset-3">
 		<form class="form-horizontal" role="form" method="post" action="/user/{{ $appointment->user->id }}/appointments/{{ $appointment->id }}"> 
                         <div class="col-md-8 col-md-offset-2">

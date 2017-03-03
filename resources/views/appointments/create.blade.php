@@ -3,23 +3,20 @@
 @section('content')
 
 <div class="row">
+<a href="{{ url()->previous() }}" class="btn btn-default">Back</a>
 	<div class="col-md-6 col-sm-offset-3">
 		<form class="form-horizontal" role="form" method="POST" action="/appointments"> 
                         <div class="col-md-8 col-md-offset-2">
 
                         	 {{ csrf_field() }}
 
-                             {{ method_field('PUT') }}
-
                         	<div class="form-group{{ $errors->has('a_patient_id') ? ' has-error' : '' }}">
                                 <label for="a_patient_id" class="col-md-4 form-control-label">Patient</label>
-
                                     <select class="form-control" id="a_patient_id" name="a_patient_id" required >
                                     @foreach($users as $user)
                                     		<option value="{{ $user->id}}">{{ $user->first_name }} {{ $user->last_name }}</option>
                                     @endforeach	
                                     </select>
-
                                     @if ($errors->has('a_patient_id'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('a_patient_id') }}</strong>

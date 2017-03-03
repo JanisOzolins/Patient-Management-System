@@ -12,7 +12,7 @@ class UsersController extends Controller
 
     	$user = User::find($id);
 
-    	return view('patient.show')->with('user', $user);
+    	return view('patients.show')->with('user', $user);
 
     }
 }
