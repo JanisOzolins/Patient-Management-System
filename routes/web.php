@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 		if(Auth::user()->user_type == "doctor") {
 			$users = App\User::orderBy('last_name', 'asc')->get();
-			return view('doctor.home')->with('users', $users);
+			return view('doctors.home')->with('users', $users);
 		}
 
 		///// STAFF HOME
@@ -41,13 +41,13 @@ Route::group(['middleware' => 'auth'], function () {
 
 		elseif(Auth::user()->user_type == "patient") {
 			$test = "hey";
-			return view('patient.home')->with('test', $test);
+			return view('patients.home')->with('test', $test);
 		}
 
 		///// MANAGER HOME
 
 		elseif(Auth::user()->user_type == "manager") {
-			return view('manager.home');
+			return view('managers.home');
 		}
 
 	});
@@ -60,17 +60,18 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('user/{uid}/appointments/{aid}/edit', 'AppointmentsController@edit')->name('appointments.edit');
 	Route::put('user/{uid}/appointments/{aid}', 'AppointmentsController@update')->name('appointments.update');
 
+
 	Route::get('/user/{user_id}', 'UsersController@show')->name('user.show');
 
 	Route::any('/patients',function(){
 	    $q = Input::get ( 'q' );
-	    $user = App\User::where('first_name','LIKE','%'.$q.'%')
+	    $users = App\User::where('first_name','LIKE','%'.$q.'%')
 	    				->orWhere('last_name','LIKE','%'.$q.'%')
 	    				->orWhere('birth_date','LIKE','%'.$q.'%')
 	    				->orWhere('phone','LIKE','%'.$q.'%')
-	    				->orWhere('email','LIKE','%'.$q.'%')->get();
-	    if(count($user) > 0)
-	    	return view('patients.index')->withDetails($user)->withQuery ( $q );
+	    				->orWhere('email','LIKE','%'.$q.'%')->paginate(15);
+	    if(count($users) > 0)
+	    	return view('patients.index')->with('users', $users)->withQuery ( $q );
     	else {
 			$users = App\User::paginate(15);
     		return view ('patients.index')->with('users', $users)->withMessage('No Details found. Try to search again !');

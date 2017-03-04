@@ -13,12 +13,11 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Jenssegers\Mongodb\Eloquent\HybridRelations;
 use Illuminate\Support\Collection;
 use Jenssegers\Mongodb\Eloquent\SoftDeletes;
-use Laravel\Scout\Searchable;
 use DateTime;
 
 class User extends Eloquent implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
-    use Notifiable, Authenticatable, Authorizable, CanResetPassword, HybridRelations, SoftDeletes, Searchable;
+    use Notifiable, Authenticatable, Authorizable, CanResetPassword, HybridRelations, SoftDeletes;
 
     protected $dates = ['deleted_at'];
 

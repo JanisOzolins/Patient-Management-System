@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Appointment;
+use Input;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -13,9 +14,38 @@ class AppointmentsController extends Controller
     
 	public function index() 
 	{
-		$users = User::all();
-		return view('appointments.index')->with('users', $users);
+		$q = Input::get ( 'q' );
+	    if($q != NULL) {
+	    	$users = $this->search($q);
+	    	$userz = User::all();
+	    	return view('appointments.index')->with('users', $users);
+	    }
+	    else { 
+			$users = User::all();
+			return view('appointments.index')->with('users', $users);
+		}
+
+    		
 	}
+
+	public function search($q) 
+	{
+		$users = User::all();
+
+	    $new = $users->filter(function($user) use ($q)
+	    {
+	    	if( stripos($user->first_name, $q) !== FALSE )
+	    		return $user;
+	    	if( stripos($user->last_name, $q) !== FALSE )
+	    		return $user;
+	    	if( stripos($user->birth_date, $q) !== FALSE )
+	    		return $user;
+	        
+	    });
+
+    	return $new;
+	}
+	
 
 	public function create() 
 	{
@@ -25,6 +55,11 @@ class AppointmentsController extends Controller
 
 	public function store() 
 	{
+		$q = Input::get ( 'q' );
+	    if($q != NULL) 
+	    	return $q;
+
+
 		// find the user
 		$user = User::find(request('a_patient_id'));
 

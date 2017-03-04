@@ -3,13 +3,11 @@
 @section('content')
 <div class="row apponitments-controls">
     <div class="col-md-4 app-control-item-container">
-     <a href="./appointments/create" class="btn btn-success btn-block" role="button">Create New Appointment</a>
- </div>
- <div class="col-md-4 app-control-item-container">
-     <a href="./appointments/search" class="btn btn-primary btn-block disabled" role="button">Find Appointment</a>
- </div>
- <div class="col-md-4 app-control-item-container"></div>
-</div>
+        <a href="./appointments/create" class="btn btn-success btn-block" role="button">Create New Appointment</a>
+    </div>
+    <div class="col-md-8 app-control-item-container">
+    @include('appointments.search')
+    </div>
 <div class="row appointments-list">
     <table class="table table-sm table-bordered table-hover appointments-table">
         <thead>
