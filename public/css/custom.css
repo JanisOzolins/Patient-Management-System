@@ -41,6 +41,10 @@ body {
     font-weight: bold;
 }
 
+.center {
+    text-align: center;
+}
+
 /* user profile page */
 
 .profile-info td {
@@ -95,6 +99,11 @@ label {
 	.user-left-container {
 		max-width: 310px;
 	}
+
+    .user-right-container {
+        width: 100%;
+        max-width: calc(100% - 310px);
+    }
 
 }
 

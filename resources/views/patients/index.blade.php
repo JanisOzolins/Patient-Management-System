@@ -1,7 +1,9 @@
 @extends('layouts.master')
 
 @section('content')
-
+<div class="row">
+    <h2 class="uppercase bold center">Patients</h2>
+</div>
 <div class="row apponitments-controls">
     <div class="col-md-4 app-control-item-container">
        <a href="./register" class="btn btn-success btn-block" role="button">Add New Patient</a>
@@ -11,7 +13,7 @@
     </div>
 </div>
 <div class="row appointments-list">
-    <table class="table table-sm table-bordered table-hover appointments-table">
+    <table class="table table-responsive table-sm table-bordered table-hover appointments-table">
         <thead>
           <tr>
             <th class="col-md-1">See Profile</th>

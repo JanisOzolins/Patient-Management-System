@@ -3,40 +3,40 @@
 @section('content')
 <div class="row">
   	<div class="col-md-4  user-left-container">
-  		<img class="img-thumbnail" src="http://placehold.it/300x300" alt="">
-
-  		<div class="tab-content">
-            <div class="tab-pane active" id="wars">
-              	<div class="table-responsive profile-info">
-                	<table class="table">
-                  <tbody id="items">
-                    <tr><td class="attribute-name">Full Name</td></tr>
-                    <tr><td>{{ $user->first_name }} {{ $user->last_name }}</td></tr>
-
-                    <tr><td class="attribute-name">Date of Birth</td></tr>
-                    <tr><td>{{ $user->birth_date }}</td></tr>
-                	<tr>
-                    	<td class="attribute-name">Age</td></tr>
-                    	<tr><td>{{ $user->age }}</td>
-                	</tr>
-                	<tr>
-                    	<td class="attribute-name">Address</td></tr>
-                    	<tr><td>{{ $user->address }}</td>
-                	</tr>
-                	<tr>
-                    	<td class="attribute-name">Email</td></tr>
-                    	<tr><td>{{ $user->email }}</td>
-                	</tr>
-                	<tr>
-                    	<td class="attribute-name">Phone</td></tr>
-                    	<tr><td>{{ $user->phone }}</td>
-                	</tr>
-                  </tbody>
-                </table>
-            	</div>
-            </div>
-        </div>
+        @include('patients.sidebar')
 	</div>
+    <div class="col-md-8  user-right-container">
+        <div class="well">
+            <h2 class="bold uppercase">Health Information</h2>
+            @if(count($user->conditions))
+                @foreach ($user->conditions as $condition)
+                    {{ $condition-> a_date }} --- {{ $condition-> a_time }} --- {{ $condition-> a_details }}
+                @endforeach
+            @else
+                <p>There are no future appointments scheduled for this patient.</p>
+            @endif
+        </div>
+        <div class="well">
+            <h2 class="bold uppercase">Upcoming Appointments</h2>
+            @if(count($user->appointments))
+                @foreach ($user->appointments as $appointment)
+                    {{ $appointment-> a_date }} --- {{ $appointment-> a_time }} --- {{ $appointment-> a_details }}
+                @endforeach
+            @else
+                <p>There are no future appointments scheduled for this patient.</p>
+            @endif
+        </div>
+        <div class="well">
+            <h2 class="bold uppercase">Prescriptions</h2>
+            @if(count($user->appointments))
+                @foreach ($user->appointments as $appointment)
+                    {{ $appointment-> a_date }} --- {{ $appointment-> a_time }} --- {{ $appointment-> a_details }}
+                @endforeach
+            @else
+                <p>There are no future appointments scheduled for this patient.</p>
+            @endif
+        </div>
+    </div>
 </div>
 <div style="text-align: center" class="col-md-4">
 <!-- 
