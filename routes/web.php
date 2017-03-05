@@ -52,6 +52,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	});
 
+	// Appointments
 	Route::get('/appointments', 'AppointmentsController@index')->name('appointments.index');
 	Route::post('/appointments', 'AppointmentsController@store')->name('appointments.store');
 	Route::get('/appointments/create', 'AppointmentsController@create')->name('appointments.create');
@@ -60,9 +61,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('user/{uid}/appointments/{aid}/edit', 'AppointmentsController@edit')->name('appointments.edit');
 	Route::put('user/{uid}/appointments/{aid}', 'AppointmentsController@update')->name('appointments.update');
 
-
-	Route::get('/user/{user_id}', 'UsersController@show')->name('user.show');
-
+	// Patients
+	Route::get('/user/{id}/', 'UsersController@show')->name('user.show');
 	Route::any('/patients',function(){
 	    $q = Input::get ( 'q' );
 	    $users = App\User::where('first_name','LIKE','%'.$q.'%')
@@ -77,6 +77,10 @@ Route::group(['middleware' => 'auth'], function () {
     		return view ('patients.index')->with('users', $users)->withMessage('No Details found. Try to search again !');
     	}
 	})->name('patients.index');
+
+	// Conditions
+	Route::get('/user/{id}/conditions/create', 'ConditionsController@create')->name('conditions.create');
+	Route::post('/conditions', 'ConditionsController@store')->name('conditions.store');
 
 	Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 

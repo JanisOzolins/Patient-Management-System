@@ -17,7 +17,6 @@ class AppointmentsController extends Controller
 		$q = Input::get ( 'q' );
 	    if($q != NULL) {
 	    	$users = $this->search($q);
-	    	$userz = User::all();
 	    	return view('appointments.index')->with('users', $users);
 	    }
 	    else { 
@@ -39,8 +38,7 @@ class AppointmentsController extends Controller
 	    	if( stripos($user->last_name, $q) !== FALSE )
 	    		return $user;
 	    	if( stripos($user->birth_date, $q) !== FALSE )
-	    		return $user;
-	        
+	    		return $user;        
 	    });
 
     	return $new;
@@ -55,11 +53,6 @@ class AppointmentsController extends Controller
 
 	public function store() 
 	{
-		$q = Input::get ( 'q' );
-	    if($q != NULL) 
-	    	return $q;
-
-
 		// find the user
 		$user = User::find(request('a_patient_id'));
 

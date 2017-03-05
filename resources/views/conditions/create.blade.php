@@ -1,83 +1,75 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
-<div class="container">
-	<div class="row">
-	    <a href="{{ url()->previous() }}" class="btn btn-default">Back</a>
-	    <div class="col-md-6 col-sm-offset-3">
-			<form class="form-horizontal" role="form" method="POST" action="/appointments"> 
-	            <div class="col-md-8 col-md-offset-2">
-	            	{{ csrf_field() }}
 
-	            	<!-- name of the condition -->
 
-	            	<div class="form-group{{ $errors->has('a_patient_id') ? ' has-error' : '' }}">
-	                    <label for="a_patient_id" class="col-md-4 form-control-label">Patient</label>
-	                        <select class="form-control" id="a_patient_id" name="a_patient_id" required >
-	                            @foreach($users as $user)
-	                            		<option value="{{ $user->id}}">{{ $user->first_name }} {{ $user->last_name }}</option>
-	                            @endforeach	
-	                        </select>
-	                        @if ($errors->has('a_patient_id'))
-	                            <span class="help-block">
-	                                <strong>{{ $errors->first('a_patient_id') }}</strong>
-	                            </span>
-	                        @endif
-	                </div>
+<div class="padded row">
+    <a href="{{ url()->previous() }}" class="btn btn-default">Back</a>
+    <div class="col-md-6 col-sm-offset-3">
+		<form class="form-horizontal" role="form" method="POST" action="/conditions"> 
+            <div class="col-md-8 col-md-offset-2">
+            	{{ csrf_field() }}
 
-	                <!-- has it been treated yet -->
-	                
-	                <div class="form-group{{ $errors->has('a_date') ? ' has-error' : '' }}">
-	                    <label for="a_date" class="col-md-4 form-control-label">Date:</label>
-	                        <input id="a_date" type="date" class="form-control form-control-success" name="a_date" required autofocus>
-	                        @if ($errors->has('a_date'))
-	                            <span class="help-block">
-	                                <strong>{{ $errors->first('a_date') }}</strong>
-	                            </span>
-	                        @endif
-	                </div>
+            	<input type="hidden" name="c_user_id" value="{{ $user->id }}">
 
-	                <!-- date of diagnosis -->
+            	<div class="form-group{{ $errors->has('c_name') ? ' has-error' : '' }}">
+                    <label for="c_name" class="col-md-4 form-control-label">Condition Name</label>
+                    <input id="c_name" type="text" class="form-control form-control-success" name="c_name" required autofocus>
+                    @if ($errors->has('c_name'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('c_name') }}</strong>
+                        </span>
+                    @endif
+                </div>
+                
+                <div class="form-group{{ $errors->has('c_diagnosed_at') ? ' has-error' : '' }}">
+                    <label for="c_diagnosed_at" class="col-md-12 form-control-label">Date diagnosed:</label>
+                        <input id="c_diagnosed_at" type="date" class="form-control form-control-success" name="c_diagnosed_at" required>
+                        @if ($errors->has('c_diagnosed_at'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('c_diagnosed_at') }}</strong>
+                            </span>
+                        @endif
+                </div>
 
-	                <div class="form-group{{ $errors->has('a_time') ? ' has-error' : '' }}">
-	                    <label for="a_time" class="col-md-4 form-control-label">Time:</label>
-	                        <select class="form-control" id="a_time" name="a_time" required >
-	                        		<option value="9:00">9:00</option>
-	                        		<option value="9:30">9:30</option>
-	                        		<option value="10:00">10:00</option>
-	                        		<option value="10:30">10:30</option>
-	                        		<option value="11:00">11:00</option>
-	                        		<option value="11:30">11:30</option>
-	                        </select>
-	                        @if ($errors->has('a_time'))
-	                            <span class="help-block">
-	                                <strong>{{ $errors->first('a_time') }}</strong>
-	                            </span>
-	                        @endif
-	                </div>
+                <div class="form-group{{ $errors->has('c_isTreated') ? ' has-error' : '' }}">
+                	<label for="c_isTreated" class="col-md-12 form-control-label">Has it been treated yet?</label>
+                	<div class="row padded">
+                	<div class="radio col-md-12">
+                    	<label class="radio-inline"> <input type="radio" name="c_isTreated" id="conditions-yes" value="Yes"> Yes </label> 
+                    </div>
+                    <div class="radio col-md-12">
+                    	<label class="radio-inline"> <input type="radio" name="c_isTreated" id="conditions-no" value="No"> No </label>
+                    </div>
+                    <div class="radio col-md-12">
+                    	<label class="radio-inline"> <input type="radio" name="c_isTreated" id="conditions-unknown" value="Unknown" checked> Unknown </label>
+                    </div>
+                    </div>
+                    @if ($errors->has('c_isTreated'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('c_isTreated') }}</strong>
+                        </span>
+                    @endif
+                </div>
 
-	                <!-- detailed information about the condition -->
+                <div class="form-group{{ $errors->has('c_details') ? ' has-error' : '' }}">
+                    <label for="c_details" class="col-md-4 form-control-label">Details:</label>
+                        <textarea id="c_details" class="form-control" name="c_details" rows="3"></textarea>
+                        @if ($errors->has('c_details'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('c_details') }}</strong>
+                            </span>
+                        @endif
+                </div>
 
-	                <div class="form-group{{ $errors->has('a_details') ? ' has-error' : '' }}">
-	                    <label for="a_details" class="col-md-4 form-control-label">Details:</label>
-	                        <input id="a_details" type="text" class="form-control" name="a_details" required autofocus>
-	                        @if ($errors->has('a_details'))
-	                            <span class="help-block">
-	                                <strong>{{ $errors->first('a_details') }}</strong>
-	                            </span>
-	                        @endif
-	                </div>
-
-	                <!-- submit button -->
-
-	                <div class="form-group">
-	                    <div class="col-md-6 col-md-offset-4">
-	                        <button type="submit" class="btn btn-primary">Register</button>
-	                    </div>
-	                </div>
-	            </div>  
-	        </form>
-		</div>	
-	</div>
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-4">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>  
+        </form>
+	</div>	
 </div>
+
 @endsection

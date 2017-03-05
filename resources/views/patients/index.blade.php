@@ -1,50 +1,52 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="row">
-    <h2 class="uppercase bold center">Patients</h2>
-</div>
-<div class="row apponitments-controls">
-    <div class="col-md-4 app-control-item-container">
-       <a href="./register" class="btn btn-success btn-block" role="button">Add New Patient</a>
+<div class="container-fluid patients-page">
+    <div class="row">
+        <h2 class="uppercase bold center">Patients</h2>
     </div>
-    <div class="col-md-8 app-control-item-container">
-        @include('patients.search')
+    <div class="row patients-controls">
+        <div class="col-md-4 patients-control-item-container">
+           <a href="./register" class="btn btn-success btn-block" role="button">Add New Patient</a>
+        </div>
+        <div class="col-md-8 patients-control-item-container">
+            @include('patients.search')
+        </div>
     </div>
-</div>
-<div class="row appointments-list">
-    <table class="table table-responsive table-sm table-bordered table-hover appointments-table">
-        <thead>
-          <tr>
-            <th class="col-md-1">See Profile</th>
-            <th class="col-md-2">First Name</th>
-            <th class="col-md-2">Last Name</th>
-            <th class="col-md-1">Date of Birth</th>
-            <th class="col-md-1">Email</th>
-            <th class="col-md-3">Phone</th>
-            <th class="col-md-1">Edit</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($users as $user)
-        <tr>
-            <td>
-                <a href='./user/{{ $user->id }}'>Profile</a>
-            </td>
-            <td>{{ $user->first_name }}</td>
-            <td>{{ $user->last_name }}</td>
-            <td>{{ $user->birth_date }}</td>
-            <td>{{ $user->email }}</td>
-            <td>{{ $user->phone }}</td>
-            <td>
-                <a href="#" method="GET" class="btn btn-primary btn-sm">Edit</a>
-            </td>
-        </tr>
-        @endforeach
+    <div class="row patients-list">
+        <table class="table table-responsive table-sm table-bordered table-hover patients-table">
+            <thead>
+              <tr>
+                <th class="col-md-1">See Profile</th>
+                <th class="col-md-2">First Name</th>
+                <th class="col-md-2">Last Name</th>
+                <th class="col-md-1">Date of Birth</th>
+                <th class="col-md-1">Email</th>
+                <th class="col-md-3">Phone</th>
+                <th class="col-md-1">Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($users as $user)
+            <tr>
+                <td>
+                    <a href='./user/{{ $user->id }}'>Profile</a>
+                </td>
+                <td>{{ $user->first_name }}</td>
+                <td>{{ $user->last_name }}</td>
+                <td>{{ $user->birth_date }}</td>
+                <td>{{ $user->email }}</td>
+                <td>{{ $user->phone }}</td>
+                <td>
+                    <a href="#" method="GET" class="btn btn-primary btn-sm">Edit</a>
+                </td>
+            </tr>
+            @endforeach
 
-    {{ $users->links() }}
-    </tbody>
-</table>
+        {{ $users->links() }}
+        </tbody>
+    </table>
+    </div>
 </div>
 @endsection	
 
