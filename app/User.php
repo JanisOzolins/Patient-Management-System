@@ -19,28 +19,14 @@ class User extends Eloquent implements AuthenticatableContract, AuthorizableCont
 {
     use Notifiable, Authenticatable, Authorizable, CanResetPassword, HybridRelations, SoftDeletes;
 
+    // enable soft delete timestamp
     protected $dates = ['deleted_at'];
-
+    // specify database collection
     protected $collection = "patientcollection";
-
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        '_id', 'first_name', 'last_name', 'user_type', 'birth_date', 'age', 'email', 'phone', 'address', 'password',
-    ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    // specify mass-assignable fields
+    protected $fillable = ['_id', 'first_name', 'last_name', 'user_type', 'birth_date', 'age', 'email', 'phone', 'address', 'password'];
+    // specify protected fields
+    protected $hidden = ['password', 'remember_token'];
 
     public function conditions()
     {
@@ -52,21 +38,9 @@ class User extends Eloquent implements AuthenticatableContract, AuthorizableCont
         return $this->embedsMany('App\Appointment', 'appointment');
     }
 
-    public function calculateAge($user) 
+    public function notes()
     {
-        $dob = $user->birth_date;
-
-        if(!empty($dob))
-        {
-            $birthdate = new DateTime($dob);
-            $today   = new DateTime('today');
-            $age = $birthdate->diff($today)->y;
-            return $age;
-        }
-        else
-        {
-            return 0;
-        }
+        return $this->embedsMany('App\Note', 'note');
     }
 
 
@@ -76,7 +50,7 @@ class User extends Eloquent implements AuthenticatableContract, AuthorizableCont
             $query->where(function ($query) use ($keyword) {
                 $query->where("name", "LIKE","%$keyword%")
                     ->orWhere("email", "LIKE", "%$keyword%")
-                    ->orWhere("blood_group", "LIKE", "%$keyword%")
+                    ->orWhere("birth_date", "LIKE", "%$keyword%")
                     ->orWhere("phone", "LIKE", "%$keyword%");
             });
         }

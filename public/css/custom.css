@@ -103,6 +103,12 @@ h3.panel-title {
     line-height: 20px;
 }
 
+.doctor-notes {
+    background-color: #fff;
+    border-radius: 0px;
+    border: 1px solid #b1b1b1;
+}
+
 /* forms */
 
 label {

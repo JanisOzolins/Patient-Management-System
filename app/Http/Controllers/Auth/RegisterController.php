@@ -78,12 +78,22 @@ class RegisterController extends Controller
         }
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
+    // calculates person's age upon registration
+    public function calculateAge($user) 
+    {
+        $dob = $user->birth_date;
+
+        if(!empty($dob)) 
+        {
+            $birthdate = new DateTime($dob);
+            $today   = new DateTime('today');
+            $age = $birthdate->diff($today)->y;
+            return $age;
+        }
+        else
+            return 0;
+    }
+
     protected function create(array $data)
     {
         $userObjectID = $this->generateRandomNumber();
@@ -99,7 +109,7 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
 
-        $age = $user->calculateAge($user);
+        $age = $this->calculateAge($user);
         $user->age = $age;
 
         $one = $user->appointments()->create(['a_patient' => $user->first_name . $user->first_name, 'a_date' => '2017-06-06', 'a_time' => '19:00']);

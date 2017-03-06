@@ -6,6 +6,22 @@
         @include('patients.sidebar')
 	</div>
     <div class="col-md-8 user-right-container">
+
+    
+
+        <div class="row well">
+            <h2 class="bold uppercase">Doctor Notes</h2>
+                @include('helpers.note-modal')
+                @if(count($user->notes))
+                    @foreach ($user->notes as $note)
+                        @if(isset($note->n_content))
+                            <div class="well well-sm doctor-notes"> {{ $note->n_content }} </div>
+                        @endif
+                    @endforeach
+                @else
+                    <p>There are no added conditions for this patient.</p>
+                @endif
+        </div>
         <div class="row well">
             <h2 class="bold uppercase">Health Information</h2>
                 <a href="/user/{{ $user->id }}/conditions/create" class="btn btn-success">Add Condition</a>

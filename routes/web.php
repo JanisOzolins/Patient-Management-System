@@ -62,7 +62,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('user/{uid}/appointments/{aid}', 'AppointmentsController@update')->name('appointments.update');
 
 	// Patients
-	Route::get('/user/{id}/', 'UsersController@show')->name('user.show');
+	Route::get('/user/{id}', 'UsersController@show')->name('user.show');
 	Route::any('/patients',function(){
 	    $q = Input::get ( 'q' );
 	    $users = App\User::where('first_name','LIKE','%'.$q.'%')
@@ -81,6 +81,10 @@ Route::group(['middleware' => 'auth'], function () {
 	// Conditions
 	Route::get('/user/{id}/conditions/create', 'ConditionsController@create')->name('conditions.create');
 	Route::post('/conditions', 'ConditionsController@store')->name('conditions.store');
+
+	// Notes
+	Route::get('/user/{id}/notes/create', 'NotesController@create')->name('notes.create');
+	Route::post('/notes', 'NotesController@store')->name('notes.store');
 
 	Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
