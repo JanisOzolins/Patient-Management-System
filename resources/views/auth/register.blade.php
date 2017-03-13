@@ -57,6 +57,22 @@
                                     @endif
                             </div>
 
+                            <div class="form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
+                                <label for="gender" class="col-md-4 form-control-label">Gender/label>
+
+                                    <select class="form-control" id="gender" name="gender" value="{{ old('gender') }}" required >
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+
+                                    @if ($errors->has('gender'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('gender') }}</strong>
+                                        </span>
+                                    @endif
+                            </div>
+
                              <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                                 <label for="address" class="col-md-4 form-control-label">Full Address</label>
 

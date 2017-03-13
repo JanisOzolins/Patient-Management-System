@@ -81,39 +81,22 @@ Route::group(['middleware' => 'auth'], function () {
 	// Conditions
 	Route::get('/user/{id}/conditions/create', 'ConditionsController@create')->name('conditions.create');
 	Route::post('/conditions', 'ConditionsController@store')->name('conditions.store');
+	Route::delete('user/{uid}/conditions/{cid}', 'ConditionsController@delete')->name('conditions.delete');
 
 	// Notes
-	Route::get('/user/{id}/notes/create', 'NotesController@create')->name('notes.create');
 	Route::post('/notes', 'NotesController@store')->name('notes.store');
+	Route::delete('/user/{uid}/notes/{nid}', 'NotesController@delete')->name('notes.delete');
+
+	// Prescriptions
+	Route::post('/prescriptions', 'PrescriptionsController@store')->name('prescriptions.store');
+	Route::delete('/user/{uid}/prescriptions/{pid}', 'PrescriptionsController@delete')->name('prescriptions.delete');
 
 	Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
-	// Route::get('/appointments/add', function () {
- 	
-	// 	return view('appointment.add');
-
-	// });
-
-	// Route::get('/appointments/{appointment}', function () {
- 	
-	// 	return view('appointment.show');
-
-	// });
 
 });
 
 
-// Route::group(['middleware' => 'patient'], function () {
-
-// 	Route::get('/', function () {
-
-// 		$test = 'tooo maamaa';
-
-// 		return view('patient.home')->with('test', $test);
-
-// 	});
-
-// });
 
 Auth::routes();
 

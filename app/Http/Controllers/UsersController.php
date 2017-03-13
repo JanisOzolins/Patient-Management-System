@@ -12,7 +12,13 @@ class UsersController extends Controller
 
     	$user = User::find($id);
 
-    	return view('patients.show')->with('user', $user);
+    	$prescriptions = $user->prescriptions;
+
+    	$appointments = $user->appointments->sortBy('a_time');
+
+    	//dd($prescriptions);
+
+    	return view('patients.show')->with('user', $user)->with('prescriptions', $prescriptions)->with('appointments', $appointments);
 
     }
 }

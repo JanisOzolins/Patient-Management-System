@@ -7,11 +7,9 @@ use Jenssegers\Mongodb\Eloquent\SoftDeletes;
 
 class Note extends Eloquent
 {
-	use SoftDeletes;
 
-	// enable soft delete timestamp
-	protected $dates = ['deleted_at'];
 	// specify mass-assignable fields
-    protected $fillable = ['n_content']; 
+    protected $fillable = ['n_content', 'n_author']; 
+
 
 }

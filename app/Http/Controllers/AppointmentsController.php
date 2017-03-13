@@ -56,14 +56,26 @@ class AppointmentsController extends Controller
 		// find the user
 		$user = User::find(request('a_patient_id'));
 
+		if ($user->appointments()->find(request('a_app_id')) != NULL) // checks if appointment needs to be updated instead of created
+		{
+			$appointment = $user->appointments()->find(request('a_app_id'));
+
+			$appointment->a_time = request('a_time');
+			$appointment->a_date = request('a_date');
+			$appointment->a_details = request('a_details');
+
+			$appointment->save();
+
+			return redirect('/user/' . request('a_patient_id'));
+		}
+
 		// add embedded 'Appointment' instance
 		$appointment = $user->appointments()->create(['a_patient' => $user->first_name . ' ' . $user->last_name, 'a_date' => request('a_date'), 'a_time' => request('a_time'), 'a_details' => request('a_details')]);
 
 		// save changes
 		$user->save();
 
-		// redirect to /appointments page
-		return redirect('/appointments');
+		return redirect('/user/' . request('a_patient_id'));
 	}
 
 	public function delete($uid, $aid) {
@@ -80,18 +92,9 @@ class AppointmentsController extends Controller
 		// save changes
 		$user->save();
 
-		// redirect to /appointments page
-		return Redirect::route('appointments.index');
+		return redirect('/user/' . $uid);
 
 	}
-
-	// public function show($uid, $aid) {
-	// 	$user = User::find($uid);
-	// 	$appointment = $user->appointments()->where('id', $aid)->first();
-
-	// 	return view('appointments.show')->with('appointment', $appointment);
-
-	// }
 
 	public function edit($uid, $aid) {
 
@@ -102,11 +105,11 @@ class AppointmentsController extends Controller
 		$appointment = $user->appointments()->find($aid);
 
 		// return variables to the "edit" view
-		return view('appointments.edit')->with('appointment', $appointment);
+		return view('appointments.edit')->with('user', $user)->with('appointment', $appointment);
 
 	}
 
-	public function update($uid, $aid) {
+	public function update($uid, $aid, $request) {
 
 		// find the user
 		$user = User::find($uid);
@@ -115,12 +118,12 @@ class AppointmentsController extends Controller
 		$appointment = $user->appointments()->find($aid);
 
 		// update data
-		$appointment->a_time = request('a_time');
-		$appointment->a_date = request('a_date');
-		$appointment->a_details = request('a_details');
+		$appointment->a_time = $request['a_time'];
+		$appointment->a_date = $request['a_date'];
+		$appointment->a_details = $request['a_details'];
 
 		$appointment->save();
 
-		return Redirect::route('appointments.index');
+		return redirect('/user/' . $uid);
  	}
 }

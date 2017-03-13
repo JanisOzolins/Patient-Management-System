@@ -43,6 +43,13 @@ class User extends Eloquent implements AuthenticatableContract, AuthorizableCont
         return $this->embedsMany('App\Note', 'note');
     }
 
+    public function prescriptions()
+    {
+        return $this->embedsMany('App\Prescription', 'prescription');
+    }
+
+
+
 
     public function searchUsers($query, $keyword)
     {
