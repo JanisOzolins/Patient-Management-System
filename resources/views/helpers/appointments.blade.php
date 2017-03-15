@@ -1,10 +1,10 @@
 <?php $appNum = 1; ?>
-@foreach ($appointments as $appointment)
+@foreach ($user->appointments as $appointment)
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">
       <div class="title-bar">
-        <a class="panel-title">Appointment {{ $appNum++ }}</a>
+        <a href="/user/{{ $appointment->user->id }}/appointments/{{ $appointment->id }}/" class="panel-title">Appointment {{ $appNum++ }}</a>
         {{ Form::open(['method' => 'DELETE', 'class' => 'delete-form', 'route' => ['appointments.delete', $appointment->user->id, $appointment->id]]) }}
         {{ Form::button('<i class="fa fa-times" aria-hidden="true"></i>', ['class' => 'btn btn-danger btn-xs user-profile-icon', 'type' => 'submit']) }}
         {{ Form::close() }}
@@ -29,6 +29,7 @@
   <strong>Date: </strong>{{ $appointment-> a_date }}<br>
   <strong>Time: </strong>{{ $appointment-> a_time }}<br>
   <strong>Details: </strong>{{ $appointment-> a_details }}
+
 </div>
 </div>
 @endforeach

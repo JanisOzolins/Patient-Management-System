@@ -1,7 +1,6 @@
 <!-- Button trigger modal -->
-<h2 class="bold uppercase prescriptions-title">Prescriptions</h2>
 <div class="prescriptions-controls">
-<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#prescriptionModal">
+<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#prescriptionsModal">
     New Prescription
 </button>
 </div>
@@ -20,9 +19,9 @@
                     <div class="col-md-12">
                         <form id="prescriptions-form" class="form-horizontal" role="form" method="POST" action="/prescriptions"> 
                             {{ csrf_field() }}
-                            <input type="hidden" id="p_patient_id" name="p_patient_id" value="{{ $user->id }}">
-                            <input type="hidden" id="p_prescription_id" name="p_prescription_id">
-                            <!-- Prescribed By -->
+                                <input type="hidden" id="patient_id" name="patient_id" value="{{ $user->id }}">
+                                <input type="hidden" id="appointment_id" name="appointment_id" value="{{ $appointment->id }}">
+                            <input type="hidden" id="prescription_id" name="prescription_id">
                             <!-- Prescription Name -->
                             <div class="form-group{{ $errors->has('p_name') ? ' has-error' : '' }}">
                                 <label for="p_name" class="col-md-4 form-control-label">Prescription name: </label>
@@ -37,9 +36,11 @@
                             <div class="form-group{{ $errors->has('p_condition') ? ' has-error' : '' }}">
                                 <label for="p_condition" class="col-md-4 form-control-label">Associated condition: </label>
                                     <select class="form-control" id="p_condition" name="p_condition" required >
-                                        @foreach($user->conditions as $condition)
+                                    @foreach($user->appointments as $appointment)
+                                        @foreach($appointment->conditions as $condition)
                                                 <option value="{{ $condition->c_name }}">{{ $condition->c_name }}</option>
                                         @endforeach 
+                                    @endforeach 
                                     </select>
                                     @if ($errors->has('p_condition'))
                                         <span class="help-block">

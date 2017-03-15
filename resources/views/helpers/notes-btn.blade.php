@@ -1,7 +1,5 @@
 <!-- Button trigger modal -->
 <div  class="row doctor-notes">
-
-    <h2 class="bold uppercase notes-title">Doctor Notes</h2>
     <form id="add-note" class="form-horizontal" role="form" method="POST" action="/notes"> 
         {{ csrf_field() }}
         <input type="hidden" name="n_user_id" value="{{ $user->id }}">

@@ -21,9 +21,11 @@
                             <div class="col-md-8 col-md-offset-2">
                                 {{ csrf_field() }}
 
-                                <input type="hidden" id="c_patient_id" name="c_patient_id" value="{{ $user->id }}">
+                                <input type="hidden" id="patient_id" name="patient_id" value="{{ $user->id }}">
 
-                                <input type="hidden" id="c_condition_id" name="c_condition_id" value="" >
+                                <input type="hidden" id="appointment_id" name="appointment_id" value="{{ $appointment->id }}">
+
+                                <input type="hidden" id="condition_id" name="condition_id" value="" >
 
                                 <div class="form-group{{ $errors->has('c_name') ? ' has-error' : '' }}">
                                     <label for="c_name" class="col-md-4 form-control-label">Condition Name</label>

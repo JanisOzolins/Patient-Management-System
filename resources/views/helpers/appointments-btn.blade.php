@@ -25,11 +25,7 @@
 
                                         <div class="form-group{{ $errors->has('a_patient_id') ? ' has-error' : '' }}">
                                             <label id="a_patient_id_label" for="a_patient_id" class="col-md-4 form-control-label">Patient</label>
-                                                <select class="form-control" id="a_patient_id" name="a_patient_id" required >
-                                                    @foreach($users as $user)
-                                                            <option value="{{ $user->id}}">{{ $user->first_name }} {{ $user->last_name }}</option>
-                                                    @endforeach 
-                                                </select>
+                                                <input id="a_patient_id" type="hidden" class="form-control form-control-success" name="a_patient_id" value="{{ $user->id }}" >
                                                 @if ($errors->has('a_patient_id'))
                                                     <span class="help-block">
                                                         <strong>{{ $errors->first('a_patient_id') }}</strong>

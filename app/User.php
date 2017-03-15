@@ -28,25 +28,12 @@ class User extends Eloquent implements AuthenticatableContract, AuthorizableCont
     // specify protected fields
     protected $hidden = ['password', 'remember_token'];
 
-    public function conditions()
-    {
-        return $this->embedsMany('App\Condition', 'condition');
-    }
-
     public function appointments()
     {
         return $this->embedsMany('App\Appointment', 'appointment');
     }
 
-    public function notes()
-    {
-        return $this->embedsMany('App\Note', 'note');
-    }
 
-    public function prescriptions()
-    {
-        return $this->embedsMany('App\Prescription', 'prescription');
-    }
 
 
 

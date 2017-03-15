@@ -11,6 +11,15 @@ use Illuminate\Support\Facades\Redirect;
 
 class AppointmentsController extends Controller
 {
+
+	public function show($uid, $aid)
+	{
+		$user = User::find($uid);
+    	$appointments = $user->appointments;
+		$appointment = $user->appointments()->find($aid);
+
+		return view('patients.show')->with('appointment', $appointment)->with('appointments', $appointments)->with('user', $user);		
+	}
     
 	public function index() 
 	{
@@ -64,13 +73,26 @@ class AppointmentsController extends Controller
 			$appointment->a_date = request('a_date');
 			$appointment->a_details = request('a_details');
 
+			$datetime = strtotime(request('a_date') . ' ' . request('a_time'));
+			$datetime = date('Y-m-d H:i', $datetime);
+			$appointment->datetime = $datetime;
+
 			$appointment->save();
 
 			return redirect('/user/' . request('a_patient_id'));
 		}
 
 		// add embedded 'Appointment' instance
-		$appointment = $user->appointments()->create(['a_patient' => $user->first_name . ' ' . $user->last_name, 'a_date' => request('a_date'), 'a_time' => request('a_time'), 'a_details' => request('a_details')]);
+		$datetime = strtotime(request('a_date') . ' ' . request('a_time'));
+		$datetime = date('Y-m-d H:i', $datetime);
+			
+
+		$appointment = $user->appointments()->create([
+			'a_patient' => $user->first_name . ' ' . $user->last_name, 
+			'a_date' => request('a_date'), 
+			'a_time' => request('a_time'), 
+			'datetime' => $datetime,
+			'a_details' => request('a_details')]);
 
 		// save changes
 		$user->save();

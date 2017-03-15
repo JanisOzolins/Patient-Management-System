@@ -1,12 +1,13 @@
-@if(count($user->conditions))
-    @foreach ($user->conditions as $condition)
+@if(count($appointments) > 0)
+@foreach ($appointments as $appointment)
+    @foreach ($appointment->conditions as $condition)
     <div class="panel-group">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">
                     <div class="title-bar">
                         <a class="panel-title" data-toggle="collapse" href="#{{ $condition->id }}">{{ $condition->c_name }}</a>
-                        {{ Form::open(['method' => 'DELETE', 'class' => 'delete-form', 'route' => ['conditions.delete', $condition->user->id, $condition->id]]) }}
+                        {{ Form::open(['method' => 'DELETE', 'class' => 'delete-form', 'route' => ['conditions.delete', $condition->appointment->user->id, $condition->id]]) }}
                         {{ Form::button('<i class="fa fa-times" aria-hidden="true"></i>', ['class' => 'btn btn-danger btn-xs user-profile-icon', 'type' => 'submit']) }}
                         {{ Form::close() }}
                         <form>
@@ -15,7 +16,7 @@
                             class="btn btn-default btn-xs user-profile-icon" 
                             data-toggle="modal"
                             data-condition-id="{{ $condition->id }}"
-                            data-patient-id="{{ $condition->user->id }}"
+                            data-patient-id="{{ $condition->appointment->user->id }}"
                             data-name="{{ $condition->c_name }}"
                             data-diagnosed="{{ $condition->c_diagnosed_at }}"
                             data-treated="{{ $condition->c_isTreated }}"
@@ -38,6 +39,7 @@
         </div>
     </div>
     @endforeach
+@endforeach
 @else
     <p>There are no added conditions for this patient.</p>
 @endif

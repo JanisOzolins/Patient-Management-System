@@ -1,13 +1,13 @@
-@if(count($user->prescriptions) > 0)
-    @foreach ($user->prescriptions->sortByDesc('updated_at') as $prescription)
 
+@if(count($appointment->prescriptions) > 0)
+    @foreach ($appointment->prescriptions()->sortByDesc('updated_at') as $prescription)
     <div class="panel-group">
         <div class="panel panel-default">
             <div class="panel-heading">
                     <h3 class="panel-title">
                         <div class="prescriptions-title-bar">
                             <a class="panel-title" data-toggle="collapse" href="#{{ $prescription->id }}">{{ $prescription->p_name }}</a>
-                            {{ Form::open(['method' => 'DELETE', 'route' => ['prescriptions.delete', $prescription->user->id, $prescription->id]]) }}
+                            {{ Form::open(['method' => 'DELETE', 'route' => ['prescriptions.delete', $prescription->appointment->user->id, $prescription->id]]) }}
                             {{ Form::button('<i class="fa fa-times" aria-hidden="true"></i>', ['class' => 'btn btn-danger btn-xs user-profile-icon', 'type' => 'submit']) }}
                             {{ Form::close() }}
                             <form>
@@ -16,7 +16,8 @@
                                 class="btn btn-default btn-xs user-profile-icon" 
                                 data-toggle="modal"
                                 data-prescription-id="{{ $prescription->id }}"
-                                data-patient-id="{{ $prescription->user->id }}"
+                                data-appointment-id="{{ $prescription->appointment->id }}"
+                                data-patient-id="{{ $prescription->appointment->user->id }}"
                                 data-condition="{{ $prescription->p_condition }}"
                                 data-name="{{ $prescription->p_name }}"
                                 data-active="{{ $prescription->p_active }}"
@@ -45,7 +46,6 @@
             </div>
         </div>
     </div>
-
     @endforeach
 @else
     <p>This patient has got no prescriptions.</p>

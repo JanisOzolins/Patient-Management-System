@@ -5,10 +5,11 @@ body {
     font-size: 13px;
     color: #333;
     line-height: 1.42857143;
+    background-color: #f1f1f1;
 }
 
-#page-wrapper {
-    background-color: #f1f1f1;
+#wrapper {
+    padding-left: 0;
 }
 
 .appointments-page.row,
@@ -70,8 +71,33 @@ body {
     width: 100%;
 }
 
-.user-right-container .panel.panel-default {
+.profile-page li.list-group-item {
+    overflow: auto;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.app-list-col {
+    padding: 10px 0;
+    text-align: center;
+    border-right: solid 1px #dddddd;
+}
+
+.profile-page li.list-group-item .last {
     border: none;
+}
+
+.row.well.user-conditions,
+.row.well.user-appointments,
+.row.well.user-prescriptions {
+    text-align: center;
+}
+
+.user-prescriptions .panel.panel-default,
+.user-conditions .panel.panel-default {
+    -moz-box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.05);
+    -webkit-box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.05);
 }
 
 .prescriptions-title-bar form {
@@ -133,14 +159,14 @@ a.panel-title:hover {
     border-radius: 0;
     border-color: #dddddd;
     margin: 10px 0;
-}
+}/*
 
 .panel-default>.panel-heading {
     color: #fff;
     background-color: #222222;
     border-color: #ddd;
     border-radius: 0px;
-}
+}*/
 
 i.fa.fa-pencil-square.edit-icon,
 i.fa.fa-minus-square.edit-icon {
@@ -264,19 +290,6 @@ textarea {
 	.mobile-only {
 		display: none !important;
 	}
-
-	.user-left-container {
-		max-width: 310px;
-	}
-
-    .user-middle-container {
-        margin: 0 15px;
-    }
-
-    .user-right-container {
-        width: 100%;
-        max-width: calc(50% - 340px);
-    }
 
 }
 

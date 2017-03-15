@@ -56,13 +56,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/appointments', 'AppointmentsController@index')->name('appointments.index');
 	Route::post('/appointments', 'AppointmentsController@store')->name('appointments.store');
 	Route::get('/appointments/create', 'AppointmentsController@create')->name('appointments.create');
-	Route::delete('user/{uid}/appointments/{aid}', 'AppointmentsController@delete')->name('appointments.delete');
-	Route::get('user/{uid}/appointments/{aid}', 'AppointmentsController@show')->name('appointments.show');
+	Route::delete('user/{uid}/appointments/{aid}/', 'AppointmentsController@delete')->name('appointments.delete');
+	Route::get('user/{uid}/appointments/{aid}/', 'AppointmentsController@show')->name('appointments.show');
 	Route::get('user/{uid}/appointments/{aid}/edit', 'AppointmentsController@edit')->name('appointments.edit');
-	Route::put('user/{uid}/appointments/{aid}', 'AppointmentsController@update')->name('appointments.update');
+	Route::put('user/{uid}/appointments/{aid}/', 'AppointmentsController@update')->name('appointments.update');
 
 	// Patients
-	Route::get('/user/{id}', 'UsersController@show')->name('user.show');
+	Route::get('/user/{id}', 'UsersController@show')->name('patients.show');
 	Route::any('/patients',function(){
 	    $q = Input::get ( 'q' );
 	    $users = App\User::where('first_name','LIKE','%'.$q.'%')

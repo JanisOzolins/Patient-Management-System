@@ -11,17 +11,20 @@ class PrescriptionsController extends Controller
 {
     public function store() 
     {
-        $user = User::find(request('p_patient_id'));
+        //return request()->all();
+        $user = User::find(request('patient_id'));
+        $appointment = $user->appointments()->find(request('appointment_id'));
 
-        if ($user->prescriptions()->find(request('p_prescription_id')) != NULL) // checks if prescription needs to be updated instead of created
+        //return request()->all();
+
+        if ($appointment->prescriptions()->find(request('prescription_id')) != NULL) // checks if prescription needs to be updated instead of created
         {
-            $prescription = $user->prescriptions()->find(request('p_prescription_id'));
+
+            $prescription = $appointment->prescriptions()->find(request('prescription_id'));
+
+            //return $prescription;
 
             $currentDoctor = Auth::user()->first_name . ' ' . Auth::user()->last_name;
-
-            if ($prescription->p_doctor != $currentDoctor) {
-                return redirect('/user/' . request('p_patient_id'));
-            }
             
             $prescription->p_name = request('p_name');
             $prescription->p_active = request('p_active');
@@ -29,19 +32,23 @@ class PrescriptionsController extends Controller
             $prescription->p_expiry = request('p_expiry');
             $prescription->p_controlled = request('p_controlled');
             $prescription->p_repeat = request('p_repeat');
-            $prescription->a_details = request('a_details');
+            $prescription->p_details = request('p_details');
 
             $prescription->save();
 
-            return redirect('/user/' . request('p_patient_id'));
+            //return request()->all();
+
+
+            return redirect('/user/' . request('patient_id'));
         }
 
-        
-        $doctor = Auth::user()->first_name . ' ' . Auth::user()->last_name; 
+        //return "CREATE REQUEST ------------- " . request()->all();
+
+        $doctor = Auth::user()->first_name . ' ' . Auth::user()->last_name; // who is the prescribing doctor
 
         // return request()->all();
 
-        $prescription = $user->prescriptions()->create([
+        $prescription = $appointment->prescriptions()->create([
         	'p_doctor' => $doctor, 
         	'p_name' => request('p_name'),
         	'p_condition' => request('p_condition'),
@@ -58,7 +65,6 @@ class PrescriptionsController extends Controller
         {
 			$prescription->p_active = date('Y-m-d', strtotime($prescription->created_at));
 			$prescription->save();	
-			return "Date was changed to today's date";
 		}
 
         // setting expiration date to 28 days (according to NHS) if a controlled drug is being prescribed
@@ -77,14 +83,15 @@ class PrescriptionsController extends Controller
         	$prescription->save();
         }
 
-        $user->save();
+        $appointment->save();
 
-        return redirect('/user/' . request('p_patient_id'));
+        return redirect('/user/' . request('patient_id') . '/appointments/' . request('appointment_id'));
     }
 
 	public function delete($uid, $pid) 
 	{
 		$user = User::find($uid);
+        $prescription = $user->prescriptions()->find();
 
 		$prescription = $user->prescriptions()->find($pid);
 
