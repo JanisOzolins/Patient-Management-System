@@ -8,7 +8,7 @@
     <div class="col-md-6 user-middle-container user-notes">
         @if (Route::current()->getName() === 'patients.show')  
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#notes-tab-pane" aria-controls="notes-tab-pane" role="tab" data-toggle="tab">Patient Notes</a></li>
+                <li role="presentation" class="active"><a href="#notes-tab-pane" aria-controls="notes-tab-pane" role="tab" data-toggle="tab">General Notes</a></li>
                 <li role="presentation"><a href="#appointments-tab-pane" aria-controls="appointments-tab-pane" role="tab" data-toggle="tab">Appointments History</a></li>
             </ul>
             <div class="tab-content">

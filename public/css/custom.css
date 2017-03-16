@@ -74,13 +74,46 @@ body {
 .profile-page li.list-group-item {
     overflow: auto;
     padding: 0;
-    margin-bottom: 10px;
 }
 
 .app-list-col {
     padding: 10px 0;
     text-align: center;
     border-right: solid 1px #dddddd;
+}
+
+.profile-page li.list-group-item.first {
+    margin-top: 15px;
+    border-top: 0;
+    background: #222222;
+    color: white;
+    border-radius: 0;
+}
+
+.profile-page .nav-tabs>li>a {
+    margin-right: 2px;
+    border-radius: 4px 4px 0 0;
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.profile-page .nav-tabs>li.active>a, 
+.profile-page .nav-tabs>li.active>a:focus, 
+.profile-page .nav-tabs>li.active>a:hover {
+    color: #fff;
+    cursor: default;
+    background-color: #353535;
+    border: 1px solid #ddd;
+    border-bottom: none;
+}
+
+.profile-page .nav-tabs>li {
+    float: left;
+    margin-bottom: -1px;
+    width: 50%;
+    text-align: center;
 }
 
 .profile-page li.list-group-item .last {
