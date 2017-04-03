@@ -12,7 +12,13 @@
                 <a class="navbar-brand" href="/">North Hill Surgery</a>
             </div>
 
-            <!-- TOP RIGHT MENU -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    @if (Auth::user()->user_type === "doctor" || Auth::user()->user_type === "staff" )<li><a href="{{ URL::to('/patients') }}">Patients</a></li>@endif
+                    @if (Auth::user()->user_type === "staff" )<li><a href="{{ URL::to('/appointments') }}">Appointments</a></li>@endif
+                    @if (Auth::user()->user_type === "doctor" || Auth::user()->user_type === "staff" )<li><a href="{{ URL::to('/schedule') }}">Schedule</a></li>@endif
+                    @if (Auth::user()->user_type === "manager" || Auth::user()->user_type === "staff" )<li><a href="{{ URL::to('/register') }}">Registration</a></li>@endif
+                </ul>
 
             <ul class="nav navbar-right top-nav desktop-only">
                 @if (Auth::user())
@@ -38,6 +44,10 @@
                     </li>
                 @endif
             </ul>
+            </div>
+
+            <!-- TOP RIGHT MENU -->
+
 
             <!-- SIDEBAR --> 
 

@@ -50,20 +50,23 @@ class ConditionsController extends Controller
 
         $condition->save();
 
-        return redirect('/user/' . request('patient_id'));
+        return redirect('/user/' . request('patient_id') . '/appointments/' . request('appointment_id') );
     }
 
-    public function delete($uid, $cid) 
+    public function delete($uid, $aid, $cid) 
     {
+
         $user = User::find($uid);
 
-        $condition = $user->conditions()->find($cid);
+        $appointment = $user->appointments()->find($aid);
+
+        $condition = $appointment->conditions()->find($cid);
 
         $condition->delete();
 
         $user->save();
 
-        return redirect('/user/' . $uid);
+        return redirect('/user/' . $uid . '/appointments/' . $aid);
     }
 
 }

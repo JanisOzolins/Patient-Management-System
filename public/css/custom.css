@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans:400,700');
+userpimport url('https://fonts.googleapis.com/css?family=Noto+Sans:400,700');
 
 body {
 	font-family: 'Noto Sans';
@@ -26,6 +26,10 @@ body {
     border-color: #e5e6e9 #dfe0e4 #d0d1d5;
     border-radius: 3px;
 }
+
+/*.list-group-item {
+    padding: 10px 15px !important;
+}*/
 
 /* appointments page */
 
@@ -61,6 +65,45 @@ body {
     text-align: center;
 }
 
+/* single appointment page */
+
+.panel-title {
+    font-size: 14px;
+}
+
+.app-notes .prescriptions-controls,
+.app-conditions .prescriptions-controls,
+.app-prescriptions .prescriptions-controls {
+    float: right;
+}
+
+.btn-return-user-profile {
+    margin-bottom: 25px;
+}
+
+/* patients list */
+
+.container-fluid.patients-page {
+    max-width: 80%;
+}
+
+.patients-page .patients-table {
+    background: white;
+    text-align: center;
+}
+
+.patients-page .col-md-4.patients-control-item-container {
+    padding-left: 0;
+}
+
+.patients-page .col-md-8.patients-control-item-container {
+    padding-right: 0;
+}
+
+.patients-page thead > tr > th {
+    text-align: center;
+}
+
 /* user profile page */
 
 .user-conditions .btn-success,
@@ -69,6 +112,10 @@ body {
     margin: 10px 0;
     text-align: center;
     width: 100%;
+}
+
+.user-right-container p {
+    text-align: center;
 }
 
 .profile-page li.list-group-item {
@@ -120,9 +167,9 @@ body {
     border: none;
 }
 
-.row.well.user-conditions,
-.row.well.user-appointments,
-.row.well.user-prescriptions {
+.row.well.user-conditions .panel,
+.row.well.user-appointments .panel,
+.row.well.user-prescriptions .panel {
     text-align: center;
 }
 
@@ -148,6 +195,11 @@ body {
     text-align: center;
     margin: 0;
     margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.user-info p, .user-info h2 {
+    text-align: left;
 }
 
 .profile-page .panel-title form {
@@ -161,13 +213,13 @@ body {
     text-align: center;
 }
 
-td.attribute-name {
-    font-weight: bold;
-    padding: 4px 0px !important;
-    text-transform: uppercase;
-    background-color: #ececec;
+.user-info {
+    text-align: center;
 }
 
+p.info-title {
+    font-weight: bold;
+}
 .appointment-info {
     padding: 5px 15px;
     margin-bottom: 0px;
@@ -192,14 +244,7 @@ a.panel-title:hover {
     border-radius: 0;
     border-color: #dddddd;
     margin: 10px 0;
-}/*
-
-.panel-default>.panel-heading {
-    color: #fff;
-    background-color: #222222;
-    border-color: #ddd;
-    border-radius: 0px;
-}*/
+}
 
 i.fa.fa-pencil-square.edit-icon,
 i.fa.fa-minus-square.edit-icon {
@@ -210,6 +255,12 @@ i.fa.fa-minus-square.edit-icon {
 
 h3.panel-title {
     line-height: 20px;
+}
+
+form#conditions-form,
+form#prescriptions-form,
+form#appointments-form {
+    float: none;
 }
 
 /*Doctor's Notes*/
@@ -225,11 +276,11 @@ h3.panel-title {
 }
 
 .note-meta {
-    line-height: 22px;
-    background: #337ab7;;
+    line-height: 28px;
+    background: #222222;
     padding: 5px 10px;
     color: #ffffff;
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .remove-icon {
@@ -244,10 +295,11 @@ h3.panel-title {
 
 .note-body {
     padding: 20px 10px;
-    background: white;
+    background: whitesmoke;
     font-size: 12px;
-
+    border: solid 1px #cccccc;
 }
+
 
 .submit-btn {
     border-radius: 2px;
@@ -305,6 +357,8 @@ h2.notes-title {
 label {
     padding-left: 0 !important;
 }
+
+
 
 .form-control {
     border-radius: 0px;

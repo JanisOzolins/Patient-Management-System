@@ -11,6 +11,9 @@
 |
 */
 
+/* API routes */
+
+Route::get('myform/ajax/{id}/{date}',array('as'=>'myform.ajax','uses'=>'DoctorsController@myformAjax'));
 
 Route::get('/welcome', function () {
 
@@ -52,6 +55,13 @@ Route::group(['middleware' => 'auth'], function () {
 
 	});
 
+	// Doctors
+	Route::get('/schedule', 'DoctorsController@index')->name('doctors.index');
+	Route::post('/schedule', 'DoctorsController@store')->name('doctors.store');
+
+
+
+
 	// Appointments
 	Route::get('/appointments', 'AppointmentsController@index')->name('appointments.index');
 	Route::post('/appointments', 'AppointmentsController@store')->name('appointments.store');
@@ -81,17 +91,20 @@ Route::group(['middleware' => 'auth'], function () {
 	// Conditions
 	Route::get('/user/{id}/conditions/create', 'ConditionsController@create')->name('conditions.create');
 	Route::post('/conditions', 'ConditionsController@store')->name('conditions.store');
-	Route::delete('user/{uid}/conditions/{cid}', 'ConditionsController@delete')->name('conditions.delete');
+	Route::delete('user/{uid}/appointments/{aid}/conditions/{cid}', 'ConditionsController@delete')->name('conditions.delete');
 
 	// Notes
 	Route::post('/notes', 'NotesController@store')->name('notes.store');
-	Route::delete('/user/{uid}/notes/{nid}', 'NotesController@delete')->name('notes.delete');
+	Route::delete('/user/{uid}/appointments/{aid}/notes/{nid}', 'NotesController@delete')->name('notes.delete');
 
 	// Prescriptions
 	Route::post('/prescriptions', 'PrescriptionsController@store')->name('prescriptions.store');
 	Route::delete('/user/{uid}/prescriptions/{pid}', 'PrescriptionsController@delete')->name('prescriptions.delete');
 
 	Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
+
+	
 
 
 });

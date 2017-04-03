@@ -9,7 +9,7 @@ class Appointment extends Model
 {
 
     protected $fillable = [
-        'a_patient', 'a_date', 'a_time', 'a_details', 'datetime'
+        'a_patient', 'a_doctor_id', 'a_doctor', 'a_date', 'a_time', 'a_details', 'datetime'
         ];
 
     public function notes()

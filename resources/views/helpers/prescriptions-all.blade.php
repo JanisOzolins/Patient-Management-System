@@ -1,5 +1,7 @@
+<?php $presNum = 0; ?>
 @foreach( $appointments as $appointment)
         @foreach ($appointment->prescriptions()->sortByDesc('updated_at') as $prescription)
+        <?php $presNum++ ?>
         <div class="panel-group">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -12,7 +14,7 @@
                                 <form>
                                     <a 
                                     type="button" 
-                                    class="btn btn-default btn-xs user-profile-icon" 
+                                    class="edit-prescription-btn btn btn-default btn-xs user-profile-icon" 
                                     data-toggle="modal"
                                     data-prescription-id="{{ $prescription->id }}"
                                     data-appointment-id="{{ $prescription->appointment->id }}"
@@ -45,3 +47,6 @@
         </div>
         @endforeach
 @endforeach
+@if ($presNum === 0)
+    <p>There are no added prescriptions for this patient.</p>
+@endif

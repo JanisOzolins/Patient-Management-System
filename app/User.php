@@ -20,11 +20,10 @@ class User extends Eloquent implements AuthenticatableContract, AuthorizableCont
     use Notifiable, Authenticatable, Authorizable, CanResetPassword, HybridRelations, SoftDeletes;
 
     // enable soft delete timestamp
-    protected $dates = ['deleted_at'];
-    // specify database collection
+    protected $dates = ['created_at', 'updated_at', 'deleted_at']; // specify database collection
     protected $collection = "patientcollection";
     // specify mass-assignable fields
-    protected $fillable = ['_id', 'first_name', 'last_name', 'user_type', 'birth_date', 'age', 'email', 'phone', 'address', 'password'];
+    protected $fillable = ['_id', 'first_name', 'gender', 'last_name', 'user_type', 'birth_date', 'age', 'email', 'phone', 'address', 'password'];
     // specify protected fields
     protected $hidden = ['password', 'remember_token'];
 
@@ -33,10 +32,10 @@ class User extends Eloquent implements AuthenticatableContract, AuthorizableCont
         return $this->embedsMany('App\Appointment', 'appointment');
     }
 
-
-
-
-
+    public function schedules()
+    {
+        return $this->embedsMany('App\Schedule', 'schedule');
+    }
 
     public function searchUsers($query, $keyword)
     {

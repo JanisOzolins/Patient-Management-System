@@ -6,6 +6,8 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use DateTime;
+use Carbon\Carbon;
 
 class RegisterController extends Controller
 {
@@ -58,7 +60,7 @@ class RegisterController extends Controller
     public function generateRandomNumber()
     {
         do {
-            $randomInt = rand(1000, 9999);
+            $randomInt = rand(10000000, 99999999);
         } 
         while ($this->checkUserId($randomInt));
 
@@ -101,6 +103,7 @@ class RegisterController extends Controller
             '_id' => strval($userObjectID),
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
+            'gender' => $data['gender'],
             'user_type' => $data['user_type'],
             'address' => $data['address'],
             'birth_date' => $data['birth_date'],
@@ -112,8 +115,8 @@ class RegisterController extends Controller
         $age = $this->calculateAge($user);
         $user->age = $age;
 
-        $one = $user->appointments()->create(['a_patient' => $user->first_name . $user->first_name, 'a_date' => '2017-06-06', 'a_time' => '19:00']);
-        $two = $user->appointments()->create(['a_patient' => $user->first_name . $user->first_name, 'a_date' => '2017-04-04', 'a_time' => '12:00']);
+        // $one = $user->appointments()->create(['a_patient' => $user->first_name . $user->first_name, 'a_date' => '2017-06-06', 'a_time' => '19:00']);
+        // $two = $user->appointments()->create(['a_patient' => $user->first_name . $user->first_name, 'a_date' => '2017-04-04', 'a_time' => '12:00']);
 
 
         $user->save();

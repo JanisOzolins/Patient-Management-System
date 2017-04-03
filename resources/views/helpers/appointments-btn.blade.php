@@ -1,6 +1,6 @@
 <!-- Button trigger modal -->
 <div class="appointments-controls">
-<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#appointmentsModal">
+<button type="button" class="btn btn-success btn-xs" data-id="new-button" data-toggle="modal" data-target="#appointmentsModal">
     New appointment
 </button>
 </div>
@@ -24,18 +24,40 @@
                                         <input id="a_app_id" type="hidden" class="form-control form-control-success" name="a_app_id" >
 
                                         <div class="form-group{{ $errors->has('a_patient_id') ? ' has-error' : '' }}">
-                                            <label id="a_patient_id_label" for="a_patient_id" class="col-md-4 form-control-label">Patient</label>
-                                                <input id="a_patient_id" type="hidden" class="form-control form-control-success" name="a_patient_id" value="{{ $user->id }}" >
+                                            <label id="a_patient_id_label" for="a_patient_id" class="form-control-label">Patient</label>
+                                                <input id="a_patient_id" type="text" class="form-control form-control-success" name="a_patient_id" value="{{ $user->id }}" >
                                                 @if ($errors->has('a_patient_id'))
                                                     <span class="help-block">
                                                         <strong>{{ $errors->first('a_patient_id') }}</strong>
                                                     </span>
                                                 @endif
                                         </div>
+
+                                        <div class="form-group{{ $errors->has('a_doctor_id') ? ' has-error' : '' }}">
+                                            <label for="a_doctor_id" class="col-md-4 form-control-label">Doctor</label>
+
+                                                <select class="form-control" id="a_doctor_id" name="a_doctor_id" value="{{ old('a_doctor_id') }}" required >
+                                                    @foreach ($users as $user) 
+                                                        @if ($user->user_type === "doctor")
+                                                            @if( old('a_doctor_id') == $user->id )
+                                                                <option value="{{$user->id}}" selected="selected">{{ $user->first_name }} {{ $user->last_name }}</option>
+                                                            @else
+                                                                <option value="{{$user->id}}">{{ $user->first_name }} {{ $user->last_name }}</option>
+                                                            @endif
+                                                        @endif
+                                                    @endforeach 
+                                                </select>
+
+                                                @if ($errors->has('a_doctor_id'))
+                                                    <span class="help-block">
+                                                        <strong>{{ $errors->first('a_doctor_id') }}</strong>
+                                                    </span>
+                                                @endif
+                                        </div>
                                         
                                         <div class="form-group{{ $errors->has('a_date') ? ' has-error' : '' }}">
-                                            <label for="a_date" class="col-md-4 form-control-label">Date:</label>
-                                                <input id="a_date" type="date" class="form-control form-control-success" name="a_date" required autofocus>
+                                            <label for="a_date" class="form-control-label">Date:</label>
+                                                <input id="a_date" type="date" class="form-control form-control-success" name="a_date" value="{{ old('a_date') }}" required autofocus>
                                                 @if ($errors->has('a_date'))
                                                     <span class="help-block">
                                                         <strong>{{ $errors->first('a_date') }}</strong>
@@ -44,14 +66,8 @@
                                         </div>
 
                                         <div class="form-group{{ $errors->has('a_time') ? ' has-error' : '' }}">
-                                            <label for="a_time" class="col-md-4 form-control-label">Time:</label>
-                                                <select class="form-control" id="a_time" name="a_time" required >
-                                                        <option value="9:00">9:00</option>
-                                                        <option value="9:30">9:30</option>
-                                                        <option value="10:00">10:00</option>
-                                                        <option value="10:30">10:30</option>
-                                                        <option value="11:00">11:00</option>
-                                                        <option value="11:30">11:30</option>
+                                            <label for="a_time" class="form-control-label">Time:</label>
+                                                <select class="form-control" id="a_time" name="a_time" value="{{ old('a_time') }}" disabled required >
                                                 </select>
                                                 @if ($errors->has('a_time'))
                                                     <span class="help-block">
@@ -61,8 +77,8 @@
                                         </div>
 
                                         <div class="form-group{{ $errors->has('a_details') ? ' has-error' : '' }}">
-                                            <label for="a_details" class="col-md-4 form-control-label">Details:</label>
-                                                <input id="a_details" type="text" class="form-control" name="a_details" value="" required autofocus>
+                                            <label for="a_details" class="form-control-label">Details:</label>
+                                                <input id="a_details" type="text" class="form-control" name="a_details" value="{{ old('a_details') }}" required autofocus>
                                                 @if ($errors->has('a_details'))
                                                     <span class="help-block">
                                                         <strong>{{ $errors->first('a_details') }}</strong>

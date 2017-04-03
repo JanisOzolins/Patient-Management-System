@@ -11,13 +11,11 @@ class UsersController extends Controller
     public function show($id) {
 
     	$user = User::find($id);
+    	$users = User::all();
 
     	$appointments = $user->appointments;
-
-    	//return $user;
-
-
-    	return view('patients.show')->with('user', $user)->with('appointments', $appointments);
+    	
+    	return view('patients.show')->with('user', $user)->with('users', $users)->with('appointments', $appointments);
 
     }
 }

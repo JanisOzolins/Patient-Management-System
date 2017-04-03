@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Appointment;
-use Input;
 
+use Input;
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -64,17 +65,31 @@ class AppointmentsController extends Controller
 	{
 		// find the user
 		$user = User::find(request('a_patient_id'));
+		// find the doctor
+		$doctor = User::find(request('a_doctor_id'));
+		// set datetime
+		$datetime = strtotime(request('a_date') . ' ' . request('a_time'));
+		$datetime = date('Y-m-d H:i', $datetime);
+
+		// checks if the appointment slot is available 
+		
+			Validator::make(request()->all(), [
+			    'a_details' => 'required|min:10',
+			])->validate();
+			
+
+		//return request()->all();
 
 		if ($user->appointments()->find(request('a_app_id')) != NULL) // checks if appointment needs to be updated instead of created
 		{
+
 			$appointment = $user->appointments()->find(request('a_app_id'));
 
+			$appointment->a_doctor_id = $doctor->id;
+			$appointment->a_doctor = $doctor->first_name . ' ' . $doctor->last_name;
 			$appointment->a_time = request('a_time');
 			$appointment->a_date = request('a_date');
 			$appointment->a_details = request('a_details');
-
-			$datetime = strtotime(request('a_date') . ' ' . request('a_time'));
-			$datetime = date('Y-m-d H:i', $datetime);
 			$appointment->datetime = $datetime;
 
 			$appointment->save();
@@ -83,12 +98,10 @@ class AppointmentsController extends Controller
 		}
 
 		// add embedded 'Appointment' instance
-		$datetime = strtotime(request('a_date') . ' ' . request('a_time'));
-		$datetime = date('Y-m-d H:i', $datetime);
-			
-
 		$appointment = $user->appointments()->create([
-			'a_patient' => $user->first_name . ' ' . $user->last_name, 
+			'a_patient' => $user->first_name . ' ' . $user->last_name,
+			'a_doctor_id' => $doctor->id,
+			'a_doctor' => $doctor->first_name . ' ' . $doctor->last_name,
 			'a_date' => request('a_date'), 
 			'a_time' => request('a_time'), 
 			'datetime' => $datetime,

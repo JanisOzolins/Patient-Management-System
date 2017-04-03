@@ -28,19 +28,21 @@
         </thead>
         <tbody>
             @foreach ($users as $user)
-            <tr>
-                <td>
-                    <a href='./user/{{ $user->id }}'>Profile</a>
-                </td>
-                <td>{{ $user->first_name }}</td>
-                <td>{{ $user->last_name }}</td>
-                <td>{{ $user->birth_date }}</td>
-                <td>{{ $user->email }}</td>
-                <td>{{ $user->phone }}</td>
-                <td>
-                    <a href="#" method="GET" class="btn btn-primary btn-sm">Edit</a>
-                </td>
-            </tr>
+            @if ($user->user_type === "patient")
+                <tr>
+                    <td>
+                        <a href='./user/{{ $user->id }}'>Profile</a>
+                    </td>
+                    <td>{{ $user->first_name }}</td>
+                    <td>{{ $user->last_name }}</td>
+                    <td>{{ $user->birth_date }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->phone }}</td>
+                    <td>
+                        <a href="#" method="GET" class="btn btn-primary btn-sm">Edit</a>
+                    </td>
+                </tr>
+            @endif
             @endforeach
 
         {{ $users->links() }}

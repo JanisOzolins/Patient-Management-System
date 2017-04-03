@@ -48,5 +48,5 @@
     </div>
     @endforeach
 @else
-    <p>This patient has got no prescriptions.</p>
+    <p>Nothing has been prescribed during this appointment.</p>
 @endif
