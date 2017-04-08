@@ -27,9 +27,13 @@
     <!-- Custom CSS -->
     <link href="{{ URL::asset('css/custom.css') }}" rel="stylesheet">
 
-    <!-- Calendar CSS -->
-    <link href="{{ URL::asset('//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.css') }}">
+    <!-- Calendar CSS & JS -->
+    <script src="{{ URL::asset('js/moment.min.js') }}"></script>
+    <script src="{{ URL::asset('lib/fullcalendar/fullcalendar.js') }}"></script>
+    <link rel='stylesheet' href="{{ URL::asset('lib/fullcalendar/fullcalendar.css') }}" />
 
+    <!-- Custom JS -->
+    <script src="{{ URL::asset('js/custom.js') }}"></script>
 </head>
 
 <body>

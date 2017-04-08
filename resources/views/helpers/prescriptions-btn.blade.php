@@ -19,9 +19,12 @@
                     <div class="col-md-12">
                         <form id="prescriptions-form" class="form-horizontal" role="form" method="POST" action="/prescriptions"> 
                             {{ csrf_field() }}
-                                <input type="hidden" id="patient_id" name="patient_id" value="{{ $user->id }}">
-                                <input type="hidden" id="appointment_id" name="appointment_id" value="{{ $appointment->id }}">
+
+                            <!-- Hidden Fields -->
+                            <input type="hidden" id="patient_id" name="patient_id" value="{{ $user->id }}">
+                            <input type="hidden" id="appointment_id" name="appointment_id" value="{{ $appointment->id }}">
                             <input type="hidden" id="prescription_id" name="prescription_id">
+
                             <!-- Prescription Name -->
                             <div class="form-group{{ $errors->has('p_name') ? ' has-error' : '' }}">
                                 <label for="p_name" class="col-md-4 form-control-label">Prescription name: </label>
@@ -32,7 +35,19 @@
                                 </span>
                                 @endif
                             </div>
-                            <!-- Associated Condition -->
+
+                            <!-- Quantity / Supply -->
+                            <div class="form-group{{ $errors->has('p_quantity') ? ' has-error' : '' }}">
+                                <label for="p_quantity" class="col-md-4 form-control-label">Quantity: </label>
+                                <input id="p_quantity" type="text" class="form-control" name="p_quantity"></input>
+                                @if ($errors->has('p_quantity'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('p_quantity') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+
+                            <!-- Condition -->
                             <div class="form-group{{ $errors->has('p_condition') ? ' has-error' : '' }}">
                                 <label for="p_condition" class="col-md-4 form-control-label">Associated condition: </label>
                                     <select class="form-control" id="p_condition" name="p_condition" required >
@@ -48,60 +63,66 @@
                                         </span>
                                     @endif
                             </div>
+
                             <!-- Active Date -->
                             <div class="form-group{{ $errors->has('p_active') ? ' has-error' : '' }}">
                                 <label for="p_active" class="col-md-4 form-control-label">Prescription activation date: </label>
-                                <input id="p_active" type="date" class="form-control" name="p_active"></input>
+                                <input id="p_active" type="date" class="form-control" name="p_active" value="date('yyyy-MM-dd')"></input>
                                 @if ($errors->has('p_active'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('p_active') }}</strong>
                                 </span>
                                 @endif
                             </div>
-                            <!-- Expiry Date -->
-                            <div class="form-group{{ $errors->has('p_expiry') ? ' has-error' : '' }}">
-                                <label for="p_expiry" class="col-md-4 form-control-label">Prescription expiry date: </label>
-                                <input id="p_expiry" type="date" class="form-control" name="p_expiry"></input>
-                                @if ($errors->has('p_expiry'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('p_expiry') }}</strong>
-                                </span>
-                                @endif
-                            </div>
-                            <!-- Are you prescribing a controlled drug? -->
+
+                            <!-- Controlled drug? -->
                             <div class="form-group{{ $errors->has('p_controlled') ? ' has-error' : '' }}">
-                                <label>Are you prescribing a controlled drug?</label>
-                                <div class="radio-buttons-container">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="p_controlled" value="Yes"><p>Yes</p>
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="p_controlled" value="No"><p>No</p>
-                                        </label>
-                                </div>
+                                <label for="p_controlled" >Is this a controlled drug?</label>
+                                <select class="form-control" id="p_controlled" name="p_controlled" required >
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
                                 @if ($errors->has('p_controlled'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('p_controlled') }}</strong>
                                     </span>
                                 @endif
                             </div>
+
                             <!-- Is the Prescription Repeat -->
-                            <div class="form-group{{ $errors->has('p_repeat') ? ' has-error' : '' }}">
-                                <label>Is this a repeat prescription?</label>
-                                <div class="radio-buttons-container">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="p_repeat" value="Yes"><p>Yes</p>
-                                        </label>
-                                        <label class="radio-inline">
-                                            <input type="radio" name="p_repeat" value="No"><p>No</p>
-                                        </label>
-                                </div>
+                            <div  id="p_repeat_group" class="form-group{{ $errors->has('p_repeat') ? ' has-error' : '' }}">
+                                <label for="p_controlled">Is this a repeat prescription?</label>
+                                <select class="form-control" id="p_repeat" name="p_repeat" value="No" required >
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
                                 @if ($errors->has('p_repeat'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('p_repeat') }}</strong>
                                     </span>
                                 @endif
                             </div>
+
+
+                            <!-- Repeat Prescription Expiry Date -->
+                            <div id="p_expiry_group" class="form-group{{ $errors->has('p_expiry') ? ' has-error' : '' }}">
+                                <label  for="p_expiry" class="col-md-4 form-control-label">Repeat prescription expiry date: </label>
+                                <select type="hidden" class="form-control" id="p_expiry" name="p_expiry" required >
+                                    <option value="6 months">6 months</option>
+                                    <option value="7 months">7 months</option>
+                                    <option value="8 months">8 months</option>
+                                    <option value="9 months">9 months</option>
+                                    <option value="10 months">10 months</option>
+                                    <option value="11 months">11 months</option>
+                                    <option value="12 months">12 months</option>
+                                </select>
+                                @if ($errors->has('p_expiry'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('p_expiry') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+
                             <!-- Prescription Details -->
                             <div class="form-group{{ $errors->has('p_details') ? ' has-error' : '' }}">
                                 <label for="p_details" class="col-md-4 form-control-label">Prescription details: </label>

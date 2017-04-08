@@ -71,7 +71,9 @@ class DoctorsController extends Controller
 		public function myformAjax($id, $date)
 	    {
 	    	$doctor = User::find($id);
-	        $times = $doctor->schedules->where('date', $date)->pluck('timeslots');
+	        $times = $doctor->schedules->where('date', $date)->pluck('timeslots')->first();
+	        if ($times === null)
+	        	$times = array();
 			return response()->json($times);
 	    }
 }

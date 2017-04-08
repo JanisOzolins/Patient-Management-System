@@ -7,7 +7,7 @@
                     <h3 class="panel-title">
                         <div class="prescriptions-title-bar">
                             <a class="panel-title" data-toggle="collapse" href="#{{ $prescription->id }}">{{ $prescription->p_name }}</a>
-                            {{ Form::open(['method' => 'DELETE', 'route' => ['prescriptions.delete', $prescription->appointment->user->id, $prescription->id]]) }}
+                            {{ Form::open(['method' => 'DELETE', 'route' => ['prescriptions.delete', $prescription->appointment->user->id, $prescription->appointment->id, $prescription->id]]) }}
                             {{ Form::button('<i class="fa fa-times" aria-hidden="true"></i>', ['class' => 'btn btn-danger btn-xs user-profile-icon', 'type' => 'submit']) }}
                             {{ Form::close() }}
                             <form>

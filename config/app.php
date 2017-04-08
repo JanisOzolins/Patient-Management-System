@@ -165,6 +165,7 @@ return [
         Jenssegers\Mongodb\MongodbServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Laravel\Scout\ScoutServiceProvider::class,
+        MaddHatter\LaravelFullcalendar\ServiceProvider::class,
 
 
         /*
@@ -203,6 +204,7 @@ return [
         'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
         'Bus' => Illuminate\Support\Facades\Bus::class,
         'Cache' => Illuminate\Support\Facades\Cache::class,
+        'Calendar' => MaddHatter\LaravelFullcalendar\Facades\Calendar::class,
         'Config' => Illuminate\Support\Facades\Config::class,
         'Cookie' => Illuminate\Support\Facades\Cookie::class,
         'Crypt' => Illuminate\Support\Facades\Crypt::class,
@@ -210,6 +212,7 @@ return [
         'Eloquent' => Illuminate\Database\Eloquent\Model::class,
         'Event' => Illuminate\Support\Facades\Event::class,
         'File' => Illuminate\Support\Facades\File::class,
+        'Fullcalendar' => Edofre\Fullcalendar\Facades\Fullcalendar::class,
         'Gate' => Illuminate\Support\Facades\Gate::class,
         'Hash' => Illuminate\Support\Facades\Hash::class,
         'Input' => Illuminate\Support\Facades\Input::class,

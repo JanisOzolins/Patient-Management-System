@@ -118,54 +118,9 @@ body {
     text-align: center;
 }
 
-.profile-page li.list-group-item {
-    overflow: auto;
-    padding: 0;
-}
 
-.app-list-col {
-    padding: 10px 0;
-    text-align: center;
-    border-right: solid 1px #dddddd;
-}
 
-.profile-page li.list-group-item.first {
-    margin-top: 15px;
-    border-top: 0;
-    background: #222222;
-    color: white;
-    border-radius: 0;
-}
 
-.profile-page .nav-tabs>li>a {
-    margin-right: 2px;
-    border-radius: 4px 4px 0 0;
-    color: #555;
-    cursor: default;
-    background-color: #fff;
-    border: 1px solid #ddd;
-}
-
-.profile-page .nav-tabs>li.active>a, 
-.profile-page .nav-tabs>li.active>a:focus, 
-.profile-page .nav-tabs>li.active>a:hover {
-    color: #fff;
-    cursor: default;
-    background-color: #353535;
-    border: 1px solid #ddd;
-    border-bottom: none;
-}
-
-.profile-page .nav-tabs>li {
-    float: left;
-    margin-bottom: -1px;
-    width: 50%;
-    text-align: center;
-}
-
-.profile-page li.list-group-item .last {
-    border: none;
-}
 
 .row.well.user-conditions .panel,
 .row.well.user-appointments .panel,
@@ -198,8 +153,18 @@ body {
     font-size: 18px;
 }
 
+/* Patient User Info Container */
+
+
 .user-info p, .user-info h2 {
     text-align: left;
+    padding: 0 19px;
+}
+
+.user-info h2.patient-name {
+    background: #e6e6e6;
+    text-align: center;
+    padding: 10px 19px;
 }
 
 .profile-page .panel-title form {
@@ -215,11 +180,25 @@ body {
 
 .user-info {
     text-align: center;
+    border: none;
+    padding: 0;
+    -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
 }
 
 p.info-title {
     font-weight: bold;
 }
+
+@media (max-width: 767px) {
+    .user-info p, .user-info h2 {
+        text-align: center;
+    }
+}
+
+/* end of profile info */
+
 .appointment-info {
     padding: 5px 15px;
     margin-bottom: 0px;
@@ -261,6 +240,160 @@ form#conditions-form,
 form#prescriptions-form,
 form#appointments-form {
     float: none;
+}
+
+/*********************************/
+/*** Appointment List Tables (user profile page)
+/*********************************/
+
+.app-list-col {
+    padding: 10px 0;
+    text-align: center;
+    border-right: solid 1px #dddddd;
+}
+
+.profile-page li.list-group-item.first {
+    margin-top: 15px;
+    border-top: 0;
+    background: #222222;
+    color: white;
+    border-radius: 0;
+}
+
+.profile-page .nav-tabs>li>a {
+    margin-right: 0;
+    border-radius: 4px 4px 0 0;
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.profile-page ul.nav.nav-tabs.user-profile-tabs {
+    border: none;
+    margin: 0;
+}
+
+.profile-page .nav-tabs>li>a {
+    margin-right: 0;
+    border-radius: 0;
+    color: #555;
+    cursor: default;
+    background-color: #f5f5f5;
+    border: solid 1px #e6e6e6;
+}
+
+.profile-page .nav-tabs>li.active>a, 
+.profile-page .nav-tabs>li.active>a:focus, 
+.profile-page .nav-tabs>li.active>a:hover {
+    color: #fff;
+    cursor: default;
+    background-color: #353535;
+    border-bottom: none;
+    border-radius: 0;
+    border: solid 1px #353535;
+}
+
+.profile-page .nav-tabs>li {
+    float: left;
+    margin-bottom: -1px;
+    width: 50%;
+    text-align: center;
+}
+
+.app-list-col.header {
+    background: #eaeaea;
+    color: #353535;
+    border: solid 1px #ddd;
+    border-right: none;
+}
+
+.app-list-item {
+    border-bottom: solid 1px #ddd;
+    border-left: solid 1px #ddd;
+    border-right: 0;
+}
+
+.app-list-col.header.last,
+.app-list-item.last {
+    border-right: solid 1px #ddd;
+}
+
+.app-list-row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+    .app-list-row > [class*='col-'] {
+         display: flex;
+         flex-direction: column;
+    }
+
+.app-list-item form {
+    margin: 0 auto;
+}
+
+@media (max-width: 767px) {
+    .user-middle-container {
+        padding: 0;
+    }
+    .row.padded.profile-page {
+        margin: 0;
+    }
+    .app-list-row > [class*='col-'] {
+        display: flex;
+        flex-direction: column-reverse;
+        text-align: center;
+    }
+    .app-list-col {
+        width: 100%;
+    }
+    .app-list-item {
+        border: solid 1px #ddd;
+        border-top: none;
+    }
+    .app-list-col.header {
+        display: none;
+    }
+    .app-doctor {
+        background: #f7f7f7;
+    }
+    .app-details, .app-edit, .app-delete {
+        display: none !important;
+    }
+    .app-doctor, .app-url {
+        width: 25%;
+        float: left;
+    }
+     .app-time {
+        width: 20%;
+        float: left;
+     }
+    .app-date {
+        width: 30%;
+        float: left;
+    }
+    .app-date, .app-time, .app-doctor {
+        border-right: none;
+    }
+    .app-list-col {
+        padding: 6px 0;
+        font-size: 12px;
+    }
+    div#appointments-tab-pane {
+        margin: 10px 0;
+        border-top: solid 1px #ddd;
+    }
+    .app-list-item p,
+    .app-list-item a {
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+    }
 }
 
 /*Doctor's Notes*/
@@ -328,7 +461,7 @@ h2.notes-title {
     margin: 10px;
 }
 
-/* prescriptions */
+/* Prescriptions */
 
 .radio-buttons-container .radio-inline {
     position: relative;
@@ -369,6 +502,9 @@ label {
 textarea { 
     resize:vertical; 
 }
+
+/* PATIENTS HOMEPAGE */
+
 
 
 /* on desktops */

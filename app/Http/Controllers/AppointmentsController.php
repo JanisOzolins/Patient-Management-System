@@ -73,10 +73,11 @@ class AppointmentsController extends Controller
 
 		// checks if the appointment slot is available 
 		
-			Validator::make(request()->all(), [
-			    'a_details' => 'required|min:10',
-			])->validate();
+		Validator::make(request()->all(), [
+		    'a_details' => 'required|min:10',
+		])->validate();
 			
+		
 
 		//return request()->all();
 

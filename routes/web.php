@@ -14,6 +14,8 @@
 /* API routes */
 
 Route::get('myform/ajax/{id}/{date}',array('as'=>'myform.ajax','uses'=>'DoctorsController@myformAjax'));
+Route::get('/appointments/doctor-this-week', 'UsersController@getAppointmentsAll');
+Route::get('/appointments/doctor-next-week', 'UsersController@getAppointmentsAll');
 
 Route::get('/welcome', function () {
 
@@ -24,36 +26,7 @@ Route::get('/welcome', function () {
 
 Route::group(['middleware' => 'auth'], function () {
 
-	Route::get('/', function () {
-
-		///// DOCTOR HOME
-
-		if(Auth::user()->user_type == "doctor") {
-			$users = App\User::orderBy('last_name', 'asc')->get();
-			return view('doctors.home')->with('users', $users);
-		}
-
-		///// STAFF HOME
-
-		elseif(Auth::user()->user_type == "staff") {
-			$users = App\User::orderBy('last_name', 'asc')->get();
-			return view('staff.home')->with('users', $users);
-		}
-
-		///// PATIENT HOME
-
-		elseif(Auth::user()->user_type == "patient") {
-			$test = "hey";
-			return view('patients.home')->with('test', $test);
-		}
-
-		///// MANAGER HOME
-
-		elseif(Auth::user()->user_type == "manager") {
-			return view('managers.home');
-		}
-
-	});
+	Route::get('/', 'UsersController@home')->name('users.home');
 
 	// Doctors
 	Route::get('/schedule', 'DoctorsController@index')->name('doctors.index');
@@ -99,7 +72,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	// Prescriptions
 	Route::post('/prescriptions', 'PrescriptionsController@store')->name('prescriptions.store');
-	Route::delete('/user/{uid}/prescriptions/{pid}', 'PrescriptionsController@delete')->name('prescriptions.delete');
+	Route::delete('/user/{uid}/appointments/{aid}/prescriptions/{pid}', 'PrescriptionsController@delete')->name('prescriptions.delete');
 
 	Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 

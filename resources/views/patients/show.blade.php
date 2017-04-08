@@ -4,7 +4,7 @@
 <div class="row padded profile-page">
     <div class="col-md-9 user-middle-container user-notes">
         @if (Route::current()->getName() === 'patients.show')  
-            <ul class="nav nav-tabs" role="tablist">
+            <ul class="nav nav-tabs user-profile-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#appointments-tab-pane" aria-controls="appointments-tab-pane" role="tab" data-toggle="tab">Appointments</a></li>
                 <li role="presentation"><a href="#notes-tab-pane" aria-controls="notes-tab-pane" role="tab" data-toggle="tab">General Notes</a></li>
             </ul>
@@ -21,7 +21,6 @@
     </div>
     <div class="col-md-3 user-right-container">
         <div class="row well user-info">
-            <h2 class="bold uppercase">{{ $user->first_name }} {{ $user->last_name }}</h2>
             @include('helpers.patient-info')        
         </div>
         <div class="row well user-conditions">
@@ -145,7 +144,7 @@ $('#prescriptionsModal').on('show.bs.modal', function(e) {
                     dataType: "json",
                     success:function(data) {
                         //if there are no free timeslots left
-                        if( !$.isArray(data) ||  !data.length ) {
+                        if( data.length === 0 ) {
                             $('select[name="a_time"]').empty();
                             $('select[name="a_time"]').append('<option value="" disabled selected>There are no available appointments for the chosen date!</option>');
                             $("#a_time").prop("disabled", true);
@@ -155,7 +154,7 @@ $('#prescriptionsModal').on('show.bs.modal', function(e) {
                             $("#a_time").prop("disabled", false);
                             $('select[name="a_time"]').empty();
                             $('select[name="a_time"]').append('<option value="" disabled selected>Select your option</option>');
-                        $.each(data[0], function(key, value) {
+                        $.each(data, function(key, value) {
                             $('select[name="a_time"]').append('<option value="'+ value +'">'+ value +'</option>');
                         });
 
