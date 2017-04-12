@@ -13,20 +13,17 @@
 
 /* API routes */
 
-Route::get('myform/ajax/{id}/{date}',array('as'=>'myform.ajax','uses'=>'DoctorsController@myformAjax'));
+Route::get('getAppointmentTimeslots/{id}/{date}',array('as'=>'myform.ajax','uses'=>'DoctorsController@fetchDoctorSchedules'));
 Route::get('/appointments/doctor-this-week', 'UsersController@getAppointmentsAll');
 Route::get('/appointments/doctor-next-week', 'UsersController@getAppointmentsAll');
-
-Route::get('/welcome', function () {
-
-		return view('welcome');
-
-	});
-
+Route::get('/appointments/patient-overview', 'UsersController@getPatientAppointments');
+Route::get('/getDoctorsAppointments/{id}', 'DoctorsController@getScheduledAppointments');
 
 Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/', 'UsersController@home')->name('users.home');
+	Route::get('/edit-profile/', 'UsersController@edit')->name('users.edit');
+	Route::POST('/update-profile', 'UsersController@update')->name('users.update');
 
 	// Doctors
 	Route::get('/schedule', 'DoctorsController@index')->name('doctors.index');

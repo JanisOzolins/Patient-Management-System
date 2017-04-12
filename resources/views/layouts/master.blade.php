@@ -17,6 +17,8 @@
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
     <!-- Latest compiled JavaScript -->
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
@@ -25,6 +27,7 @@
     <link href="{{ URL::asset('font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
 
     <!-- Custom CSS -->
+    <link href="{{ URL::asset('css/simple-sidebar.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('css/custom.css') }}" rel="stylesheet">
 
     <!-- Calendar CSS & JS -->
@@ -32,14 +35,22 @@
     <script src="{{ URL::asset('lib/fullcalendar/fullcalendar.js') }}"></script>
     <link rel='stylesheet' href="{{ URL::asset('lib/fullcalendar/fullcalendar.css') }}" />
 
+    <!-- Sweet Alert -->
+    <script src="{{ URL::asset('js/sweetalert.min.js') }}"></script>
+    <link rel='stylesheet' href="{{ URL::asset('css/sweetalert.css') }}" />
+
     <!-- Custom JS -->
     <script src="{{ URL::asset('js/custom.js') }}"></script>
 </head>
 
 <body>
-        @include('layouts.nav')
-    <div class="container-fluid body-wrapper">
+
+@include('sweet::alert')
+    <div id="wrapper" class="container-fluid body-wrapper toggled">
+        @include('layouts.sidebar')
+        <div class="content-wrapper">
         @yield('content')
+        </div>
     </div>
 
 

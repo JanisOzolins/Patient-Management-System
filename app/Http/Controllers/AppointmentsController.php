@@ -25,13 +25,14 @@ class AppointmentsController extends Controller
 	public function index() 
 	{
 		$q = Input::get ( 'q' );
+		$allUsers = User::all();
 	    if($q != NULL) {
 	    	$users = $this->search($q);
-	    	return view('appointments.index')->with('users', $users);
+	    	return view('appointments.index')->with('users', $users)->with('allUsers', $allUsers);
 	    }
 	    else { 
 			$users = User::all();
-			return view('appointments.index')->with('users', $users);
+			return view('appointments.index')->with('users', $users)->with('allUsers', $allUsers);
 		}
 
     		
@@ -110,8 +111,14 @@ class AppointmentsController extends Controller
 
 		// save changes
 		$user->save();
-
-		return redirect('/user/' . request('a_patient_id'));
+		
+		if( \Route::currentRouteName() === "patients.show" ) {
+			return redirect('/user/' . request('a_patient_id'));
+		}
+		elseif ( \Route::currentRouteName() === "appointments.index" ){
+			return redirect('/appointments/');
+		}
+		
 	}
 
 	public function delete($uid, $aid) {
@@ -128,7 +135,12 @@ class AppointmentsController extends Controller
 		// save changes
 		$user->save();
 
-		return redirect('/user/' . $uid);
+		if( \Route::currentRouteName() === "patients.show" ) {
+			return redirect('/user/' . $uid);
+		}
+		elseif ( \Route::currentRouteName() === "appointments.index" ){
+			return redirect('/appointments/');
+		}
 
 	}
 

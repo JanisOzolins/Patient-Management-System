@@ -166,6 +166,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Laravel\Scout\ScoutServiceProvider::class,
         MaddHatter\LaravelFullcalendar\ServiceProvider::class,
+        UxWeb\SweetAlert\SweetAlertServiceProvider::class,
 
 
         /*
@@ -197,6 +198,7 @@ return [
 
     'aliases' => [
 
+        'Alert' => UxWeb\SweetAlert\SweetAlert::class,
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
@@ -212,6 +214,7 @@ return [
         'Eloquent' => Illuminate\Database\Eloquent\Model::class,
         'Event' => Illuminate\Support\Facades\Event::class,
         'File' => Illuminate\Support\Facades\File::class,
+        'Flash' => Laracasts\Flash\Flash::class,
         'Fullcalendar' => Edofre\Fullcalendar\Facades\Fullcalendar::class,
         'Gate' => Illuminate\Support\Facades\Gate::class,
         'Hash' => Illuminate\Support\Facades\Hash::class,

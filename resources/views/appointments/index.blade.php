@@ -1,13 +1,14 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="container-fluid appointments-page">
+<?php $allUsers = App\User::all(); ?>
+<div class="container-fluid appointments-page col-md-10 col-md-offset-1">
     <div class="row">
         <h2 class="uppercase bold center">Appointments</h2>
     </div>
     <div class="row apponitments-controls">
         <div class="col-md-4 app-control-item-container">
-            <a href="./appointments/create" class="btn btn-success btn-block" role="button">Create New Appointment</a>
+            @include('helpers.appointments-btn')
         </div>
         <div class="col-md-8 app-control-item-container">
             @include('appointments.search')

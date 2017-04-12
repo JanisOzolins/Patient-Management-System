@@ -15231,10 +15231,10 @@ var ListViewGrid = Grid.extend({
 				'></span>' +
 			'</td>' +
 			'<td class="fc-list-item-title ' + view.widgetContentClass + '">' +
-				'<a' + (url ? ' href="' + htmlEscape(url) + '"' : '') + '>' +
+				'<strong><a' + (url ? ' href="' + htmlEscape(url) + '"' : '') + '>' +
 					htmlEscape(seg.event.title || '') +
-				'</a>' +
-			'</td>' +
+				'</a></strong><br><a>' + htmlEscape(seg.event.desc || '') + '</a>' +
+			'</td>' + 'HELOs' +
 		'</tr>';
 	}
 

@@ -130,42 +130,4 @@ $('#prescriptionsModal').on('show.bs.modal', function(e) {
     });
     </script>
 @endif 
-
-<script type="text/javascript">
-    $(document).ready(function() {
-           $('#a_date').on('change', function(e){
-            var doctor_id = $('#a_doctor_id').val();
-            var date = $('#a_date').val();
-            if(doctor_id && date) {
-                
-                $.ajax({
-                    url: '/myform/ajax/'+doctor_id+'/'+date,
-                    type: "GET",
-                    dataType: "json",
-                    success:function(data) {
-                        //if there are no free timeslots left
-                        if( data.length === 0 ) {
-                            $('select[name="a_time"]').empty();
-                            $('select[name="a_time"]').append('<option value="" disabled selected>There are no available appointments for the chosen date!</option>');
-                            $("#a_time").prop("disabled", true);
-                        }
-                        //if there are any timeslots available that day
-                        else {
-                            $("#a_time").prop("disabled", false);
-                            $('select[name="a_time"]').empty();
-                            $('select[name="a_time"]').append('<option value="" disabled selected>Select your option</option>');
-                        $.each(data, function(key, value) {
-                            $('select[name="a_time"]').append('<option value="'+ value +'">'+ value +'</option>');
-                        });
-
-                        }
-
-                    }
-                });
-            }else{
-                $('#a_time').empty();
-            }
-        });
-    });
-</script>
 @endsection

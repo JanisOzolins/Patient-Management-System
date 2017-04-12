@@ -58,7 +58,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
-                                <label for="gender" class="col-md-4 form-control-label">Gender/label>
+                                <label for="gender" class="col-md-4 form-control-label">Gender</label>
 
                                     <select class="form-control" id="gender" name="gender" value="{{ old('gender') }}" required >
                                         <option value="Male">Male</option>

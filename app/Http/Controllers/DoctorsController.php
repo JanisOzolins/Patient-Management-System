@@ -65,15 +65,43 @@ class DoctorsController extends Controller
 		return $timeslots;
     }
 
-    
-		
 
-		public function myformAjax($id, $date)
-	    {
-	    	$doctor = User::find($id);
-	        $times = $doctor->schedules->where('date', $date)->pluck('timeslots')->first();
-	        if ($times === null)
-	        	$times = array();
-			return response()->json($times);
-	    }
+
+    public function getScheduledAppointments($id) {
+        $doctor = User::find($id);
+        $scheduledAppointments = $doctor->schedules->pluck('date')->all();
+        if ($scheduledAppointments === null) {
+                $scheduledAppointments = array();
+        }
+        return response()->json($scheduledAppointments);
+    }
+
+	public function fetchDoctorSchedules($id, $date)
+    {
+    	$doctor = User::find($id);
+        $times = $doctor->schedules->where('date', $date)->pluck('timeslots')->first();
+        if($times !== null) {
+            $times = $this->removeTakenTimeslots($times, $date, $doctor);
+        }
+        if ($times === null) {
+        	$times = array();
+        }
+		return response()->json($times);
+    }
+
+    public function removeTakenTimeslots($times, $date, $doctor) {
+        $users = User::all();
+        $doctor = $doctor->first_name . ' ' . $doctor->last_name;
+        foreach($users as $user) {
+            foreach($user->appointments as $appointment) {
+                if (($appointment->a_doctor === $doctor) && ($appointment->a_date === $date)) {
+                    $index = array_search($appointment->a_time, $times);
+                    if($index !== FALSE) {
+                        unset($times[$index]);
+                    }
+                }
+            }
+        }
+        return $times;
+    }
 }
