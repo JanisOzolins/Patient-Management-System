@@ -162,18 +162,17 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Jenssegers\Mongodb\MongodbServiceProvider::class,
-        Collective\Html\HtmlServiceProvider::class,
-        Laravel\Scout\ScoutServiceProvider::class,
-        MaddHatter\LaravelFullcalendar\ServiceProvider::class,
-        UxWeb\SweetAlert\SweetAlertServiceProvider::class,
 
 
         /*
          * Package Service Providers...
          */
         Laravel\Tinker\TinkerServiceProvider::class,
-
+        Jenssegers\Mongodb\MongodbServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
+        Laravel\Scout\ScoutServiceProvider::class,
+        MaddHatter\LaravelFullcalendar\ServiceProvider::class,
+        UxWeb\SweetAlert\SweetAlertServiceProvider::class,
         /*
          * Application Service Providers...
          */

@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use DateTime;
 use Carbon\Carbon;
+use Mail;
+use App\Mail\Welcome;
+use Alert;
 
 class RegisterController extends Controller
 {
@@ -50,10 +53,13 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'first_name' => 'required|max:255',
-            'last_name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
+            'first_name' => 'required|max:100',
+            'last_name' => 'required|max:100',
+            'email' => 'required|email|max:100|unique:users',
+            'gender' => 'required',
+            'phone' => 'required|max:25',
+            'address' => 'required|max:255',
+            'birth_date' => 'required|date|before:today|after:1900/01/01'
         ]);
     }
 
@@ -96,9 +102,17 @@ class RegisterController extends Controller
             return 0;
     }
 
+    public function passwordGenerator()
+    {
+        $password = substr( "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" ,mt_rand( 0 ,51 ) ,1 ) .substr( md5( time() ), 1);
+        return $password;
+    }
+
     protected function create(array $data)
     {
+
         $userObjectID = $this->generateRandomNumber();
+        $temp_password = $this->passwordGenerator();
         $user = User::create([
             '_id' => strval($userObjectID),
             'first_name' => $data['first_name'],
@@ -109,8 +123,16 @@ class RegisterController extends Controller
             'birth_date' => $data['birth_date'],
             'phone' => $data['phone'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => bcrypt($temp_password),
         ]);
+
+        // Mail::send('emails.verify', $data, function($message) use($data){
+        //     $message->to($data['email'], $data['first_name'] . " " . $data['last_name']);
+        //     $message->subject('Please verify your email address');
+        //     $message->from('admin@patientsapp.tk', 'PMS');
+        // });
+
+        Mail::to($user)->send(new Welcome($user, $temp_password));
 
         $age = $this->calculateAge($user);
         $user->age = $age;
@@ -120,6 +142,7 @@ class RegisterController extends Controller
 
 
         $user->save();
+        Alert::success('User profile was created successfully.', 'Success!');
 
         return $user;
 

@@ -24,6 +24,16 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-12 shortcuts-section">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row shortcuts-row">
+                        <div class="col-md-12">@include('helpers.appointments-btn')</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="col-md-12 highlights-section">
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -51,11 +61,17 @@
             @foreach ($appointment->prescriptions as $prescription)
             @if ($prescription->p_repeat === "Yes")
                 @if(count($prescription->repeatUnits) > 0)
-                    @if( $prescription->repeatUnits->last()->repeat_expiry <= Carbon\Carbon::now()->addDays(31)->format('Y-m-d'))
+                    @if( $prescription->repeatUnits->last()->repeat_expiry <= Carbon\Carbon::now()->addDays(7)->format('Y-m-d'))
                             <div class="panel panel-default">
                                 <div class="panel-heading"><h3 class="panel-title">{{ $prescription->p_name }} 
                                 <button type="button" class="btn btn-primary btn-xs highlight-3">Ending Soon</button>
-                                <button type="button" class="btn btn-primary btn-xs highlight-1">Reorder</button>
+                                <button id="repeat_reorder" 
+                                data-prescription_name="{{ $prescription->p_name }}" 
+                                data-patient_id="{{ $prescription->appointment->user->id }}" 
+                                data-appointment_id="{{ $prescription->appointment->id }}" 
+                                data-prescription_id="{{ $prescription->id }}" 
+                                type="button" 
+                                class="btn btn-primary btn-xs highlight-1">Reorder</button>
                                 </h3></div>
                                 <div class="panel-body">
                                 @if( $prescription->repeatUnits->last()->repeat_expiry !== $prescription->p_expiry)

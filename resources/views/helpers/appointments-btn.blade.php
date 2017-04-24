@@ -1,12 +1,16 @@
 <!-- Button trigger modal -->
 <div class="appointments-controls">
 @if(Route::currentRouteName() === "patients.show")
-<button type="button" class="btn btn-success btn-xs" data-id="new-button" data-toggle="modal" data-target="#appointmentsModal">
+<button type="button" class="btn btn-success appointmentsAddButton btn-xs" data-id="new-button" data-toggle="modal" data-target="#appointmentsModal">
     New Appointment
 </button>
 @elseif(Route::currentRouteName() === "appointments.index")
-<button type="button" class="btn btn-success btn-block" data-id="new-button" data-toggle="modal" data-target="#appointmentsModal">
+<button type="button" class="btn btn-success appointmentsAddButton btn-block" data-id="new-button" data-toggle="modal" data-target="#appointmentsModal">
     New Appointment
+</button>
+@else
+<button type="button" class="btn btn-success appointmentsAddButton appointmentsAddButtonHome btn-block" data-id="new-button" data-toggle="modal" data-target="#appointmentsModal">
+    Book an Appointment
 </button>
 @endif
 </div>
@@ -37,21 +41,23 @@
                                 <input id="a_app_id" type="hidden" class="form-control form-control-success" name="a_app_id" >
 
                                 <!-- Patient ID selector -->
-                                <div class="form-group{{ $errors->has('a_patient_id') ? ' has-error' : '' }}">
-                                    <label id="a_patient_id_label" for="a_patient_id" class="form-control-label">Patient</label>
-                                    @if(Route::currentRouteName() === "patients.show")
-                                        <input id="a_patient_id" type="text" class="form-control form-control-success" name="a_patient_id" value="{{ $user->id }}" >
+                                <div class="patient_id-form-group form-group{{ $errors->has('a_patient_id') ? ' has-error' : '' }}">
+                                    
+                                    @if(Route::currentRouteName() === "patients.show" || Route::currentRouteName() === "users.home")
+                                        <input id="a_patient_id" type="hidden" class="form-control form-control-success" name="a_patient_id" value="{{ $user->id }}" >
                                         @if ($errors->has('a_patient_id'))
                                             <span class="help-block">
                                                 <strong>{{ $errors->first('a_patient_id') }}</strong>
                                             </span>
                                         @endif
                                     @elseif(Route::currentRouteName() === "appointments.index")
-                                        <select class="form-control" id="a_patient_id" name="a_patient_id" value="{{ old('a_patient_id') }}" required >
-                                                <option value="" disabled selected>Select a patient</option>
-                                            @foreach($allUsers as $user)
+                                        <label id="a_patient_id_label" for="a_patient_id" class="form-control-label">Patient</label>
+                                        <input type="hidden" id="a_patient_id" type="text" class="form-control form-control-success" name="a_patient_id" value="" >
+                                        <select class="form-control" id="patient_selector" name="patient_selector" value="{{ old('patient_selector') }}">
+                                            <option value="" disabled selected>Select a patient</option>
+                                            @foreach($allUsers->sortBy('last_name') as $user)
                                                 @if ($user->user_type === "patient")
-                                                <option value="{{$user->id}}">{{ $user->first_name }} {{ $user->last_name }}</option>
+                                                <option value="{{$user->id}}"> {{ $user->last_name }}, {{ $user->first_name }}</option>
                                                 @endif
                                             @endforeach
                                         </select>
@@ -59,27 +65,23 @@
                                 </div>
 
                                 <!-- Doctor Selector -->
-                                <div class="form-group{{ $errors->has('a_doctor_id') ? ' has-error' : '' }}">
+                                <div class="a_doctor_id-form-group form-group{{ $errors->has('a_doctor_id') ? ' has-error' : '' }}">
                                     <label for="a_doctor_id" class="col-md-4 form-control-label">Doctor</label>
-                                        <select class="form-control" id="a_doctor_id" name="a_doctor_id" value="{{ old('a_doctor_id') }}" required >
-                                                        <option value="" disabled selected>Select a specialist</option>
+                                        <select class="form-control" id="a_doctor_id" name="a_doctor_id" value="{{ old('a_doctor_id') }}" >
+                                            @if( old('a_doctor_id') === null )
+                                                <option value="" disabled selected>Select a specialist</option>
+                                            @endif
                                             @if(Route::currentRouteName() === "appointments.index")
-                                                @foreach ($allUsers as $user) 
+                                                @foreach ($allUsers->sortBy('last_name') as $user) 
                                                     @if ($user->user_type === "doctor")
-                                                        @if( old('a_doctor_id') == $user->id )
-                                                            <option value="{{$user->id}}" selected="selected">{{ $user->first_name }} {{ $user->last_name }}</option>
-                                                        @else
-                                                            <option value="{{$user->id}}">{{ $user->first_name }} {{ $user->last_name }}</option>
-                                                        @endif
+                                                            <option value="{{$user->id}}">{{ $user->last_name }}, {{ $user->first_name }}</option>
                                                     @endif
                                                 @endforeach 
-                                            @elseif(Route::currentRouteName() === "patients.show")
-                                                @foreach ($users as $user) 
+                                            @else
+                                                @foreach ($users->sortBy('last_name') as $user) 
                                                     @if ($user->user_type === "doctor")
-                                                        @if( old('a_doctor_id') == $user->id )
-                                                            <option value="{{$user->id}}" selected="selected">{{ $user->first_name }} {{ $user->last_name }}</option>
-                                                        @else
-                                                            <option value="{{$user->id}}">{{ $user->first_name }} {{ $user->last_name }}</option>
+                                                        @if ($user->user_type === "doctor")
+                                                            <option value="{{$user->id}}">{{ $user->last_name }}, {{ $user->first_name }}</option>
                                                         @endif
                                                     @endif
                                                 @endforeach 
@@ -96,6 +98,7 @@
                                 <!-- Appointment Date -->
                                 <div class="form-group{{ $errors->has('a_date') ? ' has-error' : '' }}">
                                     <label for="a_date" class="form-control-label">Date:</label>
+                                        <input id="a_date_hidden" type="hidden" class="form-control form-control-success" name="a_date_hidden">
                                         <input id="a_date" type="text" class="form-control form-control-success" name="a_date" value="{{ old('a_date') }}" required>
                                         @if ($errors->has('a_date'))
                                             <span class="help-block">

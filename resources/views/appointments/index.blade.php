@@ -19,38 +19,34 @@
             <table class="table table-responsive table-sm table-bordered table-hover appointments-table">
                 <thead>
                     <tr>
-                        <th class="col-md-1">Patient</th>
-                        <th class="col-md-2">First Name</th>
-                        <th class="col-md-2">Last Name</th>
+                        <th class="col-md-2">Patient</th>
                         <th class="col-md-1">Date</th>
                         <th class="col-md-1">Time</th>
-                        <th class="col-md-3">Notes</th>
+                        <th class="col-md-2">Doctor</th>
+                        <th class="col-md-4">Notes</th>
                         <th class="col-md-1">Edit</th>
                         <th class="col-md-1">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user)
-                    @foreach ( $user->appointments as $app)
-                    <tr>
-                        <td>
-                            <a href='./user/{{ $app->user->id }}'>Profile</a>
-                        </td>
-                        <td>{{ $app->user->first_name }}</td>
-                        <td>{{ $app->user->last_name }}</td>
-                        <td>{{ $app->a_date }}</td>
-                        <td>{{ $app->a_time }}</td>
-                        <td>{{ $app->a_details }}</td>
-                        <td>
-                            <a href="/user/{{ $app->user->id }}/appointments/{{ $app->id }}/edit" method="GET" class="btn btn-primary btn-sm">Edit</a>
-                        </td>
-                        <td>
-                            {{ Form::open(['method' => 'DELETE', 'route' => ['appointments.delete', $app->user->id, $app->id]]) }}
-                                {{ Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) }}
-                            {{ Form::close() }}
-                        </td>
-                    </tr>
-                    @endforeach
+                    @foreach ( $allAppointments->sortBy('datetime') as $appointment)
+                        @if($appointment->datetime > date("Y-m-d H:i:s"))
+                            <tr>
+                                <td><a href='./user/{{ $appointment->user->id }}'>{{ $appointment->user->first_name }} {{ $appointment->user->last_name }}</a></td>
+                                <td>{{ date('d F Y', strtotime($appointment->a_date)) }}</td>
+                                <td>{{ $appointment->a_time }}</td>
+                                <td>{{ $appointment->a_doctor }}</td>
+                                <td>{{ $appointment->a_details }}</td>
+                                <td>
+                                        <form> <a type="button" data-id="edit-button" class="edit-btn btn btn-primary btn-xs user-profile-icon appointmentsEditButton" data-toggle="modal" data-appointment-id="{{ $appointment->id }}" data-doctor-id="{{ $appointment->a_doctor_id }}" data-patient-id="{{ $appointment->user->id }}" data-date="{{ $appointment->a_date }}" data-time="{{ $appointment->a_time }}" data-details="{{ $appointment->a_details }}" data-target="#appointmentsModal"> Edit </a> </form>
+                                </td>
+                                <td>
+                                    {{ Form::open(['method' => 'DELETE', 'route' => ['appointments.delete', $appointment->user->id, $appointment->id]]) }}
+                                        {{ Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) }}
+                                    {{ Form::close() }}
+                                </td>
+                            </tr>
+                        @endif
                     @endforeach
                 </tbody>
             </table>

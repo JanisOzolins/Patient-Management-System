@@ -25,42 +25,48 @@ class AppointmentsController extends Controller
 	public function index() 
 	{
 		$q = Input::get ( 'q' );
-		$allUsers = User::all();
+		$allAppointments = $this->getAllAppointments();
 	    if($q != NULL) {
-	    	$users = $this->search($q);
-	    	return view('appointments.index')->with('users', $users)->with('allUsers', $allUsers);
+	    	$allAppointments = $this->search($q);
 	    }
-	    else { 
-			$users = User::all();
-			return view('appointments.index')->with('users', $users)->with('allUsers', $allUsers);
-		}
+	    
+	    return view('appointments.index')->with('allAppointments', $allAppointments);
+	}
 
-    		
+	public function getAllAppointments() {
+		$users = User::all();
+		$getAllAppointments = collect();
+		foreach($users as $user) {
+			foreach($user->appointments as $appointment) {
+				$getAllAppointments->push($appointment);
+			}
+		}
+		return $getAllAppointments;
 	}
 
 	public function search($q) 
 	{
-		$users = User::all();
+		$appointments = $this->getAllAppointments();
 
-	    $new = $users->filter(function($user) use ($q)
+	    $new = $appointments->filter(function($appointment) use ($q)
 	    {
-	    	if( stripos($user->first_name, $q) !== FALSE )
-	    		return $user;
-	    	if( stripos($user->last_name, $q) !== FALSE )
-	    		return $user;
-	    	if( stripos($user->birth_date, $q) !== FALSE )
-	    		return $user;        
+	    	if( stripos($appointment->user->first_name, $q) !== FALSE )
+	    		return $appointment;
+	    	if( stripos($appointment->user->last_name, $q) !== FALSE )
+	    		return $appointment;
+	    	if( stripos($appointment->user->id, $q) !== FALSE )
+	    		return $appointment;
+	    	if( stripos($appointment->a_date, $q) !== FALSE )
+	    		return $appointment;    
+	    	if( stripos($appointment->user->date_birth, $q) !== FALSE )
+	    		return $appointment;    
+	    	if( stripos($appointment->a_doctor, $q) !== FALSE )
+	    		return $appointment;            
 	    });
 
     	return $new;
 	}
 	
-
-	public function create() 
-	{
-		$users = User::all();
-		return view('appointments.create')->with('users', $users);
-	}
 
 	public function store() 
 	{
@@ -74,9 +80,9 @@ class AppointmentsController extends Controller
 
 		// checks if the appointment slot is available 
 		
-		Validator::make(request()->all(), [
-		    'a_details' => 'required|min:10',
-		])->validate();
+		// Validator::make(request()->all(), [
+		//     'a_details' => 'required|min:10',
+		// ])->validate();
 			
 		
 
@@ -90,13 +96,15 @@ class AppointmentsController extends Controller
 			$appointment->a_doctor_id = $doctor->id;
 			$appointment->a_doctor = $doctor->first_name . ' ' . $doctor->last_name;
 			$appointment->a_time = request('a_time');
-			$appointment->a_date = request('a_date');
+			$appointment->a_date = request('a_date_hidden');
+			$datetime = strtotime(request('a_date_hidden') . ' ' . request('a_time'));
+			$datetime = date('Y-m-d H:i', $datetime);
 			$appointment->a_details = request('a_details');
 			$appointment->datetime = $datetime;
 
 			$appointment->save();
 
-			return redirect('/user/' . request('a_patient_id'));
+			return back();
 		}
 
 		// add embedded 'Appointment' instance
@@ -112,12 +120,7 @@ class AppointmentsController extends Controller
 		// save changes
 		$user->save();
 		
-		if( \Route::currentRouteName() === "patients.show" ) {
-			return redirect('/user/' . request('a_patient_id'));
-		}
-		elseif ( \Route::currentRouteName() === "appointments.index" ){
-			return redirect('/appointments/');
-		}
+		return back();
 		
 	}
 
@@ -135,12 +138,7 @@ class AppointmentsController extends Controller
 		// save changes
 		$user->save();
 
-		if( \Route::currentRouteName() === "patients.show" ) {
-			return redirect('/user/' . $uid);
-		}
-		elseif ( \Route::currentRouteName() === "appointments.index" ){
-			return redirect('/appointments/');
-		}
+		return back();
 
 	}
 

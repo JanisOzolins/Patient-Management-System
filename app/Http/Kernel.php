@@ -39,7 +39,7 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             'bindings',
-        ],
+        ]
     ];
 
     /**
@@ -56,6 +56,15 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'whichHome' => 'App\Http\Middleware\whichHome',
+        'MedicalPatient' => \App\Http\Middleware\MedicalPatient::class,
+        'MedicalStaffManagerPatient' => \App\Http\Middleware\MedicalStaffManagerPatient::class,
+        'MedicalStaffManager' => \App\Http\Middleware\MedicalStaffManager::class,
+        'ManagerStaffPatient' => \App\Http\Middleware\ManagerStaffPatient::class,
+        'Manager' => \App\Http\Middleware\Manager::class,
+        'Medical' => \App\Http\Middleware\Medical::class,
+        'Doctor' => \App\Http\Middleware\Doctor::class,
+        'Own' => \App\Http\Middleware\Own::class,
+        'Staff' => \App\Http\Middleware\Staff::class,
+        'MedicalStaff' => \App\Http\Middleware\MedicalStaff::class,
     ];
 }

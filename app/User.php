@@ -21,9 +21,9 @@ class User extends Eloquent implements AuthenticatableContract, AuthorizableCont
 
     // enable soft delete timestamp
     protected $dates = ['created_at', 'updated_at', 'deleted_at']; // specify database collection
-    protected $collection = "patientcollection";
+    protected $collection = "users";
     // specify mass-assignable fields
-    protected $fillable = ['_id', 'first_name', 'gender', 'last_name', 'user_type', 'birth_date', 'age', 'email', 'phone', 'address', 'password'];
+    protected $fillable = ['_id', 'first_name', 'gender', 'last_name', 'user_type', 'birth_date', 'age', 'email', 'phone', 'address', 'password', 'confirmation_code', 'confirm'];
     // specify protected fields
     protected $hidden = ['password', 'remember_token'];
 

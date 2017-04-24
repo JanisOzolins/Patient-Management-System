@@ -39,7 +39,7 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->phone }}</td>
                     <td>
-                        <a href="#" method="GET" class="btn btn-primary btn-sm">Edit</a>
+                        <a href="{{ URL::to('/edit-profile/' . $user->id ) }}" class="btn btn-primary btn-sm">Edit</a>
                     </td>
                 </tr>
             @endif

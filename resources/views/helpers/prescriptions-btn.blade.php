@@ -5,7 +5,7 @@
 </button>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="prescriptionsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade prescriptions-container" id="prescriptionsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <!-- Header -->
@@ -28,7 +28,7 @@
                             <!-- Prescription Name -->
                             <div class="form-group{{ $errors->has('p_name') ? ' has-error' : '' }}">
                                 <label for="p_name" class="col-md-4 form-control-label">Prescription name: </label>
-                                <input id="p_name" type="text" class="form-control" name="p_name"></input>
+                                <input id="p_name" type="text" class="form-control" name="p_name" required></input>
                                 @if ($errors->has('p_name'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('p_name') }}</strong>
@@ -39,7 +39,7 @@
                             <!-- Quantity / Supply -->
                             <div class="form-group{{ $errors->has('p_quantity') ? ' has-error' : '' }}">
                                 <label for="p_quantity" class="col-md-4 form-control-label">Quantity: </label>
-                                <input id="p_quantity" type="text" class="form-control" name="p_quantity"></input>
+                                <input id="p_quantity" type="text" class="form-control" name="p_quantity" required></input>
                                 @if ($errors->has('p_quantity'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('p_quantity') }}</strong>
@@ -51,6 +51,7 @@
                             <div class="form-group{{ $errors->has('p_condition') ? ' has-error' : '' }}">
                                 <label for="p_condition" class="col-md-4 form-control-label">Associated condition: </label>
                                     <select class="form-control" id="p_condition" name="p_condition" required >
+                                                <option value="" disabled selected>Select an option</option>
                                     @foreach($user->appointments as $appointment)
                                         @foreach($appointment->conditions as $condition)
                                                 <option value="{{ $condition->c_name }}">{{ $condition->c_name }}</option>
@@ -79,6 +80,7 @@
                             <div class="form-group{{ $errors->has('p_controlled') ? ' has-error' : '' }}">
                                 <label for="p_controlled" >Is this a controlled drug?</label>
                                 <select class="form-control" id="p_controlled" name="p_controlled" required >
+                                    <option value="" disabled selected>Select an option</option>
                                     <option value="No">No</option>
                                     <option value="Yes">Yes</option>
                                 </select>
@@ -92,7 +94,8 @@
                             <!-- Is the Prescription Repeat -->
                             <div  id="p_repeat_group" class="form-group{{ $errors->has('p_repeat') ? ' has-error' : '' }}">
                                 <label for="p_controlled">Is this a repeat prescription?</label>
-                                <select class="form-control" id="p_repeat" name="p_repeat" value="No" required >
+                                <select class="form-control" id="p_repeat" name="p_repeat" value="No" >
+                                    <option value="" disabled selected>Select an option</option>
                                     <option value="No">No</option>
                                     <option value="Yes">Yes</option>
                                 </select>
@@ -107,7 +110,8 @@
                             <!-- Repeat Prescription Expiry Date -->
                             <div id="p_expiry_group" class="form-group{{ $errors->has('p_expiry') ? ' has-error' : '' }}">
                                 <label  for="p_expiry" class="col-md-4 form-control-label">Repeat prescription expiry date: </label>
-                                <select type="hidden" class="form-control" id="p_expiry" name="p_expiry" required >
+                                <select type="hidden" class="form-control" id="p_expiry" name="p_expiry" >
+                                    <option value="" disabled selected>Select an option</option>
                                     <option value="6 months">6 months</option>
                                     <option value="7 months">7 months</option>
                                     <option value="8 months">8 months</option>
