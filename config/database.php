@@ -49,11 +49,11 @@ return [
             'driver' => 'mongodb',
             'host' => env('DB_HOST', '67.207.86.21'),
             'port' => env('DB_PORT', '27017'),
-            'database' => env('DB_DATABASE', 'admin'),
+            'database' => env('DB_DATABASE', 'patientdatabase'),
             'username' => env('DB_USERNAME', 'JanisAdmin'),
             'password' => env('DB_PASSWORD', 'JanisAdmin'), // L283Ng11l7n17ACWYL
             'options' => array(
-                'database' => 'admin' // sets the authentication database required by mongo 3
+                'database' => 'patientdatabase' // sets the authentication database required by mongo 3
             )
         ],
 
