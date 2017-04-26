@@ -33,15 +33,27 @@ return [
 
     'connections' => [
 
+        // 'mongodb' => [   
+        //     'driver' => 'mongodb',
+        //     'host' => env('DB_HOST', '127.0.0.1'),
+        //     'port' => env('DB_PORT', '27017'),
+        //     'database' => env('DB_DATABASE', 'patientdatabase'),
+        //     'username' => env('DB_USERNAME', 'admin'),
+        //     'password' => env('DB_PASSWORD', 'admin'), // L283Ng11l7n17ACWYL
+        //     'options' => array(
+        //         'database' => 'patientdatabase' // sets the authentication database required by mongo 3
+        //     )
+        // ],
+
         'mongodb' => [   
             'driver' => 'mongodb',
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => env('DB_HOST', '67.207.86.21'),
             'port' => env('DB_PORT', '27017'),
-            'database' => env('DB_DATABASE', 'patientdatabase'),
-            'username' => env('DB_USERNAME', 'admin'),
-            'password' => env('DB_PASSWORD', 'admin'), // L283Ng11l7n17ACWYL
+            'database' => env('DB_DATABASE', 'admin'),
+            'username' => env('DB_USERNAME', 'JanisAdmin'),
+            'password' => env('DB_PASSWORD', 'JanisAdmin'), // L283Ng11l7n17ACWYL
             'options' => array(
-                'database' => 'patientdatabase' // sets the authentication database required by mongo 3
+                'database' => 'admin' // sets the authentication database required by mongo 3
             )
         ],
 
