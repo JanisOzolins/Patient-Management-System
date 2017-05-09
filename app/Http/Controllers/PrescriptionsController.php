@@ -30,6 +30,7 @@ class PrescriptionsController extends Controller
         $prescription->p_name = request('p_name');
         $prescription->p_doctor = Auth::user()->id;
         $prescription->p_active = request('p_active');
+        $prescription->p_repeat_months = request('p_expiry');
         $prescription->p_condition = request('p_condition');
         $prescription->p_controlled = request('p_controlled');
         $prescription->p_repeat = request('p_repeat');

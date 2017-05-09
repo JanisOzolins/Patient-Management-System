@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/', 'UsersController@home')->name('users.home');
 	Route::get('/edit-profile/{uid}', 'UsersController@edit')->name('users.edit')->middleware('ManagerStaffPatient');
 	Route::POST('/update-profile/{uid}', 'UsersController@update')->name('users.update')->middleware('ManagerStaffPatient');
+	Route::get('/users', 'UsersController@all')->name('users.all')->middleware('Manager');
 
 	// Doctors
 	Route::get('/schedule', 'DoctorsController@index')->name('doctors.index')->middleware('MedicalStaff');
@@ -46,8 +47,8 @@ Route::group(['middleware' => 'auth'], function () {
 	// Appointments
 	Route::get('/appointments', 'AppointmentsController@index')->name('appointments.index')->middleware('MedicalStaffManager');
 	Route::post('/appointments', 'AppointmentsController@store')->name('appointments.store');
-	Route::delete('user/{uid}/appointments/{aid}/', 'AppointmentsController@delete')->name('appointments.delete')->middleware('MedicalStaff');
-	Route::get('user/{uid}/appointments/{aid}/', 'AppointmentsController@show')->name('appointments.show')->middleware('MedicalPatient');
+	Route::delete('user/{uid}/appointments/{aid}/', 'AppointmentsController@delete')->name('appointments.delete')->middleware('MedicalStaffManager');
+	Route::get('user/{uid}/appointments/{aid}/', 'AppointmentsController@show')->name('appointments.single')->middleware('MedicalPatient');
 	Route::get('user/{uid}/appointments/{aid}/edit', 'AppointmentsController@edit')->name('appointments.edit')->middleware('MedicalStaff');
 	Route::put('user/{uid}/appointments/{aid}/', 'AppointmentsController@update')->name('appointments.update')->middleware('MedicalStaff');
 
@@ -66,16 +67,20 @@ Route::group(['middleware' => 'auth'], function () {
 			$users = App\User::paginate(15);
     		return view ('patients.index')->with('users', $users)->withMessage('No Details found. Try to search again !');
     	}
-	})->name('patients.index')->middleware('MedicalStaffManager');
+	})->name('patients.index')->middleware('MedicalStaff');
 
 	// Conditions
 	Route::get('/user/{uid}/conditions/create', 'ConditionsController@create')->name('conditions.create')->middleware('Medical');
 	Route::post('/conditions', 'ConditionsController@store')->name('conditions.store')->middleware('Medical');
 	Route::delete('user/{uid}/appointments/{aid}/conditions/{cid}', 'ConditionsController@delete')->name('conditions.delete')->middleware('Medical');
 
-	// Notes
+	// Appointment Notes
 	Route::post('/notes', 'NotesController@store')->name('notes.store');
 	Route::delete('/user/{uid}/appointments/{aid}/notes/{nid}', 'NotesController@delete')->name('notes.delete');
+
+	// General Notes
+	Route::post('/gn', 'UsersController@gn_create')->name('gn.create');
+	Route::delete('/user/{uid}/gn/{gnid}', 'UsersController@gn_delete')->name('gn.delete');
 
 	// Prescriptions
 	Route::post('/prescriptions', 'PrescriptionsController@store')->name('prescriptions.store')->middleware('Medical');

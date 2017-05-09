@@ -26,7 +26,7 @@ class MedicalPatient
             return $next($request);
         }
         else {
-            return redirect('/');
+            return back();
         }
     }
 }

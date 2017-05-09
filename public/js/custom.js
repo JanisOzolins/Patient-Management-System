@@ -33,6 +33,7 @@ $(document).ready(function() {
   //////// PRESCRIPTIONS FORM
   ///////////////////////////////////////////
 
+$(".prescriptionsAddButton").click(function(){
   if($('div').is('.prescriptions-container')){
     document.getElementById('p_expiry_group').style.display = 'none';
     document.getElementById('p_repeat_group').style.display = 'none';
@@ -61,6 +62,7 @@ $(document).ready(function() {
       }
     };
   }
+});
 
   ///////////////////////////////////////////
   //////// AVAILABLE APPOINTMENT DATES
@@ -359,7 +361,9 @@ $(document).ready(function() {
       var treated = $(e.relatedTarget).data('treated');
       var details = $(e.relatedTarget).data('details');
 
-      $("#c_condition_id").val(conid); // hidden
+      $("input[name=c_isTreated][value=" + treated + "]").prop('checked', true);
+
+      $("#condition_id").val(conid); // hidden
       $("#c_patient_id").val(patientid); // hidden
       $("#c_name").val(name);
       $("#c_diagnosed_at").val(diagnosed);
@@ -372,6 +376,7 @@ $(document).ready(function() {
   //////// EDIT PRESCRIPTION FORM 
   ///////////////////////////////////////////
 
+ $(".prescriptionsEditButton").click(function(){
   $('#prescriptionsModal').on('show.bs.modal', function(e) {
       var prescriptionid = $(e.relatedTarget).data('prescription-id');
       var appid = $(e.relatedTarget).data('appointment-id');
@@ -382,28 +387,36 @@ $(document).ready(function() {
       var active = $(e.relatedTarget).data('active');
       var expiry = $(e.relatedTarget).data('expiry');
       var repeat = $(e.relatedTarget).data('repeat');
+      var repeatmonths = $(e.relatedTarget).data('repeat-months');
       var controlled = $(e.relatedTarget).data('controlled');
       var details = $(e.relatedTarget).data('details');
+
 
       $("#prescription_id").val(prescriptionid); // hidden
       $("#patient_id").val(patientid); // hidden
       $("#appointment_id").val(appid); // hidden
       $("#p_name").val(name);
-      $("#p_quanity").val(quantity);
+      $("#p_quantity").val(quantity);
       $("#p_condition").val(condition);
       $("#p_active").val(active);
-      $("#p_expiry").val(expiry);
+      if(repeat === "Yes") {
+        $("#p_expiry").val(repeatmonths);
+      }
+      else {
+        $("#p_expiry").val("");
+      }
       $("#p_repeat").val(repeat);
       $("#p_controlled").val(controlled);
       $("#p_details").val(details);
 
       $("input[name=p_controlled][value=" + controlled + "]").prop('checked', true);
       $("input[name=p_repeat][value=" + repeat + "]").prop('checked', true);
+      $("input[name=p_expiry][value=" + expiry + "]").prop('checked', true);
 
       // var $patient = $("#p_patient_id");
       // var $patientLabel = $("#p_patient_id_label");
       // $patient.hide();
       // $patientLabel.hide();
   });
-
+});
 });

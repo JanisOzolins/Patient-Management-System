@@ -53,7 +53,7 @@
                             @endif
                         @endforeach
                     </select> -->
-                    <form action="/searchusers" method="POST" role="search">
+                    <form action="/users" method="GET" role="search">
                         {{ csrf_field() }}
                         <div class="input-group">
                             <input type="text" class="form-control" name="q"

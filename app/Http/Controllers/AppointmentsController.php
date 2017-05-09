@@ -19,7 +19,7 @@ class AppointmentsController extends Controller
     	$appointments = $user->appointments;
 		$appointment = $user->appointments()->find($aid);
 
-		return view('patients.show')->with('appointment', $appointment)->with('appointments', $appointments)->with('user', $user);		
+		return view('appointments.single')->with('appointment', $appointment)->with('appointments', $appointments)->with('user', $user);		
 	}
     
 	public function index() 
@@ -30,7 +30,7 @@ class AppointmentsController extends Controller
 	    	$allAppointments = $this->search($q);
 	    }
 	    
-	    return view('appointments.index')->with('allAppointments', $allAppointments);
+	    return view('appointments.index')->with('allAppointments', $allAppointments)->with('q', $q);
 	}
 
 	public function getAllAppointments() {
@@ -88,7 +88,7 @@ class AppointmentsController extends Controller
 
 		//return request()->all();
 
-		if ($user->appointments()->find(request('a_app_id')) != NULL) // checks if appointment needs to be updated instead of created
+		if ($user->appointments()->find(request('a_app_id')) !== NULL) // checks if appointment needs to be updated instead of created
 		{
 
 			$appointment = $user->appointments()->find(request('a_app_id'));

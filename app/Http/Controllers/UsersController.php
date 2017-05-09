@@ -27,6 +27,60 @@ class UsersController extends Controller
 
     }
 
+    public function all() {
+        $users = User::all();
+        $q = Input::get( 'q' );
+        $type = Input::get( 'searchUsers' );
+        if ($type === "" || $type === null) {
+            $type = "all";
+        }
+        if($q !== NULL) {
+            $users = $this->allUsersSearch($q, $type);
+        }
+        else {
+            $users = $this->filterUsers($type);   
+        }
+        return view('managers.users')->with('users', $users)->with('type', $type);
+    }
+
+    public function filterUsers($type) {
+        $users = User::all();
+        $usertypes = $users->filter(function($user) use ($type)
+        {
+            if( $user->user_type === $type || $type === "all" || $type === "" || $type === null)  
+                return $user;   
+        });
+
+        return $usertypes;
+    }
+
+    public function allUsersSearch($q, $type) 
+    {
+        $users = User::all();
+        $new = $users->filter(function($user) use ($q, $type)
+        {
+            if( stripos($user->first_name, $q) !== FALSE )
+                return $user;
+            if( stripos($user->last_name, $q) !== FALSE )
+                return $user;
+            if( stripos($user->id, $q) !== FALSE )
+                return $user;
+            if( stripos($user->birth_date, $q) !== FALSE )
+                return $user;    
+            if( stripos($user->phone, $q) !== FALSE )
+                return $user;  
+            if( stripos($user->email, $q) !== FALSE )
+                return $user;      
+        });
+        $usertypes = $new->filter(function($user) use ($type)
+        {
+            if( $user->user_type === $type || $type === "all" || $type === "")  
+                return $user;   
+        });
+
+        return $usertypes;
+    }
+
     public function home() {
 
     	$users = User::all();
@@ -72,6 +126,12 @@ class UsersController extends Controller
 	            'new_password_confirmation' => 'same:new_password',
 	        ], $messages);
 	    }
+        elseif(Auth::user()->user_type === "manager") {
+            $validator = Validator::make(request()->all(), [
+                'new_password' => '',
+                'new_password_confirmation' => 'same:new_password',
+            ], $messages); 
+        }
 	    elseif( (Auth::user()->user_type !== "patient") && ($user->user_type === "patient") || (Auth::user()->user_type !== "manager")){
 	    	// staff members do not require to provide current password to change patient's password
 	    	$validator = Validator::make(request()->all(), [
@@ -204,5 +264,30 @@ class UsersController extends Controller
 			}
 		}
 		return response()->json($events);
+    }
+
+    public function gn_create() {
+        $user = User::find(request('patient_id'));
+
+        $author = Auth::user()->first_name . ' ' . Auth::user()->last_name;
+
+        $note = $user->generalnotes()->create(['gn_author' => $author, 'gn_content' => request('gn_content')]);
+
+        $user->save();
+
+        return back();
+    }
+
+    public function gn_delete($uid, $gnid) {
+
+        $user = User::find($uid);
+        $note = $user->generalnotes()->find($gnid);
+
+        $note->delete();
+
+        $user->save();
+
+        return back();
+        
     }
 }

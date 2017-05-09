@@ -5,8 +5,11 @@
     </div>
     <ul class="sidebar-nav">
         <li> <a href="{{ URL::to('/') }}">Home</a> </li>
-        @if(Auth::user()->user_type !== "patient")
+        @if(Auth::user()->user_type !== "patient" && Auth::user()->user_type !== "manager")
             <li> <a href="{{ URL::to('/patients') }}">Patients</a> </li>
+        @endif
+        @if(Auth::user()->user_type === "manager")
+            <li> <a href="{{ URL::to('/users') }}">All System Users</a> </li>
         @endif
         @if(Auth::user()->user_type !== "patient" && Auth::user()->user_type !== "manager")
             <li> <a href="{{ URL::to('/schedule') }}">Schedule</a> </li>

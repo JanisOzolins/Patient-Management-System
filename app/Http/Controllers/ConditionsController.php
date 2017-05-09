@@ -29,7 +29,7 @@ class ConditionsController extends Controller
 
         if ($appointment->conditions()->find(request('condition_id')) != NULL) // checks if condition needs to be updated instead of created
         {
-            $condition = $user->conditions()->find(request('condition_id'));
+            $condition = $appointment->conditions()->find(request('condition_id'));
 
             $condition->c_name = request('c_name');
             $condition->c_diagnosed_at = request('c_diagnosed_at');
@@ -38,7 +38,7 @@ class ConditionsController extends Controller
 
             $condition->save();
 
-            return redirect('/user/' . request('patient_id'));
+            return back();
         }
 
         $condition = $appointment->conditions()->create([
@@ -50,7 +50,7 @@ class ConditionsController extends Controller
 
         $condition->save();
 
-        return redirect('/user/' . request('patient_id') . '/appointments/' . request('appointment_id') );
+        return back();
     }
 
     public function delete($uid, $aid, $cid) 
@@ -66,7 +66,7 @@ class ConditionsController extends Controller
 
         $user->save();
 
-        return redirect('/user/' . $uid . '/appointments/' . $aid);
+        return back();
     }
 
 }

@@ -34,6 +34,16 @@ body {
     box-shadow: none;
 }
 
+.btn-primary {
+    color: #fff;
+    background-color: #2196F3;
+    border-color: #2196F3;
+}
+
+label {
+    color: #212121;
+}
+
 select.form-control {
     -webkit-appearance: none;
     -webkit-border-radius: 0px;
@@ -42,7 +52,11 @@ select.form-control {
     background-repeat: no-repeat;
 }
 
-
+.panel-group {
+    -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+}
 
 .well {
     border-radius: 0;
@@ -161,6 +175,10 @@ div#sidebar-wrapper {
     font-size: 14px;
 }
 
+.app-notes p {
+    margin-top: 20px;
+}
+
 .app-notes .prescriptions-controls,
 .app-conditions .prescriptions-controls,
 .app-prescriptions .prescriptions-controls {
@@ -169,13 +187,35 @@ div#sidebar-wrapper {
 
 .btn-return-user-profile {
     margin-bottom: 25px;
+    float: left;
 }
 
 .app-prescriptions .panel-default>.panel-heading {
-    background-color: #eaeaea;
-    border-color: #ddd;
+    background-color: #F5F5F5;
+    border: solid 1px #ddd;
     border-radius: 0px;
 }
+
+.app-prescriptions a.panel-title:hover, .app-prescriptions a.panel-title:focus {
+    color: #3f51b5;
+    text-decoration: none;
+}
+
+.app-prescriptions .prescriptions-panel,
+.app-prescriptions .panel-group {
+    box-shadow: none;
+}
+
+.app-prescriptions .panel-heading + .panel-collapse > .list-group {
+    border-top: none;
+}
+
+ul.list-group {
+    border: solid 1px #ddd;
+    border-top: none;
+}
+
+
 
 /* patients list */
 
@@ -198,6 +238,13 @@ div#sidebar-wrapper {
 
 .patients-page thead > tr > th {
     text-align: center;
+}
+
+.app-conditions .radio.col-md-12 {
+    padding: 0;
+    display: inline-block;
+    width: auto;
+    padding-right: 20px;
 }
 
 /* user profile sidebar */
@@ -261,8 +308,13 @@ div#sidebar-wrapper {
 
 a.panel-title:hover, 
 a.panel-title:focus {
-    color: #ffffff;
-    text-decoration: underline;
+    color: #eaeaea;
+    text-decoration: none;
+}
+
+.appointments-controls button.appointmentsAddButton {
+    margin-bottom: 11px;
+    padding: 5px;
 }
 
 /* Patient User Info Container */
@@ -336,6 +388,8 @@ a.panel-title:hover {
     border-color: #dddddd;
     margin: 10px 0;
 }
+
+
 
 i.fa.fa-pencil-square.edit-icon,
 i.fa.fa-minus-square.edit-icon {
@@ -464,7 +518,7 @@ select#schedule_select_doctor {
     border-radius: 0;
     color: #555;
     cursor: default;
-    background-color: #f5f5f5;
+    background-color: #ffffff;
     border: solid 1px #e6e6e6;
 }
 
@@ -511,19 +565,37 @@ select#schedule_select_doctor {
     display: flex;
 }
 
-    .app-list-row > [class*='col-'] {
-         display: flex;
-         flex-direction: column;
-    }
-
-.app-list-item form {
-    margin: 0 auto;
+.app-list-row > [class*='col-'] {
+     display: flex;
+     flex-direction: column;
 }
 
+.appointments-tab .btn-block {
+    width: 80%;
+    margin: 0 10%;
+}
+
+.app-list-item > p, .app-list-item > a, .app-list-item > a.btn {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 5px;
+}
+
+.app-edit, .app-delete {
+    justify-content: center;
+}
+
+/*.app-list-item form {
+    margin: 0 auto;
+}*/
+
 @media (max-width: 767px) {
-    .user-middle-container {
+    /*.user-middle-container {
         padding: 0;
-    }
+    }*/
     .row.padded.profile-page {
         margin: 0;
     }
@@ -545,9 +617,9 @@ select#schedule_select_doctor {
     .app-doctor {
         background: #f7f7f7;
     }
-    .app-details, .app-edit, .app-delete {
+    /*.app-details, .app-edit, .app-delete {
         display: none !important;
-    }
+    }*/
     .app-doctor, .app-url {
         width: 25%;
         float: left;
@@ -564,12 +636,12 @@ select#schedule_select_doctor {
         border-right: none;
     }
     .app-list-col {
-        padding: 6px 0;
+        padding: 5px 0;
         font-size: 12px;
     }
     div#appointments-tab-pane {
         margin: 10px 0;
-        border-top: solid 1px #ddd;
+        overflow: auto;
     }
     .app-list-item p,
     .app-list-item a {
@@ -579,6 +651,34 @@ select#schedule_select_doctor {
         align-items: center;
         margin: 0;
         word-break: break-all;
+    }
+    .appointments-tab .app-list-row > [class*='col-'] {
+        display: block;
+        width: 100%;
+        flex-direction: column-reverse;
+        text-align: center;
+        overflow: auto;
+        padding: 5px 20px;
+    }
+    .appointments-tab .app-list-row {
+        display: block;
+        margin-bottom: 18px;
+        overflow: auto;
+    }
+    .appointments-tab .app-list-item.first {
+        border-top: solid 1px #ddd;
+    }
+    .appointments-tab .app-list-row .app-list-col.header {
+        display: none;
+    }
+    .appointments-tab .btn-block {
+        width: 40%;
+        margin: 5px 30%;
+        padding: 2px;
+    }
+    .appointments-tab .app-doctor {
+        background: #3F51B5;
+        color: white;
     }
 }
 
@@ -596,16 +696,16 @@ select#schedule_select_doctor {
 
 .note-meta {
     line-height: 28px;
-    background: #222222;
+    background: #e6e6e6;
     padding: 5px 10px;
-    color: #ffffff;
+    color: #333333;
     font-size: 11px;
 }
 
 .remove-icon {
     background: transparent;
     border: none;
-    color: #ffffff;
+    color: #333333;
     border-radius: 2px;
     padding: 3px;
     font-size: 16px;
@@ -614,9 +714,10 @@ select#schedule_select_doctor {
 
 .note-body {
     padding: 20px 10px;
-    background: whitesmoke;
+    background: white;
     font-size: 12px;
-    border: solid 1px #cccccc;
+    border: solid 1px #e6e6e6;
+    border-top: none;
 }
 
 
@@ -959,12 +1060,35 @@ textarea {
 /* single appointment - conditions */
 
 
+.single-appointment-page .user-middle-container .panel-default>.panel-heading button.btn.btn-primary.btn-xs {
+    float: right;
+    margin-left: 5px;
+    padding: 5px 15px;
+}
+
+.single-appointment-page  h3.panel-title.conditions-panel-title,
+.single-appointment-page h3.panel-title.prescriptions-panel-title  {
+    line-height: 30px;
+}
+
+.user-right-container .panel-title {
+    font-size: 13px;
+    font-weight: normal;
+    font-family: "Helvetica Neue";
+}
+
 .app-conditions .app-list-col.header {
     display: inline-block;
 }
 
 .app-conditions .app-list-item p{
     margin: 0;
+}
+
+.single-appointment-page .edit-condition-btn, .single-appointment-page .delete-condition-btn {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
 }
 
 @media (max-width: 550px) {
@@ -1002,7 +1126,50 @@ textarea {
     margin-top: 10%;
 }
 
+/*********************************/
+/*** Users Page
+/*********************************/
 
+.users-page input[type="radio"] {
+    position: relative;
+    margin: 0 2px 0 0 !important;
+}
+
+.users-page .edit-user-profile-btn {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.users-page .edit-user-profile-btn {
+    display: block;
+    width: 80%;
+    margin: 0 auto !important;
+    padding: 1px !important;
+}
+
+@media (max-width: 767px) {
+    .users-page .app-list-row > [class*='col-'] {
+        display: block;
+        width: 100%;
+        flex-direction: column-reverse;
+        text-align: center;
+        overflow: auto;
+        padding: 7px 20px;
+        border-left: solid 1px #ddd;
+    }
+    .users-page .app-list-row {
+        display: block;
+        margin-bottom: 18px;
+        overflow: auto;
+    }
+    .users-page .app-list-item.first {
+        border-top: solid 1px #ddd;
+    }
+    .users-page .app-list-row .app-list-col.header {
+        display: none;
+    }
+}
 
 /* on desktops */
 @media (min-width: 768px) {

@@ -1,6 +1,6 @@
 <!-- Button trigger modal -->
 <div class="prescriptions-controls">
-<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#prescriptionsModal">
+<button type="button" class="btn btn-primary btn-xs prescriptionsAddButton" data-toggle="modal" data-target="#prescriptionsModal">
     New Prescription
 </button>
 </div>
@@ -27,7 +27,7 @@
 
                             <!-- Prescription Name -->
                             <div class="form-group{{ $errors->has('p_name') ? ' has-error' : '' }}">
-                                <label for="p_name" class="col-md-4 form-control-label">Prescription name: </label>
+                                <label for="p_name" class="form-control-label">Prescription name: </label>
                                 <input id="p_name" type="text" class="form-control" name="p_name" required></input>
                                 @if ($errors->has('p_name'))
                                 <span class="help-block">
@@ -38,7 +38,7 @@
 
                             <!-- Quantity / Supply -->
                             <div class="form-group{{ $errors->has('p_quantity') ? ' has-error' : '' }}">
-                                <label for="p_quantity" class="col-md-4 form-control-label">Quantity: </label>
+                                <label for="p_quantity" class="form-control-label">Quantity: </label>
                                 <input id="p_quantity" type="text" class="form-control" name="p_quantity" required></input>
                                 @if ($errors->has('p_quantity'))
                                 <span class="help-block">
@@ -49,7 +49,7 @@
 
                             <!-- Condition -->
                             <div class="form-group{{ $errors->has('p_condition') ? ' has-error' : '' }}">
-                                <label for="p_condition" class="col-md-4 form-control-label">Associated condition: </label>
+                                <label for="p_condition" class="form-control-label">Associated condition: </label>
                                     <select class="form-control" id="p_condition" name="p_condition" required >
                                                 <option value="" disabled selected>Select an option</option>
                                     @foreach($user->appointments as $appointment)
@@ -67,7 +67,7 @@
 
                             <!-- Active Date -->
                             <div class="form-group{{ $errors->has('p_active') ? ' has-error' : '' }}">
-                                <label for="p_active" class="col-md-4 form-control-label">Prescription activation date: </label>
+                                <label for="p_active" class="form-control-label">Prescription activation date: </label>
                                 <input id="p_active" type="date" class="form-control" name="p_active" value="date('yyyy-MM-dd')"></input>
                                 @if ($errors->has('p_active'))
                                 <span class="help-block">
@@ -109,7 +109,7 @@
 
                             <!-- Repeat Prescription Expiry Date -->
                             <div id="p_expiry_group" class="form-group{{ $errors->has('p_expiry') ? ' has-error' : '' }}">
-                                <label  for="p_expiry" class="col-md-4 form-control-label">Repeat prescription expiry date: </label>
+                                <label  for="p_expiry" class="form-control-label">Repeat prescription expiry date: </label>
                                 <select type="hidden" class="form-control" id="p_expiry" name="p_expiry" >
                                     <option value="" disabled selected>Select an option</option>
                                     <option value="6 months">6 months</option>
@@ -129,7 +129,7 @@
 
                             <!-- Prescription Details -->
                             <div class="form-group{{ $errors->has('p_details') ? ' has-error' : '' }}">
-                                <label for="p_details" class="col-md-4 form-control-label">Prescription details: </label>
+                                <label for="p_details" class="form-control-label">Prescription details: </label>
                                 <textarea id="p_details" class="form-control" name="p_details" rows="3"></textarea>
                                 @if ($errors->has('p_details'))
                                 <span class="help-block">

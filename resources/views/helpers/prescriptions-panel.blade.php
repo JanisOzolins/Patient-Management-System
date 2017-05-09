@@ -1,9 +1,10 @@
 <div class="panel-group">
-            <div class="panel panel-default">
+            <div class="panel prescriptions-panel panel-default">
                 <div class="panel-heading">
                         <h3 class="panel-title">
                             <div class="prescriptions-title-bar">
                                 <a class="panel-title" data-toggle="collapse" href="#{{ $prescription->id }}">{{ $prescription->p_name }}</a>
+                                @if( Route::current()->getName() === "appointments.single")
                                 @if(Auth::user()->user_type === "doctor")
                                     {{ Form::open(['method' => 'DELETE', 'route' => ['prescriptions.delete', $prescription->appointment->user->id, $prescription->appointment->id, $prescription->id]]) }}
                                     {{ Form::button('<i class="fa fa-times" aria-hidden="true"></i>', ['class' => 'btn btn-danger btn-xs user-profile-icon', 'type' => 'submit']) }}
@@ -11,7 +12,7 @@
                                     <form>
                                         <a 
                                         type="button" 
-                                        class="btn btn-default btn-xs user-profile-icon" 
+                                        class="btn btn-default btn-xs user-profile-icon prescriptionsEditButton" 
                                         data-toggle="modal"
                                         data-prescription-id="{{ $prescription->id }}"
                                         data-appointment-id="{{ $prescription->appointment->id }}"
@@ -21,6 +22,7 @@
                                         data-active="{{ $prescription->p_active }}"
                                         data-quantity="{{ $prescription->p_quantity }}"
                                         data-expiry="{{ $prescription->p_expiry }}"
+                                        data-repeat-months="{{ $prescription->p_repeat_months }}"
                                         data-repeat="{{ $prescription->p_repeat }}"
                                         data-controlled="{{ $prescription->p_controlled }}"
                                         data-details="{{ $prescription->p_details }}"
@@ -28,6 +30,12 @@
                                         <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </a>
                                     </form>
+                                @endif
+                                @endif
+                                @if( Route::current()->getName() === "patients.show")
+                                    <a type="button" href="{{ URL::to('/user/' . $appointment->user->id . '/appointments/' . $appointment->id) }}" class="edit-condition-btn btn btn-default btn-xs user-profile-icon"> 
+                                        <i class="fa fa-link" aria-hidden="true"></i>
+                                    </a>
                                 @endif
                             </div>
                         </h3>

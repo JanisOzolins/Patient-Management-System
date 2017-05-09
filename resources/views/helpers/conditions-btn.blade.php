@@ -1,6 +1,6 @@
 <!-- Button trigger modal -->
 <div class="prescriptions-controls">
-<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#conditionsModal">
+<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#conditionsModal">
     New Condition
 </button>
 </div>
@@ -18,7 +18,7 @@
                 <div class="row padded">
                     <div class="col-md-12">
                         <form id="conditions-form" class="form-horizontal" role="form" method="POST" action="/conditions"> 
-                            <div class="col-md-8 col-md-offset-2">
+                            <div class="col-md-10 col-md-offset-1">
                                 {{ csrf_field() }}
 
                                 <input type="hidden" id="patient_id" name="patient_id" value="{{ $user->id }}">
@@ -28,7 +28,7 @@
                                 <input type="hidden" id="condition_id" name="condition_id" value="" >
 
                                 <div class="form-group{{ $errors->has('c_name') ? ' has-error' : '' }}">
-                                    <label for="c_name" class="col-md-4 form-control-label">Condition Name</label>
+                                    <label for="c_name" class="form-control-label">Condition Name</label>
                                     <input id="c_name" type="text" class="form-control form-control-success" name="c_name" required autofocus>
                                     @if ($errors->has('c_name'))
                                         <span class="help-block">
@@ -38,7 +38,7 @@
                                 </div>
                                 
                                 <div class="form-group{{ $errors->has('c_diagnosed_at') ? ' has-error' : '' }}">
-                                    <label for="c_diagnosed_at" class="col-md-12 form-control-label">Date diagnosed:</label>
+                                    <label for="c_diagnosed_at" class="form-control-label">Date diagnosed:</label>
                                         <input id="c_diagnosed_at" type="date" class="form-control form-control-success" name="c_diagnosed_at" required>
                                         @if ($errors->has('c_diagnosed_at'))
                                             <span class="help-block">
@@ -48,8 +48,7 @@
                                 </div>
 
                                 <div class="form-group{{ $errors->has('c_isTreated') ? ' has-error' : '' }}">
-                                    <label for="c_isTreated" class="col-md-12 form-control-label">Has it been treated yet?</label>
-                                    <div class="row padded">
+                                    <div style="padding: 0;" class="col-md-12"><label for="c_isTreated" class="form-control-label">Has it been treated yet?</label></div>
                                     <div class="radio col-md-12">
                                         <label class="radio-inline"> <input type="radio" name="c_isTreated" id="conditions-yes" value="Yes"> Yes </label> 
                                     </div>
@@ -59,7 +58,6 @@
                                     <div class="radio col-md-12">
                                         <label class="radio-inline"> <input type="radio" name="c_isTreated" id="conditions-unknown" value="Unknown" checked> Unknown </label>
                                     </div>
-                                    </div>
                                     @if ($errors->has('c_isTreated'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('c_isTreated') }}</strong>
@@ -68,7 +66,7 @@
                                 </div>
 
                                 <div class="form-group{{ $errors->has('c_details') ? ' has-error' : '' }}">
-                                    <label for="c_details" class="col-md-4 form-control-label">Details:</label>
+                                    <label for="c_details" class="form-control-label">Details:</label>
                                         <textarea id="c_details" class="form-control" name="c_details" rows="3"></textarea>
                                         @if ($errors->has('c_details'))
                                             <span class="help-block">

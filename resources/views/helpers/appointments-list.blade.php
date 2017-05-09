@@ -60,12 +60,12 @@
 				</div>
 				<div class="col-sm-1 app-list-col app-list-item app-edit">
 					@if ($appointment->datetime > date("Y-m-d H:i:s"))
-						<form> <a type="button" data-id="edit-button" class="edit-btn btn btn-primary btn-xs user-profile-icon appointmentsEditButton" data-toggle="modal" data-appointment-id="{{ $appointment->id }}" data-doctor-id="{{ $appointment->a_doctor_id }}" data-patient-id="{{ $appointment->user->id }}" data-date="{{ $appointment->a_date }}" data-time="{{ $appointment->a_time }}" data-details="{{ $appointment->a_details }}" data-target="#appointmentsModal"> Edit </a> </form>
+						<form> <a type="button" data-id="edit-button" class="edit-btn btn-block btn btn-primary btn-xs user-profile-icon appointmentsEditButton" data-toggle="modal" data-appointment-id="{{ $appointment->id }}" data-doctor-id="{{ $appointment->a_doctor_id }}" data-patient-id="{{ $appointment->user->id }}" data-date="{{ $appointment->a_date }}" data-time="{{ $appointment->a_time }}" data-details="{{ $appointment->a_details }}" data-target="#appointmentsModal"> Edit </a> </form>
 					@endif
 				</div>
 				<div class="col-sm-1 app-list-col app-list-item last app-delete">
 				@if ($appointment->datetime > date("Y-m-d H:i:s"))
-					{{ Form::open(['method' => 'DELETE', 'class' => 'delete-form', 'route' => ['appointments.delete', $appointment->user->id, $appointment->id]]) }} {{ Form::button('Delete', ['class' => 'btn btn-danger btn-xs user-profile-icon', 'type' => 'submit']) }} {{ Form::close() }}  
+					{{ Form::open(['method' => 'DELETE', 'class' => 'delete-form', 'route' => ['appointments.delete', $appointment->user->id, $appointment->id]]) }} {{ Form::button('Delete', ['class' => 'btn btn-danger btn-block btn-xs user-profile-icon', 'type' => 'submit']) }} {{ Form::close() }}  
 				@endif
 				</div>
 			@else

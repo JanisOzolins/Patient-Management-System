@@ -1,15 +1,15 @@
 <!-- Button trigger modal -->
 <div class="appointments-controls">
 @if(Route::currentRouteName() === "patients.show")
-<button type="button" class="btn btn-success appointmentsAddButton btn-xs" data-id="new-button" data-toggle="modal" data-target="#appointmentsModal">
+<button type="button" class="btn btn-primary btn-block appointmentsAddButton btn-xs" data-id="new-button" data-toggle="modal" data-target="#appointmentsModal">
     New Appointment
 </button>
 @elseif(Route::currentRouteName() === "appointments.index")
-<button type="button" class="btn btn-success appointmentsAddButton btn-block" data-id="new-button" data-toggle="modal" data-target="#appointmentsModal">
+<button type="button" class="btn btn-primary appointmentsAddButton btn-block" data-id="new-button" data-toggle="modal" data-target="#appointmentsModal">
     New Appointment
 </button>
 @else
-<button type="button" class="btn btn-success appointmentsAddButton appointmentsAddButtonHome btn-block" data-id="new-button" data-toggle="modal" data-target="#appointmentsModal">
+<button type="button" class="btn btn-primary btn-block appointmentsAddButton appointmentsAddButtonHome btn-block" data-id="new-button" data-toggle="modal" data-target="#appointmentsModal">
     Book an Appointment
 </button>
 @endif
@@ -43,7 +43,7 @@
                                 <!-- Patient ID selector -->
                                 <div class="patient_id-form-group form-group{{ $errors->has('a_patient_id') ? ' has-error' : '' }}">
                                     
-                                    @if(Route::currentRouteName() === "patients.show" || Route::currentRouteName() === "users.home")
+                                    @if(Route::currentRouteName() === "patients.show" || Route::currentRouteName() === "users.home" || Route::currentRouteName() === "appointments.show")
                                         <input id="a_patient_id" type="hidden" class="form-control form-control-success" name="a_patient_id" value="{{ $user->id }}" >
                                         @if ($errors->has('a_patient_id'))
                                             <span class="help-block">
@@ -73,8 +73,8 @@
                                             @endif
                                             @if(Route::currentRouteName() === "appointments.index")
                                                 @foreach ($allUsers->sortBy('last_name') as $user) 
-                                                    @if ($user->user_type === "doctor")
-                                                            <option value="{{$user->id}}">{{ $user->last_name }}, {{ $user->first_name }}</option>
+                                                    @if ($user->user_type === "doctor" || $user->user_type === "nurse")
+                                                            <option value="{{$user->id}}">{{ $user->last_name }}, {{ $user->first_name }} ({{ $user->user_type }})</option>
                                                     @endif
                                                 @endforeach 
                                             @else

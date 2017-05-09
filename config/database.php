@@ -32,51 +32,19 @@ return [
     */
 
     'connections' => [
-    
+
         'mongodb' => [   
             'driver' => 'mongodb',
-            'host' => env('DB_HOST', '67.207.86.21'),
-            'port' => env('DB_PORT', '27017'),
-            'database' => env('DB_DATABASE', 'patientsdatabase'),
-            'username' => env('DB_USERNAME', 'laraveladmin'),
-            'password' => env('DB_PASSWORD', 'laravelpassword'), // L283Ng11l7n17ACWYL
+            'host' => env('DB_HOST'),
+            'port' => env('DB_PORT'),
+            'database' => env('DB_DATABASE'),
+            'username' => env('DB_USERNAME'),
+            'password' => env('DB_PASSWORD'), // L283Ng11l7n17ACWYL
             'options' => array(
-                'database' => 'patientsdatabase' // sets the authentication database required by mongo 3
+                'database' => 'patientdatabase' // sets the authentication database required by mongo 3
             )
         ],
 
-        'sqlite' => [
-            'driver' => 'sqlite',
-            'database' => env('DB_DATABASE', database_path('database.sqlite')),
-            'prefix' => '',
-        ],
-
-        'mysql' => [
-            'driver' => 'mysql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '27017'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
-            'prefix' => '',
-            'strict' => true,
-            'engine' => null,
-        ],
-
-        'pgsql' => [
-            'driver' => 'pgsql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '27017'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'charset' => 'utf8',
-            'prefix' => '',
-            'schema' => 'public',
-            'sslmode' => 'prefer',
-        ],
 
     ],
 

@@ -7,7 +7,7 @@
     </div>
     <div class="row patients-controls">
         <div class="col-md-4 patients-control-item-container">
-           <a href="./register" class="btn btn-success btn-block" role="button">Add New Patient</a>
+           @include('patients.add')
         </div>
         <div class="col-md-8 patients-control-item-container">
             @include('patients.search')

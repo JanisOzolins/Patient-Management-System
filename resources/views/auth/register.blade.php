@@ -8,8 +8,9 @@
                   @if (Auth::user()->isStaff(Auth::user()) == "staff" || Auth::user()->isStaff(Auth::user()) == "nurse" || Auth::user()->isStaff(Auth::user()) == "doctor")
                     <option value="patient">Patient</option>
                   @elseif (Auth::user()->isStaff(Auth::user()) == "manager")
-                    <option value="staff">Staff/Nurse</option>
+                    <option value="staff">Staff</option>
                     <option value="doctor">Doctor</option>
+                    <option value="nurse">Nurse</option>
                     <option value="manager">Manager</option>
                   @endif
                 </select>
