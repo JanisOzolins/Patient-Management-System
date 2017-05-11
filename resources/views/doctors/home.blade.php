@@ -24,7 +24,9 @@
                 <div class="panel-body">
                     <div class="row highlights-row">
                         <div class="col-sm-12 col-md-4 highlight-item highlight-1 first active-prescriptions"><h2>{{ $totalNumberPatients }}</h2><h3>Total Number of Patients</h3></div>
-                        <div class="col-sm-12 col-md-4 highlight-item highlight-2 unread-messages"><h2>0</h2><h3>Unread Messages</h3></div>
+                        <div class="col-sm-12 col-md-4 highlight-item highlight-2 unread-messages">
+                            <h2>{{ $thisMonth }}</h2>
+                            <h3>Appointments This Month</h3></div>
                         <div class="col-sm-12 col-md-4 highlight-item highlight-3 last repeat-prescriptions"><a href="" data-toggle="modal" data-target="#repeatPrescriptions"><div class="highlight-inner"><h2>{{ count($prescriptionRequests) }}</h2><h3>Pending Repeat Prescriptions</h3></div></a></div>
                     </div>
                 </div>

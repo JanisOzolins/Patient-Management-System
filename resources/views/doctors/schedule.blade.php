@@ -103,6 +103,7 @@
             <div class="col-md-10 col-md-offset-1 select-schedule">
                 <h4 class="uppercase center bold">View doctors schedule</h4>
                     <select class="form-control" id="schedule_select_doctor" name="schedule_select_doctor" required>
+                    @if( Auth::user()->user_type !== "doctor" )
                         @foreach ($users->sortBy('last_name') as $user)
                         	@if($user->user_type === "doctor")
                                 @if($loop->first)
@@ -112,6 +113,9 @@
                                 @endif
                         	@endif
                         @endforeach
+                    @elseif( Auth::user()->user_type === "doctor" )
+                        <option selected value="{{ Auth::user()->id }}">Dr. {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</option>
+                    @endif
                     </select>
                     <button id="submit_select_schedule" type="submit" class="btn btn-primary submit-btn btn-block"/>View Schedule</button>
             </div>

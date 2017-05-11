@@ -5,7 +5,7 @@
     <div class="row">
         <div class="form-container">
             <form class="form-horizontal" role="form" method="POST" action="/update-profile/{{ $user->id }}">
-            <h2 class="uppercase bold center">Edit user profile</h2>
+            <h2 style="padding-bottom: 20px;" class="uppercase bold center">Edit user profile</h2>
                 {{ csrf_field() }}
                 <div class="col-md-8 col-md-offset-2">
 

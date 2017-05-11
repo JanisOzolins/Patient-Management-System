@@ -15224,11 +15224,7 @@ var ListViewGrid = Grid.extend({
 				'</td>' :
 				'') +
 			'<td class="fc-list-item-marker ' + view.widgetContentClass + '">' +
-				'<span class="fc-event-dot"' +
-				(bgColor ?
-					' style="background-color:' + bgColor + '"' :
-					'') +
-				'></span>' +
+				 (seg.event.delete || "") +
 			'</td>' +
 			'<td class="fc-list-item-title ' + view.widgetContentClass + '">' +
 				'<strong><a' + (url ? ' href="' + htmlEscape(url) + '"' : '') + '>' +

@@ -12,6 +12,7 @@ use Alert;
 use Validator;
 use Input;
 use Auth;
+use DateTime;
 
 
 class UsersController extends Controller
@@ -22,6 +23,7 @@ class UsersController extends Controller
     	$users = User::all();
 
     	$appointments = $user->appointments;
+
     	
     	return view('patients.show')->with('user', $user)->with('users', $users)->with('appointments', $appointments);
 
@@ -91,13 +93,42 @@ class UsersController extends Controller
     	$totalNumberPatients = $this->totalNumberPatients();
     	$diagnoses = $this->getPatientConditions($currentUser);
     	$prescriptionRequests = $this->getPrescriptionRequests($currentUser);
+        $thisMonth = $this->getAppointmentsThisMonth();
+
+        //recalculate user age
+        $this->recalculateAge();
 
 		//return $prescriptionRequests;
 		return view('layouts.home')->with('users', $users)
 								   ->with('activePrescriptions', $activePrescriptions)
 								   ->with('diagnoses', $diagnoses)
 								   ->with('totalNumberPatients', $totalNumberPatients)
-								   ->with('prescriptionRequests', $prescriptionRequests);
+								   ->with('prescriptionRequests', $prescriptionRequests)
+                                   ->with('thisMonth', $thisMonth);
+    }
+
+    public function recalculateAge() {
+        $users = User::all();
+
+        foreach($users as $user) {
+             $user->age = $this->calculateAge($user);
+             $user->save();
+        }
+    }
+
+    public function calculateAge($user) 
+    {
+        $dob = $user->birth_date;
+
+        if(!empty($dob)) 
+        {
+            $birthdate = new DateTime($dob);
+            $today   = new DateTime('today');
+            $age = $birthdate->diff($today)->y;
+            return $age;
+        }
+        else
+            return 0;
     }
 
     public function edit($id) {
@@ -216,6 +247,23 @@ class UsersController extends Controller
     	return $number;
     }
 
+    public function getAppointmentsThisMonth() {
+        $doctor = Auth::user()->id;
+        $users = User::all();
+        $query_date = date('Y-m-h');
+        $first = date('Y-m-01', strtotime($query_date));
+        $last = date('Y-m-t', strtotime($query_date));
+        $number = 0;
+        foreach($users as $user) {
+            foreach ($user->appointments as $appointment) {
+                if ($appointment->a_date >= $first && $appointment->a_date <= $last) {
+                    $number++;
+                }
+            }
+        }
+        return $number;
+    }
+
     public function getPatientConditions($user) {
     	$number = 0;
     	foreach ($user->appointments as $appointment) {
@@ -237,6 +285,7 @@ class UsersController extends Controller
 	                'title' => $doctor_name,
 	                'start' => $appointment->a_date . "T" . $appointment->a_time,
 	                'desc' => $appointment->a_details,
+                    'delete' => '<form method="POST" action="/user/' . $appointment->user->id . '/appointments/' . $appointment->id . '" accept-charset="UTF-8"><input name="_method" type="hidden" value="DELETE">' . csrf_field() . '<input class="btn btn-danger btn-sm" type="submit" value="Cancel"> </form>'
 	            );
             }
 
@@ -257,6 +306,7 @@ class UsersController extends Controller
 						$events[] = array(
 			                'title' => $fullname,
 			                'start' => $appointment->a_date . "T" . $appointment->a_time,
+                            'desc' => $appointment->a_details,
 			                'url' => './user/' . $appointment->user->id . '/appointments/' . $appointment->id,
 			            );
 					}

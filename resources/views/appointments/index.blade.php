@@ -16,40 +16,34 @@
     </div>
     <div class="row">
         <div class="appointments-list col-md-12">
-            <table class="table table-responsive table-sm table-bordered table-hover appointments-table">
-                <thead>
-                    <tr>
-                        <th class="col-md-2">Patient</th>
-                        <th class="col-md-1">Date</th>
-                        <th class="col-md-1">Time</th>
-                        <th class="col-md-2">Doctor</th>
-                        <th class="col-md-4">Notes</th>
-                        <th class="col-md-1">Edit</th>
-                        <th class="col-md-1">Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ( $allAppointments->sortByDesc('datetime') as $appointment)
-                        @if( $appointment->datetime > date("Y-m-d H:i:s") || Auth::user()->user_type === "manager")
-                            <tr>
-                                <td><a href='./user/{{ $appointment->user->id }}'>{{ $appointment->user->first_name }} {{ $appointment->user->last_name }}</a></td>
-                                <td>{{ date('d F Y', strtotime($appointment->a_date)) }}</td>
-                                <td>{{ $appointment->a_time }}</td>
-                                <td>{{ $appointment->a_doctor }}</td>
-                                <td>{{ $appointment->a_details }}</td>
-                                <td>
-                                        <form> <a type="button" data-id="edit-button" class="edit-btn btn btn-primary btn-xs user-profile-icon appointmentsEditButton" data-toggle="modal" data-appointment-id="{{ $appointment->id }}" data-doctor-id="{{ $appointment->a_doctor_id }}" data-patient-id="{{ $appointment->user->id }}" data-date="{{ $appointment->a_date }}" data-time="{{ $appointment->a_time }}" data-details="{{ $appointment->a_details }}" data-target="#appointmentsModal" @if(Auth::user()->user_type !== "staff") disable @endif > Edit </a> </form>
-                                </td>
-                                <td>
-                                    {{ Form::open(['method' => 'DELETE', 'route' => ['appointments.delete', $appointment->user->id, $appointment->id]]) }}
-                                        {{ Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) }}
-                                    {{ Form::close() }}
-                                </td>
-                            </tr>
-                        @endif
-                    @endforeach
-                </tbody>
-            </table>
+            <div class="app-list-row">
+                            <div class="app-list-col header first col-sm-2">Patient</div>
+                            <div class="app-list-col header col-sm-1">Date</div>
+                            <div class="app-list-col header col-sm-1">Time</div>
+                            <div class="app-list-col header col-sm-2">Doctor</div>
+                            <div class="app-list-col header col-sm-4">Notes</div>
+                            <div class="app-list-col header col-sm-1">Edit</div>
+                            <div class="app-list-col header col-sm-1">Delete</div>
+            </div>
+                @foreach ( $allAppointments->sortByDesc('datetime') as $appointment)
+                    @if( $appointment->datetime > date("Y-m-d H:i:s") || Auth::user()->user_type === "manager")
+                        <div class="app-list-row">
+                            <div class="app-list-col app-list-item col-sm-2 first"><a href='./user/{{ $appointment->user->id }}'>{{ $appointment->user->first_name }} {{ $appointment->user->last_name }}</a></div>
+                            <div class="app-list-col app-list-item col-sm-1">{{ date('d F Y', strtotime($appointment->a_date)) }}</div>
+                            <div class="app-list-col app-list-item col-sm-1">{{ $appointment->a_time }}</div>
+                            <div class="app-list-col app-list-item col-sm-2">{{ $appointment->a_doctor }}</div>
+                            <div class="app-list-col app-list-item col-sm-4">{{ $appointment->a_details }}</div>
+                            <div class="app-list-col app-list-item col-sm-1">
+                                    <form> <a type="button" data-id="edit-button" class="edit-btn btn btn-primary btn-xs appointmentsEditButton" data-toggle="modal" data-appointment-id="{{ $appointment->id }}" data-doctor-id="{{ $appointment->a_doctor_id }}" data-patient-id="{{ $appointment->user->id }}" data-date="{{ $appointment->a_date }}" data-time="{{ $appointment->a_time }}" data-details="{{ $appointment->a_details }}" data-target="#appointmentsModal" @if(Auth::user()->user_type !== "staff") disable @endif > Edit </a> </form>
+                            </div>
+                            <div class="app-list-col app-list-item col-sm-1 last">
+                                {{ Form::open(['method' => 'DELETE', 'route' => ['appointments.delete', $appointment->user->id, $appointment->id]]) }}
+                                    {{ Form::submit('Delete', ['class' => 'btn edit-btn btn-danger btn-xs appointmentsDeleteButton']) }}
+                                {{ Form::close() }}
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
         </div>
     </div>
 </div>

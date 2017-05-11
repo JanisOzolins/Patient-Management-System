@@ -9,7 +9,6 @@
                     <div class="title-bar">
                         <a class="panel-title" data-toggle="collapse" href="#{{ $condition->id }}">{{ $condition->c_name }}</a>
                         @if (Route::current()->getName() === "patients.show")
-                            @if(Auth::user()->user_type === "nurse" || Auth::user()->user_type === "doctor")
                                 <!-- {{ Form::open(['method' => 'DELETE', 'class' => 'delete-form', 'route' => ['conditions.delete', $condition->appointment->user->id, $condition->appointment->id, $condition->id]]) }} {{ Form::button('<i class="fa fa-times" aria-hidden="true"></i>', ['class' => 'btn btn-danger btn-xs user-profile-icon', 'type' => 'submit']) }} {{ Form::close() }}  -->
 <!--                                 <form>
                                     <a 
@@ -29,7 +28,6 @@
                                 <a type="button" href="{{ URL::to('/user/' . $appointment->user->id . '/appointments/' . $appointment->id) }}" class="edit-condition-btn btn btn-default btn-xs user-profile-icon"> 
                                     <i class="fa fa-link" aria-hidden="true"></i>
                                 </a>
-                            @endif
                         @endif
                     </div>
                 </h3>

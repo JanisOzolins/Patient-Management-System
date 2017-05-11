@@ -30,7 +30,7 @@
                         <div class="col-sm-12 col-md-4 highlight-item highlight-2 unread-messages">
                             <h2>{{ count(App\User::where('user_type', 'staff')->orWhere('user_type', 'manager')->get()) }}</h2>
                             <h4>Staff Members</h4></div>
-                        <div class="col-sm-12 col-md-4 highlight-item highlight-3 last repeat-prescriptions"><a href="" data-toggle="modal" data-target="#repeatPrescriptions"><div class="highlight-inner">
+                        <div class="col-sm-12 col-md-4 highlight-item highlight-3 last repeat-prescriptions"><div class="highlight-inner">
                         <h2>{{ count(App\User::where('user_type', 'patient')->get()) }}</h2>
                         <h4>Patients</h4></div></a>
                         </div>

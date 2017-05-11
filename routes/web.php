@@ -47,7 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
 	// Appointments
 	Route::get('/appointments', 'AppointmentsController@index')->name('appointments.index')->middleware('MedicalStaffManager');
 	Route::post('/appointments', 'AppointmentsController@store')->name('appointments.store');
-	Route::delete('user/{uid}/appointments/{aid}/', 'AppointmentsController@delete')->name('appointments.delete')->middleware('MedicalStaffManager');
+	Route::delete('user/{uid}/appointments/{aid}/', 'AppointmentsController@delete')->name('appointments.delete')->middleware('MedicalStaffManagerPatient');
 	Route::get('user/{uid}/appointments/{aid}/', 'AppointmentsController@show')->name('appointments.single')->middleware('MedicalPatient');
 	Route::get('user/{uid}/appointments/{aid}/edit', 'AppointmentsController@edit')->name('appointments.edit')->middleware('MedicalStaff');
 	Route::put('user/{uid}/appointments/{aid}/', 'AppointmentsController@update')->name('appointments.update')->middleware('MedicalStaff');

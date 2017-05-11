@@ -39,7 +39,9 @@
                 <div class="panel-body">
                     <div class="row highlights-row">
                         <div class="col-sm-12 col-md-4 highlight-item highlight-1 first active-prescriptions"><h2>{{ $activePrescriptions }}</h2><h3>Active Prescriptions</h3></div>
-                        <div class="col-sm-12 col-md-4 highlight-item highlight-2 unread-messages"><h2>0</h2><h3>Unread Messages</h3></div>
+                        <div class="col-sm-12 col-md-4 highlight-item highlight-2 unread-messages"><h2>{{ count(
+                        Auth::user()->appointments->where('a_date', '>=', date('Y-m-h'))
+                        ) }}</h2><h3>Upcoming Appointments</h3></div>
                         <div class="col-sm-12 col-md-4 highlight-item highlight-3 last unread-messages"><h2>{{ $diagnoses }}</h2><h3>Health Conditions</h3></div>
                     </div>
                 </div>

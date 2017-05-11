@@ -128,6 +128,11 @@ div#sidebar-wrapper {
     padding: 5px 10px 10px;
 }
 
+.appointments-page .appointmentsEditButton,
+.appointments-page .appointmentsDeleteButton {
+    width: 80%;
+    margin: 0 auto;
+}
 
 
 /* font tweaks */
@@ -475,10 +480,15 @@ select#schedule_select_doctor {
     margin: 30px 0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .schedule-page .add-schedule-form {
         padding: 20px 10%;
     } 
+    .single-schedule-page h1 {
+        width: 100%;
+        overflow: auto;
+        margin: 20px 0;
+    }
 }
 
 /*********************************/
@@ -889,6 +899,19 @@ textarea {
     padding: 15px;
 }
 
+.shortcuts-row {
+    padding-top: 11px;
+}
+
+div#patient-appointments-calendar .btn-danger {
+    color: #fff;
+    background-color: #d32f2f;
+    border-color: #d32f2f;
+    padding: 3px 10px;
+    font-size: 11px;
+    line-height: 100%;
+}
+
 @media (max-width: 1199px) {
     .highlights-row {
         display: initial;
@@ -941,8 +964,10 @@ textarea {
     text-decoration: none;
 }
 
+.active-prescriptions:hover,
+.unread-messages:hover,
 .repeat-prescriptions:hover {
-    background-color: rgba(63, 81, 181, 0.9);
+    opacity: 0.9;
 }
 
 .prescriptionRequestsTable .table-column {
@@ -1049,12 +1074,20 @@ textarea {
     height: 100%;
     background: white;
     overflow: hidden;
-    padding: 0 0 35px;
+    padding: 20px 0 35px;
     width: 600px;
     margin: 0 auto;
     -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
     -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 767px) {
+    .edit-profile-page form.form-horizontal {
+        width: 80%;
+        padding: 20px 5%;
+    }
+
 }
 
 /* single appointment - conditions */

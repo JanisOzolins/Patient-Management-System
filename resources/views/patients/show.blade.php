@@ -10,8 +10,10 @@
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in appointments-tab active" id="appointments-tab-pane">@include('helpers.appointments-list')</div>
                 <div role="tabpanel" class="tab-pane fade" id="notes-tab-pane">
-                    <p style="margin-top: 20px; padding: 25px; text-align: center; border: #3f51b5 solid 0px; background: #3F51B5; color: white;">In this section you can add general notes related to the patient or his/hers appointments. Do <strong><u>NOT</u></strong> post any health-related or confidential information in this section. Appointment notes can be left on each individual appointment page.</p>
-                    @include('generalnotes.form')
+                    @if(Auth::user()->user_type === "nurse" || Auth::user()->user_type === "doctor")
+                        <p style="margin-top: 20px; padding: 25px; text-align: center; border: #3f51b5 solid 0px; background: #3F51B5; color: white;">In this section you can add general notes related to the patient or his/hers appointments. Do <strong><u>NOT</u></strong> post any health-related or confidential information in this section. Appointment notes can be left on each individual appointment page.</p>
+                        @include('generalnotes.form')
+                    @endif
                     @include('generalnotes.notes')
                 </div>
             </div>
