@@ -144,7 +144,7 @@ class RegisterController extends Controller
         $user->save();
         Alert::success('User profile was created successfully.', 'Success!');
 
-        return $user;
+        return back();
 
     }
 }

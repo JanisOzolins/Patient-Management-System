@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Appointment;
-
+use Alert;
 use Input;
 use Validator;
 use Illuminate\Http\Request;
@@ -77,17 +77,7 @@ class AppointmentsController extends Controller
 		// set datetime
 		$datetime = strtotime(request('a_date') . ' ' . request('a_time'));
 		$datetime = date('Y-m-d H:i', $datetime);
-
-		// checks if the appointment slot is available 
 		
-		// Validator::make(request()->all(), [
-		//     'a_details' => 'required|min:10',
-		// ])->validate();
-			
-		
-
-		//return request()->all();
-
 		if ($user->appointments()->find(request('a_app_id')) !== NULL) // checks if appointment needs to be updated instead of created
 		{
 
@@ -137,7 +127,7 @@ class AppointmentsController extends Controller
 
 		// save changes
 		$user->save();
-
+		Alert::warning('The appointment was sucessfully cancelled!', 'Appointment cancelled!');
 		return back();
 
 	}

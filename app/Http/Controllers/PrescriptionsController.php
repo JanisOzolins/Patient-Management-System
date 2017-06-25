@@ -74,17 +74,17 @@ class PrescriptionsController extends Controller
     }
 
     public function setExpiryDate($prescription, $length) {
-            $createDate = date('Y-m-d', strtotime($prescription->created_at)); // when the prescription was created
-            $activeDate = date('Y-m-d', strtotime($prescription->p_active));  // when the prescription is supposed to become active
-            if( $activeDate > $createDate) {
-                $setdate = $activeDate;
-            }
-            else {
-                $setdate = $createDate;
-            }
+        $createDate = date('Y-m-d', strtotime($prescription->created_at)); // when the prescription was created
+        $activeDate = date('Y-m-d', strtotime($prescription->p_active));  // when the prescription is supposed to become active
+        if( $activeDate > $createDate) {
+            $setdate = $activeDate;
+        }
+        else {
+            $setdate = $createDate;
+        }
 
-            $date = date('Y-m-d', strtotime($setdate.'+'.$length));
-            return $date;
+        $date = date('Y-m-d', strtotime($setdate.'+'.$length));
+        return $date;
     }
 
 	public function delete($uid, $aid, $pid) {
@@ -147,6 +147,5 @@ class PrescriptionsController extends Controller
            $lastRepeatUnit->repeat_approved = date('Y-m-d'); 
            $lastRepeatUnit->save();
         }
-
     }
 }

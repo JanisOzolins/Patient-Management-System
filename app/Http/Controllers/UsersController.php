@@ -29,6 +29,34 @@ class UsersController extends Controller
 
     }
 
+    public function index() {
+        $q = Input::get ( 'q' );
+        $users = User::paginate(15);
+
+        if($q != NULL) {
+            $users = $this->search($q);
+        }
+
+        return view ('patients.index')->with('users', $users)->with('q', $q);
+    }
+
+    public function search($q) 
+    {
+        $patients = User::where('user_type', '=', 'patient');
+
+        $new = $users = User::where('first_name','LIKE','%'.$q.'%')
+                        ->orWhere('last_name','LIKE','%'.$q.'%')
+                        ->orWhere('birth_date','LIKE','%'.$q.'%')
+                        ->orWhere('birth_date','LIKE','%'.$q.'%')
+                        ->orWhere('gender','LIKE','%'.$q.'%')
+                        ->orWhere('age','===',$q)
+                        ->orWhere('address','LIKE','%'.$q.'%')
+                        ->orWhere('phone','LIKE','%'.$q.'%')
+                        ->orWhere('email','LIKE','%'.$q.'%')->paginate(15);
+
+        return $new;
+    }
+
     public function all() {
         $users = User::all();
         $q = Input::get( 'q' );
@@ -42,7 +70,7 @@ class UsersController extends Controller
         else {
             $users = $this->filterUsers($type);   
         }
-        return view('managers.users')->with('users', $users)->with('type', $type);
+        return view('managers.users')->with('users', $users)->with('type', $type)->with('q', $q);
     }
 
     public function filterUsers($type) {
@@ -175,11 +203,7 @@ class UsersController extends Controller
         	return back()->withErrors($validator)->withInput();
         }
 
-        $user->first_name = request('first_name');
-        $user->last_name = request('last_name');
-        $user->address = request('address');
-        $user->phone = request('phone');
-        $user->email = request('email');
+
 
         // changing the password if new password is provided
         if (
@@ -193,13 +217,34 @@ class UsersController extends Controller
         }
 
         //current password needs to be checked ONLY if the user is editing his own profile
-        if ((Hash::check(request('current_password'), $user->password) === false) && (Auth::user()->id === $user->id)) {
-        	return back()->withInput();
+        if ((Hash::check(request('current_password'), $user->password) === true) && (Auth::user()->id === $user->id)) {
+            $user->first_name = request('first_name');
+            $user->last_name = request('last_name');
+            $user->address = request('address');
+            $user->phone = request('phone');
+            $user->email = request('email');
+            $user->save();
+
+        	Alert::success('Profile was updated successfully.', 'Success!');
+        }
+        elseif (Auth::user()->user_type === "manager") {
+            $user->first_name = request('first_name');
+            $user->last_name = request('last_name');
+            $user->address = request('address');
+            $user->phone = request('phone');
+            $user->email = request('email');
+            $user->save();
+            if(request('new_password') !== NULL) {
+                $user->fill([
+                    'password' => Hash::make(request('new_password'))
+                    ])->save();
+            }
+            Alert::success('Profile was updated successfully.', 'Success!');
+        }
+        else {
+            Alert::error('Please check the entered information and try again!', 'Error!');
         }
 
-
-        $user->save();
-        Alert::success('Profile was updated successfully.', 'Success!');
 
         return back();
     }
@@ -256,7 +301,7 @@ class UsersController extends Controller
         $number = 0;
         foreach($users as $user) {
             foreach ($user->appointments as $appointment) {
-                if ($appointment->a_date >= $first && $appointment->a_date <= $last) {
+                if ($appointment->a_date >= $first && $appointment->a_date <= $last && $appointment->a_doctor_id === Auth::user()->id ) {
                     $number++;
                 }
             }

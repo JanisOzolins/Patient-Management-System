@@ -27,12 +27,20 @@ class ConditionsController extends Controller
 
         $appointment = $user->appointments()->find(request('appointment_id'));
 
+        if(request('c_diagnosed_at') > date('Y-m-d')) {
+            $diagnosed_at = date('Y-m-d');
+        }
+        else {
+            $diagnosed_at = request('c_diagnosed_at');
+        }
+
+
         if ($appointment->conditions()->find(request('condition_id')) != NULL) // checks if condition needs to be updated instead of created
         {
             $condition = $appointment->conditions()->find(request('condition_id'));
 
             $condition->c_name = request('c_name');
-            $condition->c_diagnosed_at = request('c_diagnosed_at');
+            $condition->c_diagnosed_at = $diagnosed_at;
             $condition->c_isTreated = request('c_isTreated');
             $condition->c_details = request('c_details');
 
@@ -43,7 +51,7 @@ class ConditionsController extends Controller
 
         $condition = $appointment->conditions()->create([
             'c_name' => request('c_name'), 
-            'c_diagnosed_at' => request('c_diagnosed_at'), 
+            'c_diagnosed_at' => $diagnosed_at,
             'c_isTreated' => request('c_isTreated'), 
             'c_details' => request('c_details')
         ]);

@@ -23,46 +23,58 @@ class DoctorsController extends Controller
         return view('doctors.schedule')->with('timeslots', $timeslots)->with('users', $users);
     }
 
-    // public function create() 
-    // {
-    //     $users = User::all();
-    //     $timeslots = $this->getTimeslots('06:00', '21:00', 15);
-    //     return view('doctors.add-schedule')->with('timeslots', $timeslots)->with('users', $users);
-    // }
-
     public function store() 
     {
     	$user = User::find(request('doctor_id'));
     	if(Auth::user()->user_type === "patient") {
             Alert::error('Sorry, you do not have rights to perform this action!', 'Unauthorised action!')->persistent("Close");
-    		return redirect('/schedule');
+    		return back();
     	}
     	// create an array of chosen timeslots 
     	$timeslots = $this->getTimeslots(request('time_from'), request('time_to'), '15');
 
-    	// if($this->checkDateExists($user, request('date')) === true) {
-    	// 	$date = $user->schedules->where('date', request('date'))->first();
-    	// 	//return $timeslots;
-    	// 	// $oldtimeslots = $date->timeslots;
-    	// 	// $newarray = array_merge_recursive($oldtimeslots, $timeslots);
-    	// 	// $newarray = array_unique($newarray);
-    	// 	// sort($newarray);
-    	// 	$date->timeslots = $$timeslots;
-    	// 	$date->save();
-    	// }
-    	// else {
-	    //     $schedule = $user->schedules()->create(['date' => request('date'), 'timeslots' => $timeslots]);
-	    //     $user->save();
-	    //  } 
-
-         if(request('repeat_for') !== null) {
+    	if($this->checkDateExists($user, request('date')) === true && request('repeat_for') === null) {
+    		$date = $user->schedules->where('date', request('date'))->first();
+    		//return $timeslots;
+    		$oldtimeslots = $date->timeslots;
+    		$newarray = array_merge_recursive($oldtimeslots, $timeslots);
+    		$newarray = array_unique($newarray);
+    		sort($newarray);
+    		$date->timeslots = $newarray;
+    		$date->save();
+            $user->save();
+            Alert::success('New appointment schedule has been added to your calendar!', 'Success!');
+    	}
+        elseif(request('repeat_for') !== null) {
             $repeat = request('repeat_for');
             for( $i = 0; $i < $repeat; $i++) {
+                // sets the current repeat date
                 $date = date('Y-m-d', strtotime(request('date').'+'.$i.'weeks'));
-                $schedule = $user->schedules()->create(['date' => $date, 'timeslots' => $timeslots]);
-                $user->save();
+                // if the repeat date already exists
+                if($this->checkDateExists($user, $date)) {
+                    $date = $user->schedules->where('date', $date)->first();
+                    //return $date; //for testing
+                    $oldtimeslots = $date->timeslots;
+                    $newarray = array_merge_recursive($oldtimeslots, $timeslots);
+                    $newarray = array_unique($newarray);
+                    sort($newarray);
+                    $date->timeslots = $newarray;
+                    $date->save();
+                }
+                else { // if it doesn't exist
+                    $schedule = $user->schedules()->create(['date' => $date, 'timeslots' => $timeslots]);
+                }
             }
+            $user->save();
+            Alert::success('New appointment schedule has been added to your calendar!', 'Success!');
          }
+    	else {
+	        $schedule = $user->schedules()->create(['date' => request('date'), 'timeslots' => $timeslots]);
+	        $user->save();
+            Alert::success('New appointment schedule has been added to your calendar!', 'Success!');
+	     } 
+
+         
 	     return back();
     }
 
