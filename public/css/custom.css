@@ -44,6 +44,17 @@ label {
     color: #212121;
 }
 
+.mobile-menu .divider {
+  height: 1px;
+  margin: 9px 0;
+  overflow: hidden;
+  background-color: #313131;
+}
+
+.mobile-menu > li {
+    text-align: center;
+}
+
 select.form-control {
     -webkit-appearance: none;
     -webkit-border-radius: 0px;
@@ -115,6 +126,10 @@ div#sidebar-wrapper {
 
 /* appointments page */
 
+.appointments-page {
+    margin: 0 7% 50px;
+}
+
 .appointments-table th, .appointments-table td {
     text-align: center;
     vertical-align: middle !important;
@@ -122,6 +137,10 @@ div#sidebar-wrapper {
 
 .appointments-list .btn {
     width: 100%;
+}
+
+.appointments-list {
+    padding: inherit;
 }
 
 .app-control-item-container {
@@ -132,6 +151,36 @@ div#sidebar-wrapper {
 .appointments-page .appointmentsDeleteButton {
     width: 80%;
     margin: 0 auto;
+}
+
+.patients-page .prescriptions-controls {
+    margin-right: 25px;
+}
+
+@media (max-width: 767px) {
+    .patients-page .prescriptions-controls {
+        margin-right: 0;
+    }
+    .appointments-page .app-list-row > [class*='col-'] {
+        display: block;
+        width: 100%;
+        flex-direction: column-reverse;
+        text-align: center;
+        overflow: auto;
+        padding: 7px 20px;
+        border-left: solid 1px #ddd;
+    }
+    .appointments-page .app-list-row {
+        display: block;
+        margin-bottom: 18px;
+        overflow: auto;
+    }
+    .appointments-page .app-list-item.first {
+        border-top: solid 1px #ddd;
+    }
+    .appointments-page .app-list-row .app-list-col.header {
+        display: none;
+    }
 }
 
 
@@ -222,10 +271,10 @@ ul.list-group {
 
 
 
-/* patients list */
+/* patients page list */
 
 .container-fluid.patients-page {
-    max-width: 80%;
+    max-width: 90%;
 }
 
 .patients-page .patients-table {
@@ -251,6 +300,54 @@ ul.list-group {
     width: auto;
     padding-right: 20px;
 }
+
+.patients-page .patients-control-item-container {
+        padding: initial;
+        margin: 25px 0;
+    }
+
+.patients-page .patients-controls {
+    padding: inherit;
+}
+
+.patientsEditBtn {
+    width: 80%;
+    margin: 0 auto !important;
+    padding: initial !important;
+    height: initial !important;
+}
+
+
+@media (max-width: 767px) {
+
+    .patients-page .patients-control-item-container {
+        padding: initial;
+        margin-bottom: 0;
+        margin-top: 25px;
+    }
+
+    .patients-page .app-list-row > [class*='col-'] {
+        display: block;
+        width: 100%;
+        flex-direction: column-reverse;
+        text-align: center;
+        overflow: auto;
+        padding: 7px 20px;
+        border-left: solid 1px #ddd;
+    }
+    .patients-page .app-list-row {
+        display: block;
+        margin-bottom: 18px;
+        overflow: auto;
+    }
+    .patients-page .app-list-item.first {
+        border-top: solid 1px #ddd;
+    }
+    .patients-page .app-list-row .app-list-col.header {
+        display: none;
+    }
+}
+
 
 /* user profile sidebar */
 
@@ -576,8 +673,10 @@ select#schedule_select_doctor {
 }
 
 .app-list-row > [class*='col-'] {
-     display: flex;
-     flex-direction: column;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    word-break: break-word;
 }
 
 .appointments-tab .btn-block {
