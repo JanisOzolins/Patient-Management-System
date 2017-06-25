@@ -21,7 +21,7 @@ class Doctor
             return $next($request);
         }
         else {
-            return redirect('/');
+            return back();
         }
     }
 }

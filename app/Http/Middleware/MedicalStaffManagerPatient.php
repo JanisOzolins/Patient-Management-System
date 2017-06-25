@@ -32,7 +32,7 @@ class MedicalStaffManagerPatient
             return $next($request);
         }
         else {
-            return redirect('/');
+            return back();
         }
     }
 }

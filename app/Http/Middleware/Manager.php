@@ -21,7 +21,7 @@ class Manager
             return $next($request);
         }
         else {
-            return redirect('/');
+            return back();
         }
     }
 }

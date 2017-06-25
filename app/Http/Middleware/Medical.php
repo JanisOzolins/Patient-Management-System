@@ -18,5 +18,8 @@ class Medical
         elseif(Auth::check() && Auth::user()->user_type === "nurse") {
             return $next($request);
         }
+        else {
+            return back();
+        }
     }
 }

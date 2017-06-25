@@ -26,7 +26,7 @@ class MedicalStaff
             return $next($request);
         }
         else {
-            return redirect('/');
+            return back();
         }
     }
 }
