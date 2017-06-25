@@ -38,11 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
 	// Doctors
 	Route::get('/schedule', 'DoctorsController@index')->name('doctors.index')->middleware('MedicalStaff');
 	Route::get('/user/{uid}/schedule', 'DoctorsController@show')->name('doctors.show')->middleware('MedicalStaff');
-	// Route::get('/addSchedule', 'DoctorsController@create')->name('doctors.create')->middleware('MedicalStaff');
 	Route::post('/storeSchedule', 'DoctorsController@store')->name('doctors.store')->middleware('MedicalStaff');
-
-
-
 
 	// Appointments
 	Route::get('/appointments', 'AppointmentsController@index')->name('appointments.index')->middleware('MedicalStaffManager');
@@ -54,20 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	// Patients
 	Route::get('/user/{uid}', 'UsersController@show')->name('patients.show')->middleware('MedicalPatient'); //not sure 
-	Route::any('/patients',function(){
-	    $q = Input::get ( 'q' );
-	    $users = App\User::where('first_name','LIKE','%'.$q.'%')
-	    				->orWhere('last_name','LIKE','%'.$q.'%')
-	    				->orWhere('birth_date','LIKE','%'.$q.'%')
-	    				->orWhere('phone','LIKE','%'.$q.'%')
-	    				->orWhere('email','LIKE','%'.$q.'%')->paginate(15);
-	    if(count($users) > 0)
-	    	return view('patients.index')->with('users', $users)->withQuery ( $q );
-    	else {
-			$users = App\User::paginate(15);
-    		return view ('patients.index')->with('users', $users)->withMessage('No Details found. Try to search again !');
-    	}
-	})->name('patients.index')->middleware('MedicalStaff');
+	Route::any('/patients', 'UsersController@index')->name('patients.index')->middleware('MedicalStaff');
 
 	// Conditions
 	Route::get('/user/{uid}/conditions/create', 'ConditionsController@create')->name('conditions.create')->middleware('Medical');
@@ -88,11 +71,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/approvePrescription/{uid}/{aid}/{pid}/{prid}', 'PrescriptionsController@store')->name('prescriptions.store')->middleware('Medical');
 
 	Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
-
-
-	
-
-
 });
 
 
