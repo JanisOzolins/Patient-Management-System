@@ -20,7 +20,7 @@
 				Edit
 			</div>
 			<div class="col-sm-1 app-list-col header last">
-				Delete
+				Cancel
 			</div>
 		@else
 			<div class="col-sm-2 app-list-col header first">
@@ -65,7 +65,7 @@
 				</div>
 				<div class="col-sm-1 app-list-col app-list-item last app-delete">
 				@if ($appointment->datetime > date("Y-m-d H:i:s"))
-					{{ Form::open(['method' => 'DELETE', 'class' => 'delete-form', 'route' => ['appointments.delete', $appointment->user->id, $appointment->id]]) }} {{ Form::button('Delete', ['class' => 'btn btn-danger btn-block btn-xs user-profile-icon', 'type' => 'submit']) }} {{ Form::close() }}  
+					{{ Form::open(['method' => 'DELETE', 'class' => 'delete-form', 'route' => ['appointments.delete', $appointment->user->id, $appointment->id]]) }} {{ Form::button('Cancel', ['class' => 'btn btn-danger btn-block btn-xs user-profile-icon', 'type' => 'submit']) }} {{ Form::close() }}  
 				@endif
 				</div>
 			@else

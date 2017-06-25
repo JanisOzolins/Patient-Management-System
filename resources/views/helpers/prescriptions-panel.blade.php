@@ -50,7 +50,7 @@
                         <li class="list-group-item"><strong>Controlled drug? </strong> {{ $prescription-> p_controlled}}</li> 
                         <li class="list-group-item"><strong>Repeat prescription? </strong> {{ $prescription-> p_repeat}}</li> 
                         <li class="list-group-item"><strong>Details: </strong> {{ $prescription-> p_details}}</li>
-                        <li class="list-group-item"><strong>Prescribed by: </strong> {{ $prescription-> p_doctor }} </li>
+                        <li class="list-group-item"><strong>Prescribed by: </strong> {{ App\User::find($prescription->p_doctor)->first_name }} {{ App\User::find($prescription->p_doctor)->last_name }} </li>
                     </ul>
                 </div>
             </div>

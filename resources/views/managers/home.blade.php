@@ -9,7 +9,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="col-md-12">
-                        <h4>{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h4>
+                        <h4>{{ Auth::user()->first_name }} {{ Auth::user()->last_name }} (manager)</h4>
                     </div>
                     <div class="col-md-4">
                         <p><strong>Personal ID: </strong> {{ Auth::user()->id }}</p>

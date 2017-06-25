@@ -80,8 +80,8 @@
                                             @else
                                                 @foreach ($users->sortBy('last_name') as $user) 
                                                     @if ($user->user_type === "doctor")
-                                                        @if ($user->user_type === "doctor")
-                                                            <option value="{{$user->id}}">{{ $user->last_name }}, {{ $user->first_name }}</option>
+                                                        @if ($user->user_type === "doctor" || $user->user_type === "nurse")
+                                                            <option value="{{$user->id}}">{{ $user->last_name }}, {{ $user->first_name }} ({{ $user->user_type }})</option>
                                                         @endif
                                                     @endif
                                                 @endforeach 
@@ -122,7 +122,7 @@
                                 <!-- Appointment Details -->
                                 <div class="form-group{{ $errors->has('a_details') ? ' has-error' : '' }}">
                                     <label for="a_details" class="form-control-label">Details:</label>
-                                        <input id="a_details" type="text" class="form-control" name="a_details" value="{{ old('a_details') }}" required>
+                                        <input id="a_details" type="text" class="form-control" name="a_details" value="{{ old('a_details') }}" >
                                         @if ($errors->has('a_details'))
                                             <span class="help-block">
                                                 <strong>{{ $errors->first('a_details') }}</strong>

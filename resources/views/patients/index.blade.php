@@ -13,42 +13,47 @@
             @include('patients.search')
         </div>
     </div>
-    <div class="row patients-list">
-        <table class="table table-responsive table-sm table-bordered table-hover patients-table">
-            <thead>
-              <tr>
-                <th class="col-md-1">See Profile</th>
-                <th class="col-md-2">First Name</th>
-                <th class="col-md-2">Last Name</th>
-                <th class="col-md-1">Date of Birth</th>
-                <th class="col-md-1">Email</th>
-                <th class="col-md-3">Phone</th>
-                <th class="col-md-1">Edit</th>
-            </tr>
-        </thead>
-        <tbody>
+    @if(count($users) > 0)
+    <div class="row">
+        <div class="patients-list col-md-12">
+            <div class="app-list-row">
+                <div class="app-list-col header first col-md-1">See Profile</div>
+                <div class="app-list-col header col-md-2">First Name</div>
+                <div class="app-list-col header col-md-2">Last Name</div>
+                <div class="app-list-col header col-md-2">Date of Birth</div>
+                <div class="app-list-col header col-md-2">Email</div>
+                <div class="app-list-col header col-md-2">Phone</div>
+                <div class="app-list-col header last col-md-1">Edit</div>
+            </div>
             @foreach ($users as $user)
             @if ($user->user_type === "patient")
-                <tr>
-                    <td>
-                        <a href='./user/{{ $user->id }}'>Profile</a>
-                    </td>
-                    <td>{{ $user->first_name }}</td>
-                    <td>{{ $user->last_name }}</td>
-                    <td>{{ $user->birth_date }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td>{{ $user->phone }}</td>
-                    <td>
-                        <a href="{{ URL::to('/edit-profile/' . $user->id ) }}" class="btn btn-primary btn-sm">Edit</a>
-                    </td>
-                </tr>
+                <div class="app-list-row">
+                    <div class="app-list-col app-list-item col-sm-1 first">
+                        <p><a href='./user/{{ $user->id }}'>Profile</a></p>
+                    </div>
+                    <div class="app-list-col app-list-item col-sm-2"><p>{{ $user->first_name }}</p></div>
+                    <div class="app-list-col app-list-item col-sm-2"><p>{{ $user->last_name }}</p></div>
+                    <div class="app-list-col app-list-item col-sm-2"><p>{{ date('d F Y', strtotime($user->birth_date)) }}</p></div>
+                    <div class="app-list-col app-list-item col-sm-2"><p>{{ $user->email }}</p></div>
+                    <div class="app-list-col app-list-item col-sm-2"><p>{{ $user->phone }}</p></div>
+                    <div class="app-list-col app-list-item col-sm-1 last">
+                        <p><a href="{{ URL::to('/edit-profile/' . $user->id ) }}" class="btn patientsEditBtn btn-primary btn-xs">Edit</a></p>
+                    </div>
+                </div>
             @endif
             @endforeach
 
         {{ $users->links() }}
-        </tbody>
-    </table>
+
     </div>
+    </div>
+    @else
+        <center><p style=" padding: 25px; background: white; border: solid 1px gray;">Sorry, nothing was found! 
+        @if($q !== NULL)
+        <br>Click <a href="{{ URL::to('/patients') }}">HERE</a> to show all patients, or search again!</p></center>
+        @endif
+    @endif
+
 </div>
 @endsection	
 

@@ -9,7 +9,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="col-md-12">
-                        <h4>{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h4>
+                        <h4>{{ Auth::user()->first_name }} {{ Auth::user()->last_name }} (patient)</h4>
                     </div>
                     <div class="col-md-5">
                         <p><strong>Patient ID: </strong> {{ Auth::user()->id }}</p>
@@ -40,13 +40,14 @@
                     <div class="row highlights-row">
                         <div class="col-sm-12 col-md-4 highlight-item highlight-1 first active-prescriptions"><h2>{{ $activePrescriptions }}</h2><h3>Active Prescriptions</h3></div>
                         <div class="col-sm-12 col-md-4 highlight-item highlight-2 unread-messages"><h2>{{ count(
-                        Auth::user()->appointments->where('a_date', '>=', date('Y-m-h'))
+                        Auth::user()->appointments->where('a_date', '>=', date('Y-m-d'))
                         ) }}</h2><h3>Upcoming Appointments</h3></div>
                         <div class="col-sm-12 col-md-4 highlight-item highlight-3 last unread-messages"><h2>{{ $diagnoses }}</h2><h3>Health Conditions</h3></div>
                     </div>
                 </div>
             </div>
         </div>
+    @include('generalnotes.notes')
     </div>
 
     <!-- RIGHT COLUMN -->

@@ -14,12 +14,12 @@
                         <label for="doctor_id" class="col-md-12 form-control-label">Doctor's name: </label>
                             <select class="form-control" id="doctor_id" name="doctor_id" required >
                                 @foreach ($users as $user)
-                                    @if($user->user_type === "doctor")
-                                    <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
+                                    @if($user->user_type === "doctor" || $user->user_type === "nurse")
+                                    <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }} ({{ $user->user_type }}) </option>
                                     @endif
                                 @endforeach
                             </select>
-                        @elseif( Auth::user()->user_type === "doctor" )
+                        @elseif( Auth::user()->user_type === "doctor" || Auth::user()->user_type === "nurse" )
                              <input id="doctor_id" type="hidden" class="form-control form-control-success" name="doctor_id" value="{{ Auth::user()->id }}">
                         @endif
                         @if ($errors->has('doctor_id'))
@@ -101,20 +101,20 @@
         <!-- RIGHT COLUMN -->
         <div class="col-md-5 schedule-col">
             <div class="col-md-10 col-md-offset-1 select-schedule">
-                <h4 class="uppercase center bold">View doctors schedule</h4>
+                <h4 class="uppercase center bold">View schedule</h4>
                     <select class="form-control" id="schedule_select_doctor" name="schedule_select_doctor" required>
-                    @if( Auth::user()->user_type !== "doctor" )
+                    @if( Auth::user()->user_type !== "doctor" && Auth::user()->user_type !== "nurse" )
                         @foreach ($users->sortBy('last_name') as $user)
-                        	@if($user->user_type === "doctor")
+                        	@if($user->user_type === "doctor" || $user->user_type === "nurse")
                                 @if($loop->first)
-                                    <option selected value="{{ $user->id }}">Dr. {{ $user->first_name }} {{ $user->last_name }}</option>
+                                    <option selected value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }} ({{ $user->user_type }})</option>
                                 @else
-                                    <option value="{{ $user->id }}">Dr. {{ $user->first_name }} {{ $user->last_name }}</option>
+                                    <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}  ({{ $user->user_type }})</option>
                                 @endif
                         	@endif
                         @endforeach
-                    @elseif( Auth::user()->user_type === "doctor" )
-                        <option selected value="{{ Auth::user()->id }}">Dr. {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</option>
+                    @elseif( Auth::user()->user_type === "doctor" || Auth::user()->user_type === "nurse" )
+                        <option selected value="{{ Auth::user()->id }}">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</option>
                     @endif
                     </select>
                     <button id="submit_select_schedule" type="submit" class="btn btn-primary submit-btn btn-block"/>View Schedule</button>

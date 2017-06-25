@@ -11,7 +11,7 @@
 				<form method="GET" role="search">
 				    {{ csrf_field() }}
 				    <div style="margin: 20px 0;" class="input-group">
-				        <input type="text" class="form-control" name="q"
+				        <input type="text" class="form-control" name="q" value="{{ $q }}"
 				            placeholder="Search Users"> <span class="input-group-btn">
 				            <button type="submit" class="btn btn-default">
 				                <span class="glyphicon glyphicon-search"></span>
@@ -66,30 +66,30 @@
 				@foreach($users as $user)
 						<div class="app-list-row">
 							<div class="col-sm-2 app-list-col app-list-item first">
-								{{ $user->first_name }}
+								<p>{{ $user->first_name }}</p>
 							</div>
 							<div class="col-sm-2 app-list-col app-list-item">
-								{{ $user->last_name }}
+								<p>{{ $user->last_name }}</p>
 							</div>
 							<div class="col-sm-2 app-list-col app-list-item">
-								{{ str_replace("-"," ", date('d-F-Y', strtotime($user->birth_date))) }}
+								<p>{{ str_replace("-"," ", date('d-F-Y', strtotime($user->birth_date))) }}</p>
 							</div>
 							<div class="col-sm-2 app-list-col app-list-item">
-								{{ $user->phone }}
+								<p>{{ $user->phone }}</p>
 							</div>
 							<div class="col-sm-2 app-list-col app-list-item">
-								{{ $user->email }}
+								<p>{{ $user->email }}</p>
 							</div>
 							<div class="col-sm-1 app-list-col app-list-item">
-								{{ ucwords($user->user_type) }}
+								<p>{{ ucwords($user->user_type) }}</p>
 							</div>
 							<div class="col-sm-1 app-list-col app-list-item last">
-								<a href="{{ URL::to('/edit-profile/' . $user->id ) }}" class="btn btn-primary btn-sm edit-user-profile-btn">Edit</a>
+								<p><a href="{{ URL::to('/edit-profile/' . $user->id ) }}" class="btn btn-primary btn-sm edit-user-profile-btn">Edit</a></p>
 							</div>
 						</div>
 				@endforeach
 				@else
-				<p>This user has not made any appointments yet.</p>
+				<p>No users matching this criteria were found!</p>
 				@endif
 			</div>
 		</div>

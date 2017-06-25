@@ -7,6 +7,7 @@
 
 @include('sweet::alert')
     <div id="wrapper" class="container-fluid body-wrapper toggled">
+    	@include('layouts.nav')
         @include('layouts.sidebar')
         <div class="content-wrapper">
         @yield('content')

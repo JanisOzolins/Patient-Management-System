@@ -5,9 +5,9 @@
             <label for="user_type" class="form-control-label">User Type</label>
 
                 <select class="form-control" id="user_type" name="user_type" value="{{ old('user_type') }}" required >
-                  @if (Auth::user()->isStaff(Auth::user()) == "staff" || Auth::user()->isStaff(Auth::user()) == "nurse" || Auth::user()->isStaff(Auth::user()) == "doctor")
+                  @if (Auth::user()->user_type == "staff" || Auth::user()->user_type == "nurse" || Auth::user()->user_type == "doctor")
                     <option value="patient">Patient</option>
-                  @elseif (Auth::user()->isStaff(Auth::user()) == "manager")
+                  @elseif (Auth::user()->user_type == "manager")
                     <option value="staff">Staff</option>
                     <option value="doctor">Doctor</option>
                     <option value="nurse">Nurse</option>

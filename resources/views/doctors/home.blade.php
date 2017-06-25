@@ -9,7 +9,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="col-md-12">
-                        <h4>{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h4>
+                        <h4>{{ Auth::user()->first_name }} {{ Auth::user()->last_name }} ({{ Auth::user()->user_type }})</h4>
                     </div>
                     <div class="col-md-4">
                         <p><strong>Personal ID: </strong> {{ Auth::user()->id }}</p>
@@ -27,7 +27,11 @@
                         <div class="col-sm-12 col-md-4 highlight-item highlight-2 unread-messages">
                             <h2>{{ $thisMonth }}</h2>
                             <h3>Appointments This Month</h3></div>
-                        <div class="col-sm-12 col-md-4 highlight-item highlight-3 last repeat-prescriptions"><a href="" data-toggle="modal" data-target="#repeatPrescriptions"><div class="highlight-inner"><h2>{{ count($prescriptionRequests) }}</h2><h3>Pending Repeat Prescriptions</h3></div></a></div>
+                            @if (Auth::user()->user_type === "doctor")
+                        <div class="col-sm-12 col-md-4 highlight-item highlight-3 last repeat-prescriptions"><a href="" data-toggle="modal" data-target="#repeatPrescriptions">
+                            <div class="highlight-inner"><h2>{{ count($prescriptionRequests) }}</h2><h3>Pending Repeat Prescriptions</h3></div></a>
+                        </div>
+                            @endif
                     </div>
                 </div>
             </div>

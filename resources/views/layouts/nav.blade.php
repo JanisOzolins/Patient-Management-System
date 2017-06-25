@@ -1,77 +1,45 @@
-        <nav class="navbar navbar-inverse" role="navigation">
+<nav class="navbar navbar-inverse mobile-only">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">{{ config('app.name', 'Laravel') }}</a>
+    </div>
 
-            <!-- BRAND AND TOGGLE -->
-
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/">North Hill Surgery</a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    @if (Auth::user()->user_type === "doctor" || Auth::user()->user_type === "staff" )<li><a href="{{ URL::to('/patients') }}">Patients</a></li>@endif
-                    @if (Auth::user()->user_type === "staff" )<li><a href="{{ URL::to('/appointments') }}">Appointments</a></li>@endif
-                    @if (Auth::user()->user_type === "doctor" || Auth::user()->user_type === "staff" )<li><a href="{{ URL::to('/schedule') }}">Schedule</a></li>@endif
-                    @if (Auth::user()->user_type === "manager" || Auth::user()->user_type === "staff" )<li><a href="{{ URL::to('/register') }}">Registration</a></li>@endif
-                </ul>
-
-            <ul class="nav navbar-right top-nav desktop-only">
-                @if (Auth::user())
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
-                            {{ Auth::user()->first_name }} {{ Auth::user()->last_name }} <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="{{ url('/logout') }}"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-                            </li>
-                        </ul>
-                    </li>
-                @endif
-            </ul>
-            </div>
-
-            <!-- TOP RIGHT MENU -->
-
-
-            <!-- SIDEBAR --> 
-
-<!--             <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
-                    <li class="dropdown mobile-only">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{ Auth::user()->first_name }} {{ Auth::user()->last_name }} <span class="caret"></span></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="#">Profile</a></li>
-                        <li><a href="{{ url('/logout') }}">Logout</a></li>
-                      </ul>
-                    </li>
-
-                    <li><a href="{{ url('/') }}"> Dashboard</a></li>
-
-                    <li>
-                        <a href="{{ route('appointments.index') }}"> Appointments</a>
-                    </li>
-
-                    <li>
-                        <a href="{{ route('patients.index') }}"> Patients</a>
-                    </li>
-                    
-                </ul>
-            </div> -->
-            <!-- /.navbar-collapse -->
-        </nav>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav mobile-menu">
+            <li> <a href="{{ URL::to('/') }}">Home</a> </li>
+        @if(Auth::user()->user_type !== "patient" && Auth::user()->user_type !== "manager")
+            <li role="separator" class="divider"></li>
+            <li> <a href="{{ URL::to('/patients') }}">Patients</a> </li>
+        @endif
+        @if(Auth::user()->user_type === "manager")
+            <li role="separator" class="divider"></li>
+            <li> <a href="{{ URL::to('/users') }}">All System Users</a> </li>
+        @endif
+        @if(Auth::user()->user_type !== "patient" && Auth::user()->user_type !== "manager")
+            <li role="separator" class="divider"></li>
+            <li> <a href="{{ URL::to('/schedule') }}">Schedule</a> </li>
+        @endif
+        @if(Auth::user()->user_type !== "patient")
+            <li role="separator" class="divider"></li>
+            <li> <a href="{{ URL::to('/appointments') }}">Appointments</a> </li> 
+        @endif
+        @if(Auth::user()->user_type === "patient")
+            <li role="separator" class="divider"></li>
+            <li> <a href="{{ URL::to('/user/' . Auth::user()->id ) }}">Your Medical Profile</a> </li> 
+        @endif
+            <li role="separator" class="divider"></li>
+            <li> <a href="{{ URL::to('/edit-profile/' . Auth::user()->id ) }}">Edit Profile</a> </li>
+            <li role="separator" class="divider"></li>
+            <li> <a href="/logout/">Logout</a> </li> 
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
